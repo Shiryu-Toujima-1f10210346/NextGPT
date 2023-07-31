@@ -6,8 +6,9 @@ const configuration = new Configuration({
   
 });
 const openai = new OpenAIApi(configuration);
-let resText = "";
+
 export default async function (req, res) {
+  let resText = "";
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -31,7 +32,8 @@ export default async function (req, res) {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
-          { role: "user", content: `${animal}` },
+        { role: "system", content: `日本語で` },
+        { role: "user", content: `${animal}` },
       ],
     });
     console.log(completion.data.choices[0].message.content);
@@ -39,6 +41,7 @@ export default async function (req, res) {
     console.log(completion.data);
     res.status(200).json({ result: completion.data.choices[0].message });
     console.log(resText);
+    return resText;
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -54,13 +57,3 @@ export default async function (req, res) {
     }
   }
 }
-
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `${animal}`;
-}
-
-
-
-export {resText};

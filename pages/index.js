@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import {resText} from "./api/generate.js";
 
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
@@ -25,8 +24,8 @@ export default function Home() {
 
       // setResult(data.result);
       //dataの中身をわかりやすく表示
-      console.log(resText);
-      setResult(resText);
+      console.log(data.result.content);
+      setResult(data.result.content);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -54,7 +53,7 @@ export default function Home() {
           />
           <input type="submit" value="Generate names" />
         </form>
-        <div className={styles.result}>{resText}</div>
+        <div className={styles.result}>{result}</div>
       </main>
     </div>
   );
