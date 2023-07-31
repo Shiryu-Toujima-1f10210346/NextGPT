@@ -1,10 +1,11 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
+import {resText} from "./api/generate.js";
 
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState();
+  const [result, setResult] = useState("");
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -22,8 +23,10 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
-      setAnimalInput("");
+      // setResult(data.result);
+      //dataの中身をわかりやすく表示
+      console.log(resText);
+      setResult(resText);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -51,7 +54,7 @@ export default function Home() {
           />
           <input type="submit" value="Generate names" />
         </form>
-        <div className={styles.result}>{result}</div>
+        <div className={styles.result}>{resText}</div>
       </main>
     </div>
   );
