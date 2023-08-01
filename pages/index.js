@@ -38,6 +38,7 @@ export default function Home() {
       <Head>
         <title>ほげほげ</title>
         <link rel="icon" href="/dog.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
       </Head>
 
       <main className={styles.main}>
@@ -55,7 +56,11 @@ export default function Home() {
         </form>
         <div className={styles.result}>
           {result.map((fact, index) => (
-            <p key={index}>{fact}</p>
+            <p key={index} class ="
+            border rounded-xl border-gray-800 border-4
+            p-6 mr-64 ml-4 mb-4 
+            text-xl font-bold text-gray-800
+            " >{fact}</p>
           ))}
         </div>
         <div id="result"></div>
