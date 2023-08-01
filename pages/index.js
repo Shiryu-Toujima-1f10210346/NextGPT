@@ -26,7 +26,7 @@ export default function Home() {
       // setResult(data.result);
       //dataの中身をわかりやすく表示
       console.log(data.result.content);
-      setResult([...result,event.target.elements.animal.value ,data.result.content]);
+      setResult([...result,"あなた:"+event.target.elements.animal.value ,"GPT:"+data.result.content]);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -58,8 +58,8 @@ export default function Home() {
         <div className={styles.result}>
           {result.map((fact, index) => (
             <p key={index} class ="
-            border rounded-xl border-gray-800 border-4
-            p-6 mr-64 ml-4 mb-4 
+            border rounded-xl border-gray-800 border-2 shadow-xl
+            p-6 m-6
             text-xl font-bold text-gray-800
             " >{fact}</p>
           ))}
