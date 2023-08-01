@@ -6,7 +6,9 @@ const configuration = new Configuration({
   
 });
 const openai = new OpenAIApi(configuration);
+const messagesHistory = [{ role: "system", content: `
 
+` }];
 export default async function (req, res) {
   let resText = "";
   if (!configuration.apiKey) {
@@ -29,16 +31,16 @@ export default async function (req, res) {
   }
 
   try {
+    messagesHistory.push({ role: "user", content: `${animal}` });
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: `日本語で` },
-        { role: "user", content: `${animal}` },
-      ],
+      messages:messagesHistory,
     });
+    messagesHistory.push(completion.data.choices[0].message);
+    console.log(messagesHistory);
     console.log(completion.data.choices[0].message.content);
     resText = completion.data.choices[0].message.content;
-    console.log(completion.data);
+    // console.log(completion.data);
     res.status(200).json({ result: completion.data.choices[0].message });
     console.log(resText);
     return resText;
