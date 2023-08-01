@@ -7,6 +7,7 @@ export default function Home() {
   const [result, setResult] = useState([]);
 
   async function onSubmit(event) {
+    // document.getElementById("result").innerHTML += event.target.elements.animal.value;
     event.preventDefault();
     try {
       const response = await fetch("/api/generate", {
@@ -25,7 +26,7 @@ export default function Home() {
       // setResult(data.result);
       //dataの中身をわかりやすく表示
       console.log(data.result.content);
-      setResult([...result, data.result.content]);
+      setResult([...result,event.target.elements.animal.value ,data.result.content]);
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);

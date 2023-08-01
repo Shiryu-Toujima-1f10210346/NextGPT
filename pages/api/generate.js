@@ -7,8 +7,10 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 const messagesHistory = [{ role: "system", content: `
-
+日本語で返答してください。
 ` }];
+
+const userMessageHistory = [];
 export default async function (req, res) {
   let resText = "";
   if (!configuration.apiKey) {
@@ -32,6 +34,7 @@ export default async function (req, res) {
 
   try {
     messagesHistory.push({ role: "user", content: `${animal}` });
+    userMessageHistory.push(animal);
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages:messagesHistory,
