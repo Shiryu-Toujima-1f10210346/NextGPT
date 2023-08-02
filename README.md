@@ -7,7 +7,7 @@
 3. Navigate into the project directory
 
    ```bash
-   $ cd　NextGPT
+   $ cd NextGPT
    ```
 
 4. Install the requirements

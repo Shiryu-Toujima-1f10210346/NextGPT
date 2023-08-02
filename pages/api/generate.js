@@ -22,19 +22,19 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const user = req.body.user || '';
+  if (user.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a message.",
       }
     });
     return;
   }
 
   try {
-    messagesHistory.push({ role: "user", content: `${animal}` });
-    userMessageHistory.push(animal);
+    messagesHistory.push({ role: "user", content: `${user}` });
+    userMessageHistory.push(user);
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages:messagesHistory,
