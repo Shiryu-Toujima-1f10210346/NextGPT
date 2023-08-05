@@ -7,7 +7,7 @@ export default function Home() {
   const [result, setResult] = useState([]);
   const [limit, setLimit] = useState(3);
   const [odai, setOdai] = useState("バナナ");
-  const [NG, setNG] = useState(["赤い", "甘い", "酸っぱい"]);
+  const [NG, setNG] = useState(["黄色", "甘い", "酸っぱい"]);
   const [alert, setAlert] = useState("");
 
   async function onSubmit(event) {
