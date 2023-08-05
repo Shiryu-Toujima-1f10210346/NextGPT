@@ -32,12 +32,21 @@ export default function Home() {
 
     event.preventDefault();
     try {
+      console.log({ user: userInput + " お題は" + odai + " NGワードは" + NG });
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user: userInput }),
+        body: JSON.stringify({
+          user:
+            "ユーザーの入力は:" +
+            userInput +
+            "､お題は" +
+            odai +
+            "､NGワードは" +
+            NG,
+        }),
       });
 
       const data = await response.json();
