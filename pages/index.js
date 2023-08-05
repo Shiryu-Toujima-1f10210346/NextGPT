@@ -5,14 +5,31 @@ import styles from "./index.module.css";
 export default function Home() {
   const [userInput, setUserInput] = useState("");
   const [result, setResult] = useState([]);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(3);
+  const [odai, setOdai] = useState("バナナ");
+  const [NG, setNG] = useState(["赤い", "甘い", "酸っぱい"]);
+  const [alert, setAlert] = useState("");
 
   async function onSubmit(event) {
-    // document.getElementById("result").innerHTML += event.target.elements.user.value;
-    if (limit <= 0) {
-      alert("もう終わりです");
+    //エラー処理
+    if (userInput.trim().length === 0) {
+      setAlert("文字を入力してください");
       return;
     }
+    //userInputの文字列にNGの文字列が含まれていたら
+    for (let i = 0; i < NG.length; i++) {
+      if (userInput.includes(NG[i]) || userInput.includes(odai)) {
+        setAlert("NGワードが含まれています");
+        return;
+      }
+    }
+
+    //残り回数が0以下だったら
+    if (limit <= 0) {
+      setAlert("もう終わりです");
+      return;
+    }
+
     event.preventDefault();
     try {
       const response = await fetch("/api/generate", {
@@ -30,6 +47,12 @@ export default function Home() {
           new Error(`Request failed with status ${response.status}`)
         );
       }
+      //data.result.contentにodaiが含まれていたら
+      if (data.result.content.includes(odai)) {
+        //勝ち
+        document.getElementById("title").innerHTML = "あなたの勝ちです";
+        document.getElementById("title").style.color = "red";
+      }
 
       // setResult(data.result);
       //dataの中身をわかりやすく表示
@@ -43,7 +66,7 @@ export default function Home() {
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
-      alert(error.message);
+      setAlert(error.message);
     }
   }
 
@@ -57,12 +80,47 @@ export default function Home() {
 
       <main className={styles.main}>
         <img src="/gpt.png" className={styles.icon} />
-        <h3>GPTとバトル</h3>
+        <h3 id="title">GPTとバトル</h3>
+
+        <div class="flex flex-row">
+          {/* お題設定 */}
+          <div>
+            <p class="text-xl m-6">デバッグ用:お題を設定</p>
+            <input
+              type="text"
+              placeholder="お題を入力してください"
+              value={odai}
+              onChange={(e) => setOdai(e.target.value)}
+            />
+          </div>
+
+          {/* NGワード設定 */}
+          <div>
+            <p class="text-xl m-6">デバッグ用:NGワードを設定</p>
+            <input
+              type="text"
+              placeholder="NGワードを入力してください"
+              value={NG}
+              onChange={(e) => setNG(e.target.value)}
+            />
+          </div>
+        </div>
+        <p
+          id="odai"
+          class="
+        text-xl mb-4
+        "
+        >
+          お題:{odai}
+        </p>
+        <p id="alert" class="text-xl mb-4">
+          {alert}
+        </p>
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="user"
-            placeholder="話したいことを入力してください"
+            placeholder="お題を引き出そう！"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
