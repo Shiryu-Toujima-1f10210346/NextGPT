@@ -1,6 +1,9 @@
 ## チーム実習3　グループ4　チーム5　教育
 
-## Setup
+## Visit this site!
+
+[![ためしてみる](https://github.com/Shiryu-Toujima-1f10210346/NextGPT/assets/85663022/f9337d7d-344e-480c-99ed-b3a0c9d5f500)
+](https://next-gpt-ecru.vercel.app/)
 
 1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/) (Node.js version >= 14.6.0 required)
 
