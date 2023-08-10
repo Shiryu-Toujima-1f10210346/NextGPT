@@ -125,7 +125,7 @@ export default function Home() {
         <p id="alert" class="text-xl mb-4">
           {alert}
         </p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <input
             type="text"
             name="user"
@@ -137,7 +137,7 @@ export default function Home() {
             type="submit"
             id="submit"
             value="Send Message"
-            disabled={limit <= 0}
+            disabled={limit <= 0 || userInput.length === 0}
           />
         </form>
 

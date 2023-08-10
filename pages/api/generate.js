@@ -59,6 +59,7 @@ export default async function (req, res) {
     userMessageHistory.push(user);
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
+      // model: "gpt-4",
       messages: messagesHistory,
     });
     messagesHistory.push(completion.data.choices[0].message);
