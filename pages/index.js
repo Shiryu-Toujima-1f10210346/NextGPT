@@ -40,12 +40,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           user:
-            "ユーザーの入力は:" +
-            userInput +
-            "､お題は" +
-            odai +
-            "､NGワードは" +
-            NG,
+            "ユーザーの入力:" + userInput + " お題:" + odai + " NGワード:" + NG,
         }),
       });
 
