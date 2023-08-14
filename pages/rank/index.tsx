@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import Sideber from '../components/Sidebar'
+import Sideber from '../../components/Sidebar'
 import styles from './index.module.css'
 import Head from "next/head";
 

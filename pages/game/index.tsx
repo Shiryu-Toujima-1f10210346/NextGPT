@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import Sidever from "../components/Sidebar";
+import Sidever from "../../components/Sidebar";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
