@@ -16,7 +16,7 @@ function Sidebar() {
              className="
              m-4 object-center flex flex-row justify-center items-center
               hover:bg-gray-200 rounded-xl text-gray-800
-              py-4 shadow 
+              py-4 shadow
              ">
               <div>{val.icon}</div>
               <div>{val.title}</div>
