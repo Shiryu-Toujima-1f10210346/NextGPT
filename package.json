@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start"
   },
   "dependencies": {
@@ -12,14 +12,17 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.4",
+    "@prisma/client": "^5.1.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/material-bottom-tabs": "^6.2.16",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
+    "@vercel/postgres": "^0.4.1",
     "next": "^13.1.1",
     "openai": "^3.3.0",
+    "prisma": "^5.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native-gesture-handler": "^2.12.1",
@@ -28,7 +31,8 @@
     "react-native-safe-area-context": "^4.7.1",
     "react-native-screens": "^3.24.0",
     "react-navigation": "^4.4.4",
-    "tailwind": "^4.0.0"
+    "tailwind": "^4.0.0",
+    "vercel": "^31.2.3"
   },
   "engines": {
     "node": ">=16"
