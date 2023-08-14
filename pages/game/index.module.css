@@ -65,3 +65,10 @@
   font-weight: bold;
   margin-top: 20px;
 }
+
+.resultContainer{
+  margin-top: 15px;
+  background-color: #0553400c;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(37, 255, 66, 0.24);
+}

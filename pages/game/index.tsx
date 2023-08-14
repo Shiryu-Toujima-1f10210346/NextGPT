@@ -33,7 +33,7 @@ export default function Home() {
 
     event.preventDefault();
     try {
-      console.log({ user: userInput + " お題は" + odai + " NGワードは" + NG });
+      console.log({ user: userInput  + " NGワードは" + NG });
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           user:
-            "ユーザーの入力:" + userInput + " お題:" + odai + " NGワード:" + NG,
+            "ユーザーの入力:" + userInput + " NGワード:" + NG,
         }),
       });
 
@@ -85,7 +85,7 @@ export default function Home() {
       <Sidever />
       <main className={styles.main}>
         <img src="/gpt.png" className={styles.icon} />
-        <h3 id="title">GPTとバトル</h3>
+        <h3 id="title">GPTとバトル！</h3>
 
         <div className="flex flex-row">
           {/* お題設定 */}
@@ -147,7 +147,7 @@ export default function Home() {
         >
           {limit <= 0 ? <p>もう終わりです</p> : <p>残り{limit}回</p>}
         </div>
-
+        <div className={styles.resultContainer}>
         <div className={styles.result}>
           {result.map((fact, index) => (
             <p
@@ -165,7 +165,7 @@ export default function Home() {
         </div>
 
         <div id="result"></div>
-
+        </div>
       </main>
     </div>
   );
