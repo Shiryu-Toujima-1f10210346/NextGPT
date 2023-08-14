@@ -2,7 +2,6 @@ import React from 'react'
 import Sideber from "../components/Sidebar"
 import Head from 'next/head'
 import global from '../styles/global.module.css'
-import createRanking from '../repo/rankingRepo'
 
 function index() {
   return (
@@ -23,7 +22,6 @@ function index() {
 
                 </p>
             </div>
-            <button onClick={createRanking}>ランキング作成:デバッグ</button>
         </main>
     </div>
   )
