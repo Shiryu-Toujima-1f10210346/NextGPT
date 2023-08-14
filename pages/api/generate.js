@@ -17,10 +17,12 @@ const systemText =
 "NGワード:" ここにNGワードが入ります｡カンマ区切りで複数のNGワードが入ります｡例:｢赤い,くだもの｣
 ユーザーはお題を引き出そうとあなたに指示を出します。
 例えばお題が｢りんご｣だとすると､ユーザーは
-｢赤くて丸い､甘い果物は？｣
+｢赤くて丸い､甘い果物｣
 というような指示を出すでしょう。
 その指示に対してあなたはその特徴にあてはまる単語を返します。
 この例の場合はあなたは｢りんご｣とのみ返答してください｡
+できるだけその特徴に当てはまる､違う単語を返答するようにしてください｡
+例えば｢赤くて甘い果物｣と指示が来たらお題の｢りんご｣ではなく｢いちご｣等を返答するようにしてください｡
 ですが､あまり一般的ではないものは返答しないでください｡
 ユーザーの入力した文字列内にNGワードのどれか一つに近い単語が含まれていた場合は､｢NGワードに類する単語が含まれています｡｣
 と返してください｡
@@ -57,7 +59,7 @@ export default async function (req, res) {
   try {
     userMessageHistory.push(user);
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [systemText, { role: "user", content: `${user}` }],
       temperature: 0,
     });

@@ -6,7 +6,7 @@ import Sidever from "../../components/Sidebar";
 export default function Home() {
   const [userInput, setUserInput] = useState("");
   const [result, setResult] = useState<string[]>([]); // add type annotation for result state
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(10);
   const [odai, setOdai] = useState("バナナ");
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
@@ -153,7 +153,8 @@ export default function Home() {
             <p
               key={index}
               className="
-            border rounded-xl border-gray-800 border-2 shadow-xl
+            border border-gray-800 border-2 
+            shadow-xl rounded-xl 
             p-6 m-4
             text-xl font-bold text-gray-800
             "
