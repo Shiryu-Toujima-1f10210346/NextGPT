@@ -33,7 +33,7 @@ export default function Home() {
 
     event.preventDefault();
     try {
-      console.log({ user: userInput + " お題は" + odai + " NGワードは" + NG });
+      console.log({ user: userInput  + " NGワードは" + NG });
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           user:
-            "ユーザーの入力:" + userInput + " お題:" + odai + " NGワード:" + NG,
+            "ユーザーの入力:" + userInput + " NGワード:" + NG,
         }),
       });
 
