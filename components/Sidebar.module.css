@@ -22,5 +22,6 @@
     transition: all 0.5s ease;
     font-size: 90%;
     user-select: none;
+    border-top : 3px solid #00000010;
 }
 }
