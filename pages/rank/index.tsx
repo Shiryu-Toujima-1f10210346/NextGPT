@@ -1,4 +1,7 @@
 import {useState} from 'react'
+import Sideber from '../components/Sidebar'
+import styles from './index.module.css'
+import Head from "next/head";
 
 export default function Home(){
     // ランキングデータの配列
@@ -17,6 +20,14 @@ export default function Home(){
 
     return (
         <div>
+        <Head>
+        <title>ほげほげ</title>
+        <link rel="icon" href="/dog.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
+      </Head>
+      <Sideber />
+      <main>
+      <div className={styles.container}>
             <h1>Ranking</h1>
             <ul>
                 {ranking.map((item, index) => (
@@ -26,6 +37,8 @@ export default function Home(){
                     </li>
                 ))}
             </ul>
+        </div>
+        </main>
         </div>
     )
 }
