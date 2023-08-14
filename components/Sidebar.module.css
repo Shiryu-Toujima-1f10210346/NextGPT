@@ -20,5 +20,7 @@
     bottom: 0;
     width: 100%;
     transition: all 0.5s ease;
+    font-size: 90%;
+    user-select: none;
 }
 }
