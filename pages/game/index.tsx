@@ -1,13 +1,14 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
+import Sidever from "../../components/Sidebar";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<string[]>([]); // add type annotation for result state
   const [limit, setLimit] = useState(3);
   const [odai, setOdai] = useState("バナナ");
-  const [NG, setNG] = useState(["黄色", "甘い", "酸っぱい"]);
+  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
 
   async function onSubmit(event) {
@@ -81,15 +82,15 @@ export default function Home() {
         <link rel="icon" href="/dog.png" />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
-
+      <Sidever />
       <main className={styles.main}>
         <img src="/gpt.png" className={styles.icon} />
         <h3 id="title">GPTとバトル</h3>
 
-        <div class="flex flex-row">
+        <div className="flex flex-row">
           {/* お題設定 */}
           <div>
-            <p class="text-xl m-6">デバッグ用:お題を設定</p>
+            <p className="text-xl m-6">デバッグ用:お題を設定</p>
             <input
               type="text"
               placeholder="お題を入力してください"
@@ -100,24 +101,24 @@ export default function Home() {
 
           {/* NGワード設定 */}
           <div>
-            <p class="text-xl m-6">デバッグ用:NGワードを設定</p>
+            <p className="text-xl m-6">デバッグ用:NGワードを設定</p>
             <input
               type="text"
               placeholder="NGワードを入力してください"
               value={NG}
-              onChange={(e) => setNG(e.target.value)}
+                onChange={(e) => setNG([e.target.value])}
             />
           </div>
         </div>
         <p
           id="odai"
-          class="
+          className="
         text-xl mb-4
         "
         >
           お題:{odai}
         </p>
-        <p id="alert" class="text-xl mb-4">
+        <p id="alert" className="text-xl mb-4">
           {alert}
         </p>
         <form onSubmit={(e) => onSubmit(e)}>
@@ -138,7 +139,7 @@ export default function Home() {
 
         <div
           id="limit"
-          class="
+          className="
         mt-6 p-2
         border rounded-xl border-gray-800 border-2 shadow-xl
         font-bold text-xl text-gray-800
@@ -151,7 +152,7 @@ export default function Home() {
           {result.map((fact, index) => (
             <p
               key={index}
-              class="
+              className="
             border rounded-xl border-gray-800 border-2 shadow-xl
             p-6 m-4
             text-xl font-bold text-gray-800
@@ -163,6 +164,7 @@ export default function Home() {
         </div>
 
         <div id="result"></div>
+
       </main>
     </div>
   );

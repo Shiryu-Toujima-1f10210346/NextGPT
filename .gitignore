@@ -30,3 +30,6 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# package-lock.jsonを無視
+package-lock.json
