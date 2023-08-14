@@ -31,5 +31,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# next.js build artifact
+# package-lock.jsonを無視
 package-lock.json

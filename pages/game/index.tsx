@@ -5,10 +5,10 @@ import Sidever from "../components/Sidebar";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<string[]>([]); // add type annotation for result state
   const [limit, setLimit] = useState(3);
   const [odai, setOdai] = useState("バナナ");
-  const [NG, setNG] = useState(["黄色", "甘い", "酸っぱい"]);
+  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
 
   async function onSubmit(event) {
@@ -106,7 +106,7 @@ export default function Home() {
               type="text"
               placeholder="NGワードを入力してください"
               value={NG}
-              onChange={(e) => setNG(e.target.value)}
+                onChange={(e) => setNG([e.target.value])}
             />
           </div>
         </div>
