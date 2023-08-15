@@ -1,14 +1,17 @@
 import {PrismaClient} from '@prisma/client';
 
 const prisma = new PrismaClient();
-const userScore = 100;
-const userName = 'test';
-export default async function  createRanking() {
+
+export const addRanking = async (userName:string,userScore:number) => {
+    if (!userName || !userScore) {
+        return;
+    }
+   
     const ranking = await prisma.rank.create({
         data: {
             name: userName,
-            score : userScore,
-        },
+            score: userScore
+        }
     });
-    console.log(ranking);
+    return ranking;
 }
