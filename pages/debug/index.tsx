@@ -14,7 +14,7 @@ function debug() {
         <Sidebar />
         <main>
             <div className={global.container}>
-                
+                デバッグ用ページやで
             </div>
         </main>
     </div>
