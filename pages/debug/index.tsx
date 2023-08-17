@@ -17,9 +17,9 @@ function debug() {
         <div className={global.container}>デバッグ用ページやで</div>
         <input onChange={(e) => (score = Number(e.target.value))} />
         <div>{score}</div>
-        <button onClick={() => addRanking("test", score)}>
+        {/* <button onClick={() => addRanking("test", score)}>
           ランキング更新
-        </button>
+        </button> */}
         <p>デバッグ用ページ</p>
       </main>
     </div>
