@@ -115,15 +115,12 @@ export default function Home() {
           <div>
             <div
               id="left"
-              className="border-2 border-black mt-6"
-              style={{
-                position: "sticky",
-                zIndex: 100,
-                top: 0,
-                backgroundColor: "#0051ff52",
-              }}
+              className="
+              left 
+              text-center
+              border-2 border-black mt-6 
+              "
             >
-              <img src="/gpt.png" className={styles.icon} />
               <h3 id="title">GPTとバトル！</h3>
 
               <div className="flex flex-row">
@@ -160,7 +157,7 @@ export default function Home() {
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
-              <form onSubmit={(e) => onSubmit(e)}>
+              <form onSubmit={(e) => onSubmit(e)} className="mx-auto">
                 <input
                   type="text"
                   name="user"
