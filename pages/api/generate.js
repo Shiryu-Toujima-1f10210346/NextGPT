@@ -20,7 +20,7 @@ const systemText =
 ｢赤くて丸い､甘い果物は？｣
 というような指示を出すでしょう。
 その指示に対してあなたはその特徴にあてはまる単語を返します。
-この例の場合はあなたは｢りんご｣とのみ返答してください｡
+この例の場合はあなたは｢それはりんごですか？｣と返答してください｡
 ユーザーの入力した文字列内にNGワードのどれか一つに近い単語が含まれていた場合は､｢NGワードに類する単語が含まれています｡｣
 と返してください｡
 例えばNGワードが｢りんご｣だとすると､｢リンゴ｣｢林檎｣｢Ringo｣｢Apple｣など｢りんご｣と同じ意味を示す単語はNGワードに類する単語です｡
@@ -62,8 +62,8 @@ export default async function (req, res) {
   try {
     userMessageHistory.push(user);
     const completion = await openai.createChatCompletion({
-      model: "gpt-4",
-      // model : "gpt3-5-turbo",
+      // model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [systemText, { role: "user", content: `${user}` }],
       temperature: 0,
     });
