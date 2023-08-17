@@ -113,22 +113,24 @@ export default function Home() {
          border-red-800 border-4 
 
          "
+          style={{ position: "sticky", top: "0" }}
         >
           <div>
             <div
-              id="left"
               className="
               left 
               text-center
               border-2 border-black mt-6 
               "
             >
-              <h3 id="title">GPTとバトル！</h3>
+              <div id="title" className="text-3xl font-bold">
+                GPTとバトル！
+              </div>
 
               <div className="flex flex-row">
                 {/* お題設定 */}
                 <div>
-                  <p className="text-xl m-6">デバッグ用:お題を設定</p>
+                  <p className="text-xl m-2">デバッグ用:お題を設定</p>
                   <input
                     type="text"
                     placeholder="お題を入力してください"
@@ -139,7 +141,7 @@ export default function Home() {
 
                 {/* NGワード設定 */}
                 <div>
-                  <p className="text-xl m-6">デバッグ用:NGワードを設定</p>
+                  <p className="text-xl m-2">デバッグ用:NGワードを設定</p>
                   <input
                     type="text"
                     placeholder="NGワードを入力してください"
