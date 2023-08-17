@@ -109,8 +109,10 @@ export default function Home() {
       <main className={styles.main}>
         <div
           className="
-        sm:flex sm:flex-row ml-56 p-4
-         border-red-800 border-4 "
+        sm:flex sm:flex-row  p-4 lg:mt-16 m-auto
+         border-red-800 border-4 
+
+         "
         >
           <div>
             <div
