@@ -7,10 +7,11 @@ import { useState } from "react";
 
 function debug() {
   const [score, setScore] = useState(0);
+  const [name, setName] = useState("testUser");
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
       method: "POST",
-      body: JSON.stringify({ name: "デバッグ", score: score }),
+      body: JSON.stringify({ name: name, score: score }),
     });
   }
   return (
@@ -24,11 +25,16 @@ function debug() {
       <main>
         <div className={global.container}>
           <input
-            onChange={(e) => (
-              setScore(Number(e.target.value)), console.log(e.target.value)
-            )}
+            placeholder="score"
+            onChange={(e) => setScore(Number(e.target.value))}
             className="border-2"
           />
+          <input
+            placeholder="name"
+            onChange={(e) => setName(e.target.value)}
+            className="border-2"
+          />
+          <div>{name}</div>
           <div>{score}</div>
           <button
             onClick={() => fetchAddRank()}
