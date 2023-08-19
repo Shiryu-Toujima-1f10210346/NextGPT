@@ -3,17 +3,16 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 import { addRanking } from "../../repo/rankingRepo";
-
-let score = 0;
-
-async function fetchAddRank() {
-  const res = await fetch("/api/addRank", {
-    method: "POST",
-    body: JSON.stringify({ name: "デバッグ", score: score }),
-  });
-}
+import { useState } from "react";
 
 function debug() {
+  const [score, setScore] = useState(0);
+  async function fetchAddRank() {
+    const res = await fetch("/api/addRank", {
+      method: "POST",
+      body: JSON.stringify({ name: "デバッグ", score: score }),
+    });
+  }
   return (
     <div>
       <Head>
@@ -24,9 +23,10 @@ function debug() {
       <Sidebar />
       <main>
         <div className={global.container}>
-          デバッグ用ページやで
           <input
-            onChange={(e) => (score = Number(e.target.value))}
+            onChange={(e) => (
+              setScore(Number(e.target.value)), console.log(e.target.value)
+            )}
             className="border-2"
           />
           <div>{score}</div>
