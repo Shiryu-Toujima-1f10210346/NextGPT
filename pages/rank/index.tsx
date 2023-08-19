@@ -6,31 +6,31 @@ import Head from "next/head";
 export default function Home() {
   //ランキングデータの配列
   const [ranking, setRanking] = useState([
-    { name: "ごーた", score: 0 },
-    { name: "ばくしんち", score: 100 },
-    { name: "けだ", score: 200 },
-    { name: "ふじ", score: 300 },
+    // { name: "ごーた", score: 0 },
+    // { name: "ばくしんち", score: 100 },
+    // { name: "けだ", score: 200 },
+    // { name: "ふじ", score: 300 },
   ]);
 
   // ランキングデータを昇順に並び替える
-  const sortRanking = () => {
-    const newRanking = [...ranking];
-    newRanking.sort((a, b) => a.score - b.score);
-    setRanking(newRanking);
-  };
+  //   const sortRanking = () => {
+  //     const newRanking = [...ranking];
+  //     newRanking.sort((a, b) => a.score - b.score);
+  //     setRanking(newRanking);
+  //   };
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
     const res = await fetch("/api/getRanking");
     const data = await res.json();
-    console.log(data);
+    console.log("data");
+    console.table(data);
     const newRanking = data.map((item) => ({
       name: item.name,
       score: item.score,
     }));
-    console.log(newRanking);
+
     setRanking(newRanking);
-    sortRanking();
   };
 
   useEffect(() => {
