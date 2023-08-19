@@ -69,7 +69,8 @@
   border-radius: 10px;
   box-shadow: inset 0 0 10px rgba(37, 255, 66, 0.24);
   overflow-y: scroll;
-  width: 33vw;
+  width: 500px;
+  height: 500px;
 }
 
 .left {

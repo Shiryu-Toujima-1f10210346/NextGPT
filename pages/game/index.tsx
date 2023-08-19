@@ -113,7 +113,6 @@ export default function Home() {
          border-red-800 border-4 
 
          "
-          style={{ position: "sticky", top: "0" }}
         >
           <div>
             <div
@@ -199,11 +198,7 @@ export default function Home() {
             </div>
           </div>{" "}
           {/* left */}
-          <div
-            className={styles.resultContainer}
-            id="right"
-            style={{ width: 500, height: 550 }}
-          >
+          <div className={styles.resultContainer} id="right">
             <div className={styles.result}>
               <p
                 className="
