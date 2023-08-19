@@ -8,6 +8,9 @@ function debug() {
   //scoreはNumber型
   const [score, setScore] = useState<Number>(0);
   const [name, setName] = useState<String>("testUser");
+  const [odai, setOdai] = useState<String>("バナナ");
+  const [userInput, setUserInput] = useState<String>("ばなな");
+  let result = "待機";
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
       method: "POST",
@@ -18,6 +21,20 @@ function debug() {
     });
     console.log(res);
   }
+
+  async function fetchJudge() {
+    const res = await fetch("/api/judge", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: userInput, odai: odai }),
+    });
+    console.log("res:");
+    console.log(res);
+    result = await res.json();
+  }
+
   return (
     <div>
       <Head>
@@ -28,6 +45,7 @@ function debug() {
       <Sidebar />
       <main>
         <div className={global.container}>
+          <p>デバッグ用ページ</p>
           <input
             placeholder="name"
             onChange={(e) => setName(e.target.value)}
@@ -47,7 +65,28 @@ function debug() {
           >
             ランキング更新
           </button>
-          <p>デバッグ用ページ</p>
+          <br />
+          <p>NG判別</p>
+          <input
+            placeholder="お題"
+            onChange={(e) => setOdai(e.target.value)}
+            className="border-2"
+          />
+          <input
+            placeholder="ユーザー入力"
+            onChange={(e) => setUserInput(e.target.value)}
+            className="border-2"
+          />
+          <div>{odai}</div>
+          <div>{userInput}</div>
+          <button
+            onClick={() => fetchJudge()}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            判定
+          </button>
+          <br />
+          <div>{result}</div>
         </div>
       </main>
     </div>

@@ -80,6 +80,7 @@ export default function Home() {
       if (data.result.content.includes(odai)) {
         //勝ち
         setWin(true);
+        //result配列の一番最後の要素の背景を変える
       }
 
       // setResult(data.result);
@@ -167,7 +168,7 @@ export default function Home() {
               <p
                 id="odai"
                 className="
-        text-lg mb-4
+        text-lg 
         "
               >
                 お題:{odai} NGワード:{NG.join(",")}
@@ -189,7 +190,9 @@ export default function Home() {
                   type="submit"
                   id="submit"
                   value="送信"
-                  disabled={limit <= 0 || userInput.length === 0}
+                  disabled={
+                    limit <= 0 || userInput.length === 0 || thiking || win
+                  }
                 />
               </form>
               <div
@@ -234,6 +237,9 @@ export default function Home() {
             p-6 m-4
             text-xl font-bold text-gray-800
             "
+                  style={{
+                    backgroundColor: fact.includes(odai) ? "#f79999" : "",
+                  }}
                 >
                   {fact}
                 </p>

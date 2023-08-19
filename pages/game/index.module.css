@@ -1,3 +1,5 @@
+/* ~639px */
+
 .resultContainer {
   margin-bottom: 10px;
   margin-top: 15px;
@@ -13,16 +15,14 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
 .main input[type="submit"] {
+  padding: 10px 30px;
   color: #fff;
-  background-color: #103ca3;
+  background-color: #10a31c;
   border: none;
   border-radius: 4px;
   text-align: center;
-  cursor: pointer;
-  margin-bottom: 24px;
-  margin-left: 24px;
-  padding: 0 20px;
 }
 
 .left {
@@ -32,6 +32,7 @@
   z-index: 100;
 }
 
+/* 640~1199px */
 @media (min-width: 640px) {
   .main {
     display: flex;
@@ -46,6 +47,8 @@
     width: 45vw;
   }
 }
+
+/* 1200px ~ */
 @media (min-width: 1200px) {
   .main {
     padding: 0 0 0 25vw;
@@ -65,16 +68,4 @@
     margin-left: 5vh;
     width: 35vw;
   }
-}
-
-.main input[type="submit"] {
-  color: #fff;
-  background-color: #103ca3;
-  border: none;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
-  margin-bottom: 24px;
-  margin-left: 24px;
-  padding: 0 20px;
 }
