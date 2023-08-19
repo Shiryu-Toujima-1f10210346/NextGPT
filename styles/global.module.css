@@ -4,10 +4,18 @@
   align-items: center;
   height: 100vh;
   padding: 3%;
-  font-size: large;
+  font-size: 1.5rem;
 }
+
+@media (max-width: 500px) {
+  .container {
+    font-size: 1rem;
+  }
+}
+/*PC 
+
 @media (min-width: 1200px) {
-  /* pc */
+  
   .sidebar {
     position: fixed;
     height: 100%;
@@ -17,10 +25,11 @@
     transition: all 0.5s ease;
     box-shadow: 0 0 10px rgba(37, 255, 66, 0.24);
   }
-}
+} 
+
+
+ tablet
 @media (max-width: 1199px) {
-  /* tablet */
-  /* 5つの要素を横並びにする */
   .sidebar {
     z-index: 100;
     display: flex;
@@ -36,9 +45,9 @@
     border-top: 3px solid #00000010;
   }
 }
-
+    
+     mobile
 @media (max-width: 500px) {
-  /* mobile */
   .sidebar {
     flex-direction: column;
     width: 100%;
@@ -52,3 +61,4 @@
     border-top: 3px solid #00000010;
   }
 }
+*/

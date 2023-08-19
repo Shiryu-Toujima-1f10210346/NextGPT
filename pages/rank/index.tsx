@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Sideber from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 import Head from "next/head";
+import styles from "./index.module.css";
 
 export default function Home() {
   //ランキングデータの配列
@@ -57,7 +58,7 @@ export default function Home() {
           ) : (
             <p>ランキングデータ</p>
           )}
-          <ul className="border-2 p-2" style={{ width: "20vw" }}>
+          <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
               <li key={index} className="border-2 m-4 p-2">
                 <div className="">{index + 1}位</div>

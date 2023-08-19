@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
-import Sidever from "../../components/Sidebar";
+import Sideber from "../../components/Sidebar";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -105,7 +105,7 @@ export default function Home() {
         <link rel="icon" href="/dog.png" />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
-      <Sidever />
+      <Sideber />
       <main className={styles.main}>
         <div
           className="
