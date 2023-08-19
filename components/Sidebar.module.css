@@ -7,6 +7,7 @@
     z-index: 100;
     transition: all 0.5s ease;
     box-shadow: 0 0 10px rgba(37, 255, 66, 0.24);
+    background-color: rgba(127, 255, 212, 0.198);
   }
 }
 @media (max-width: 1199px) {
@@ -24,5 +25,16 @@
     user-select: none;
     border-top: 3px solid #00000010;
     background-color: aliceblue;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidebar {
+    background-color: #ffffff;
+  }
+  .icon {
+    display: none;
   }
 }

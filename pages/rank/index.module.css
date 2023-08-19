@@ -1,6 +1,15 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+}
+
+@media (min-width: 1200px) {
+  .resultContainer {
+    font-size: 2rem;
+    width: 20vw;
+    height: 20vw;
+  }
 }
