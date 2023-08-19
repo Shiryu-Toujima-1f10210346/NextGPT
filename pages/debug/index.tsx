@@ -2,7 +2,6 @@ import Head from "next/head";
 import React from "react";
 import Sidebar from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
-import { addRanking } from "../../repo/rankingRepo";
 import { useState } from "react";
 
 function debug() {
@@ -13,6 +12,7 @@ function debug() {
       method: "POST",
       body: JSON.stringify({ name: name, score: score }),
     });
+    console.log(res);
   }
   return (
     <div>
