@@ -20,3 +20,20 @@ export const getRanking = async () => {
   });
   return ranking;
 };
+
+export const updateRanking = async (
+  userName: string,
+  userScore: number,
+  id: number
+) => {
+  const ranking = await prisma.rank.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: userName,
+      score: userScore,
+    },
+  });
+  return ranking;
+};

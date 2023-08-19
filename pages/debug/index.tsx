@@ -29,15 +29,16 @@ function debug() {
       <main>
         <div className={global.container}>
           <input
-            placeholder="score"
-            onChange={(e) => setScore(Number(e.target.value))}
-            className="border-2"
-          />
-          <input
             placeholder="name"
             onChange={(e) => setName(e.target.value)}
             className="border-2"
           />
+          <input
+            placeholder="score"
+            onChange={(e) => setScore(Number(e.target.value))}
+            className="border-2"
+          />
+
           <div>{name}</div>
           <div>{score.toString()}</div>
           <button

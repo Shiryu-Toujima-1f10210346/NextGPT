@@ -33,8 +33,13 @@ export default function Home() {
     setRanking(newRanking);
   };
 
+  //1分ごとにランキングデータを取得する
   useEffect(() => {
     fetchRanking();
+    const interval = setInterval(() => {
+      fetchRanking();
+    }, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
