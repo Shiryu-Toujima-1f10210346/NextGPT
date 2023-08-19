@@ -13,8 +13,8 @@ export default function Home() {
   const [alert, setAlert] = useState("");
   const [thiking, setThiking] = useState(false);
   const [debug, setDebug] = useState(false);
+  const [win, setWin] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
-
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
 
@@ -79,8 +79,7 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.content.includes(odai)) {
         //勝ち
-        document.getElementById("title").innerHTML = "あなたの勝ちです";
-        document.getElementById("title").style.color = "red";
+        setWin(true);
       }
 
       // setResult(data.result);
@@ -93,7 +92,7 @@ export default function Home() {
       ]);
       setLimit(limit - 1);
       setThiking(false);
-      //0.5秒後にスクロール
+      //0.5秒後にスクロール､その要素の背景を変える
       setTimeout(() => {
         if (resultRef.current) {
           resultRef.current.scrollIntoView({ behavior: "smooth" });
@@ -131,8 +130,12 @@ export default function Home() {
               border-2 border-black mt-2
               "
             >
-              <div id="title" className="text-3xl font-bold">
-                GPTとバトル！
+              <div
+                id="title"
+                className="text-3xl font-bold"
+                style={{ color: win ? "red" : "" }}
+              >
+                {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
                 <button onClick={() => setDebug(!debug)}>@</button>
               </div>
 
