@@ -10,6 +10,26 @@ export default function Home() {
   const [odai, setOdai] = useState("バナナ");
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
+  const [thiking, setThiking] = useState(false);
+
+  const n = 10; // 生成する<p>要素の数
+  const paragraphs = [];
+
+  for (let i = 0; i < n; i++) {
+    paragraphs.push(
+      <p
+        key={i}
+        className="
+          border border-gray-800 border-2 
+          shadow-xl rounded-xl 
+          p-6 m-4
+          text-xl font-bold text-gray-800
+        "
+      >
+        デバッグ用会話ダミー
+      </p>
+    );
+  }
 
   async function onSubmit(event) {
     //エラー処理
@@ -31,17 +51,18 @@ export default function Home() {
       return;
     }
 
+    setThiking(true);
+
     event.preventDefault();
     try {
-      console.log({ user: userInput  + " NGワードは" + NG });
+      console.log({ user: userInput + " NGワードは" + NG });
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user:
-            "ユーザーの入力:" + userInput + " NGワード:" + NG,
+          user: "ユーザーの入力:" + userInput + " NGワード:" + NG,
         }),
       });
 
@@ -68,8 +89,10 @@ export default function Home() {
         "GPT:" + data.result.content,
       ]);
       setLimit(limit - 1);
+      setThiking(false);
     } catch (error) {
       // Consider implementing your own error handling logic here
+      setThiking(false);
       console.error(error);
       setAlert(error.message);
     }
@@ -84,87 +107,133 @@ export default function Home() {
       </Head>
       <Sidever />
       <main className={styles.main}>
-        <img src="/gpt.png" className={styles.icon} />
-        <h3 id="title">GPTとバトル！</h3>
-
-        <div className="flex flex-row">
-          {/* お題設定 */}
-          <div>
-            <p className="text-xl m-6">デバッグ用:お題を設定</p>
-            <input
-              type="text"
-              placeholder="お題を入力してください"
-              value={odai}
-              onChange={(e) => setOdai(e.target.value)}
-            />
-          </div>
-
-          {/* NGワード設定 */}
-          <div>
-            <p className="text-xl m-6">デバッグ用:NGワードを設定</p>
-            <input
-              type="text"
-              placeholder="NGワードを入力してください"
-              value={NG}
-                onChange={(e) => setNG([e.target.value])}
-            />
-          </div>
-        </div>
-        <p
-          id="odai"
+        <div
           className="
+        sm:flex sm:flex-row  p-4 lg:mt-16 m-auto
+         border-red-800 border-4 
+
+         "
+          style={{ position: "sticky", top: "0" }}
+        >
+          <div>
+            <div
+              className="
+              left 
+              text-center
+              border-2 border-black mt-6 
+              "
+            >
+              <div id="title" className="text-3xl font-bold">
+                GPTとバトル！
+              </div>
+
+              <div className="flex flex-row">
+                {/* お題設定 */}
+                <div>
+                  <p className="text-xl m-2">デバッグ用:お題を設定</p>
+                  <input
+                    type="text"
+                    placeholder="お題を入力してください"
+                    value={odai}
+                    onChange={(e) => setOdai(e.target.value)}
+                  />
+                </div>
+
+                {/* NGワード設定 */}
+                <div>
+                  <p className="text-xl m-2">デバッグ用:NGワードを設定</p>
+                  <input
+                    type="text"
+                    placeholder="NGワードを入力してください"
+                    value={NG}
+                    onChange={(e) => setNG([e.target.value])}
+                  />
+                </div>
+              </div>
+              <p
+                id="odai"
+                className="
         text-xl mb-4
         "
-        >
-          お題:{odai}
-        </p>
-        <p id="alert" className="text-xl mb-4">
-          {alert}
-        </p>
-        <form onSubmit={(e) => onSubmit(e)}>
-          <input
-            type="text"
-            name="user"
-            placeholder="お題を引き出そう！"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-          />
-          <input
-            type="submit"
-            id="submit"
-            value="Send Message"
-            disabled={limit <= 0 || userInput.length === 0}
-          />
-        </form>
-
-        <div
-          id="limit"
-          className="
-        mt-6 p-2
+              >
+                お題:{odai}
+              </p>
+              <p id="alert" className="text-xl mb-4">
+                {alert}
+              </p>
+              <form onSubmit={(e) => onSubmit(e)} className="mx-auto">
+                <input
+                  type="text"
+                  name="user"
+                  placeholder="お題を引き出そう！"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                />
+                <input
+                  type="submit"
+                  id="submit"
+                  value="Send Message"
+                  disabled={limit <= 0 || userInput.length === 0}
+                />
+              </form>
+              <div>
+                {thiking ? (
+                  <div className="flex justify-center mt-6">
+                    {/* <img src="/thinking.gif" className={styles.thinking} /> */}
+                    GPTくん考え中...
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+              <div
+                id="limit"
+                className="
+        m-6 p-2 mx-36
         border rounded-xl border-gray-800 border-2 shadow-xl
-        font-bold text-xl text-gray-800
+        font-bold text-xl text-gray-800 text-center
         "
-        >
-          {limit <= 0 ? <p>もう終わりです</p> : <p>残り{limit}回</p>}
-        </div>
-        <div className={styles.resultContainer}>
-        <div className={styles.result}>
-          {result.map((fact, index) => (
-            <p
-              key={index}
-              className="
+              >
+                {limit <= 0 ? <p>もう終わりです</p> : <p>残り{limit}回</p>}
+              </div>
+            </div>
+          </div>{" "}
+          {/* left */}
+          <div
+            className={styles.resultContainer}
+            id="right"
+            style={{ width: 500, height: 550 }}
+          >
+            <div className={styles.result}>
+              <p
+                className="
+            border border-gray-800 border-2 
+            shadow-xl rounded-xl 
+            my-8 mx-32
+            text-xl font-bold text-gray-800 text-center
+            "
+              >
+                会話履歴
+              </p>
+              {/* デバッグ用の会話ダミー */}
+              {paragraphs}
+              {result.map((fact, index) => (
+                <p
+                  key={index}
+                  className="
             border border-gray-800 border-2 
             shadow-xl rounded-xl 
             p-6 m-4
             text-xl font-bold text-gray-800
             "
-            >
-              {fact}
-            </p>
-          ))}
-        </div>
+                >
+                  {fact}
+                </p>
+              ))}
+            </div>
 
-        <div id="result"></div>
+            <div id="result"></div>
+          </div>
         </div>
       </main>
     </div>

@@ -27,7 +27,7 @@ export const SidebarData=[
     },
     {
         title:"デバッグ",
-        icon: <ThreePSharpIcon/>,
+        icon: <ThreePSharpIcon/>,   
         path:"/debug",
     }
 ]
