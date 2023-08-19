@@ -12,6 +12,7 @@ export default function Home() {
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
   const [thiking, setThiking] = useState(false);
+  const [debug, setDebug] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   const n = 10; // 生成する<p>要素の数
@@ -117,24 +118,25 @@ export default function Home() {
       <main className={styles.main}>
         <div
           className="
-        sm:flex sm:flex-row lg:mt-16 m-auto
+        sm:flex sm:flex-row sm:justify-strech sm:items-center
          border-red-800 border-4 border-solid
 
          "
         >
-          <div>
+          <div className={styles.left}>
             <div
               className="
               left 
               text-center
-              border-2 border-black mt-2 lg:mt-6
+              border-2 border-black mt-2
               "
             >
               <div id="title" className="text-3xl font-bold">
                 GPTとバトル！
+                <button onClick={() => setDebug(!debug)}>@</button>
               </div>
 
-              <div className="flex flex-row">
+              <div className={`flex flex-row ${debug ? "hidden" : ""}`}>
                 {/* お題設定 */}
                 <div>
                   <p className="m-2">デバッグ用:お題を設定</p>
@@ -162,10 +164,10 @@ export default function Home() {
               <p
                 id="odai"
                 className="
-        text-xl mb-4
+        text-lg mb-4
         "
               >
-                お題:{odai}
+                お題:{odai} NGワード:{NG.join(",")}
               </p>
               <p id="alert" className="text-xl mb-4">
                 {alert}
