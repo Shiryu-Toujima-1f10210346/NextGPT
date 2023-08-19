@@ -5,11 +5,15 @@ import global from "../../styles/global.module.css";
 import { useState } from "react";
 
 function debug() {
-  const [score, setScore] = useState(0);
-  const [name, setName] = useState("testUser");
+  //scoreはNumber型
+  const [score, setScore] = useState<Number>(0);
+  const [name, setName] = useState<String>("testUser");
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ name: name, score: score }),
     });
     console.log(res);
