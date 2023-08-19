@@ -13,3 +13,9 @@
     height: 20vw;
   }
 }
+@media (max-width: 500px) {
+  .resultContainer {
+    font-size: 1.5rem;
+    width: 80vw;
+  }
+}

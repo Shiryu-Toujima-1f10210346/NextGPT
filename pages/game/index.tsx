@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Sideber from "../../components/Sidebar";
+import { useRef } from "react";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -11,6 +12,7 @@ export default function Home() {
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
   const [alert, setAlert] = useState("");
   const [thiking, setThiking] = useState(false);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
@@ -90,6 +92,12 @@ export default function Home() {
       ]);
       setLimit(limit - 1);
       setThiking(false);
+      //0.5秒後にスクロール
+      setTimeout(() => {
+        if (resultRef.current) {
+          resultRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 300);
     } catch (error) {
       // Consider implementing your own error handling logic here
       setThiking(false);
@@ -109,18 +117,17 @@ export default function Home() {
       <main className={styles.main}>
         <div
           className="
-        sm:flex sm:flex-row  p-4 lg:mt-16 m-auto
-         border-red-800 border-4 
+        sm:flex sm:flex-row lg:mt-16 m-auto
+         border-red-800 border-4 border-solid
 
          "
-          style={{ position: "sticky", top: "0" }}
         >
           <div>
             <div
               className="
               left 
               text-center
-              border-2 border-black mt-6 
+              border-2 border-black mt-2 lg:mt-6
               "
             >
               <div id="title" className="text-3xl font-bold">
@@ -130,23 +137,25 @@ export default function Home() {
               <div className="flex flex-row">
                 {/* お題設定 */}
                 <div>
-                  <p className="text-xl m-2">デバッグ用:お題を設定</p>
+                  <p className="m-2">デバッグ用:お題を設定</p>
                   <input
                     type="text"
                     placeholder="お題を入力してください"
                     value={odai}
                     onChange={(e) => setOdai(e.target.value)}
+                    className="border-2 border-black text-center"
                   />
                 </div>
 
                 {/* NGワード設定 */}
                 <div>
-                  <p className="text-xl m-2">デバッグ用:NGワードを設定</p>
+                  <p className="m-2">デバッグ用:NGワードを設定</p>
                   <input
                     type="text"
                     placeholder="NGワードを入力してください"
                     value={NG}
                     onChange={(e) => setNG([e.target.value])}
+                    className="border-2 border-black text-center"
                   />
                 </div>
               </div>
@@ -168,48 +177,42 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
+                  className="border-2 border-black text-center
+        "
                 />
                 <input
                   type="submit"
                   id="submit"
-                  value="Send Message"
+                  value="送信"
                   disabled={limit <= 0 || userInput.length === 0}
                 />
               </form>
-              <div>
-                {thiking ? (
-                  <div className="flex justify-center mt-6">
-                    {/* <img src="/thinking.gif" className={styles.thinking} /> */}
-                    GPTくん考え中...
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
               <div
                 id="limit"
                 className="
-        m-6 p-2 mx-36
+        lg:m-6 m-2 p-2 mx-16
         border rounded-xl border-gray-800 border-2 shadow-xl
         font-bold text-xl text-gray-800 text-center
         "
               >
-                {limit <= 0 ? <p>もう終わりです</p> : <p>残り{limit}回</p>}
+                {limit <= 0 ? (
+                  <p>もう終わりです</p>
+                ) : thiking ? (
+                  <p>GPTくん考え中</p>
+                ) : (
+                  <p>残り{limit}回</p>
+                )}
               </div>
             </div>
           </div>{" "}
           {/* left */}
-          <div
-            className={styles.resultContainer}
-            id="right"
-            style={{ width: 500, height: 550 }}
-          >
+          <div className={styles.resultContainer} id="right">
             <div className={styles.result}>
               <p
                 className="
             border border-gray-800 border-2 
             shadow-xl rounded-xl 
-            my-8 mx-32
+            my-8 mx-16
             text-xl font-bold text-gray-800 text-center
             "
               >
@@ -230,6 +233,7 @@ export default function Home() {
                   {fact}
                 </p>
               ))}
+              <div ref={resultRef} />
             </div>
 
             <div id="result"></div>
