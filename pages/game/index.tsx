@@ -13,8 +13,8 @@ export default function Home() {
   const [alert, setAlert] = useState("");
   const [thiking, setThiking] = useState(false);
   const [debug, setDebug] = useState(false);
+  const [win, setWin] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
-
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
 
@@ -79,8 +79,8 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.content.includes(odai)) {
         //勝ち
-        document.getElementById("title").innerHTML = "あなたの勝ちです";
-        document.getElementById("title").style.color = "red";
+        setWin(true);
+        //result配列の一番最後の要素の背景を変える
       }
 
       // setResult(data.result);
@@ -93,7 +93,7 @@ export default function Home() {
       ]);
       setLimit(limit - 1);
       setThiking(false);
-      //0.5秒後にスクロール
+      //0.5秒後にスクロール､その要素の背景を変える
       setTimeout(() => {
         if (resultRef.current) {
           resultRef.current.scrollIntoView({ behavior: "smooth" });
@@ -131,8 +131,12 @@ export default function Home() {
               border-2 border-black mt-2
               "
             >
-              <div id="title" className="text-3xl font-bold">
-                GPTとバトル！
+              <div
+                id="title"
+                className="text-3xl font-bold"
+                style={{ color: win ? "red" : "" }}
+              >
+                {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
                 <button onClick={() => setDebug(!debug)}>@</button>
               </div>
 
@@ -164,7 +168,7 @@ export default function Home() {
               <p
                 id="odai"
                 className="
-        text-lg mb-4
+        text-lg 
         "
               >
                 お題:{odai} NGワード:{NG.join(",")}
@@ -186,7 +190,9 @@ export default function Home() {
                   type="submit"
                   id="submit"
                   value="送信"
-                  disabled={limit <= 0 || userInput.length === 0}
+                  disabled={
+                    limit <= 0 || userInput.length === 0 || thiking || win
+                  }
                 />
               </form>
               <div
@@ -231,6 +237,9 @@ export default function Home() {
             p-6 m-4
             text-xl font-bold text-gray-800
             "
+                  style={{
+                    backgroundColor: fact.includes(odai) ? "#f79999" : "",
+                  }}
                 >
                   {fact}
                 </p>
