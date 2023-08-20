@@ -87,7 +87,7 @@ function debug() {
             判定
           </button>
           <br />
-          <div>{result ? "真" : "偽"}</div>
+          <div>{result ? "同じ" : "違う"}</div>
         </div>
       </main>
     </div>
