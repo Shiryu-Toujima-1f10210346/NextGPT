@@ -41,7 +41,7 @@ export default async function (req, res) {
       messages: [systemText, { role: "user", content: judgeMessage }],
       temperature: 0,
     });
-    const resText = judge.data.choices[0].text;
+    const resText = judge.data.choices[0].message.content;
     console.log("resText");
     console.log(resText);
     res.status(200).json({
@@ -49,6 +49,7 @@ export default async function (req, res) {
     });
   } catch (error) {
     if (error.response) {
+      console.log("error");
       console.error(error.response.status, error.response.data);
       res.status(error.response.status).json(error.response.data);
     } else {
