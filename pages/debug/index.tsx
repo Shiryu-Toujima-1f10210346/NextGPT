@@ -10,7 +10,7 @@ function debug() {
   const [name, setName] = useState<String>("testUser");
   const [odai, setOdai] = useState<String>("バナナ");
   const [userInput, setUserInput] = useState<String>("ばなな");
-  let result = "待機";
+  const [result, setResult] = useState<String>("");
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
       method: "POST",
@@ -32,7 +32,8 @@ function debug() {
     });
     console.log("res:");
     console.log(res);
-    result = await res.json();
+    const data = await res.json();
+    setResult(data.result);
   }
 
   return (
@@ -86,7 +87,7 @@ function debug() {
             判定
           </button>
           <br />
-          <div>{result}</div>
+          <div>{result ? "真" : "偽"}</div>
         </div>
       </main>
     </div>
