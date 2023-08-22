@@ -12,6 +12,29 @@ const systemText = {
   content: "絶対に true or falseで返してください｡",
 };
 
+async function mainChat(req, res) {
+  try {
+    const userInput = req.body.userInput || "";
+    const NG = req.body.NG || "";
+    console.log({ user: userInput + " NGワードは" + NG });
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: userInput + " NGワードは" + NG,
+      }),
+    });
+    const data = await response.json();
+    console.log("mainchat" + data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
 export default async function (req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
@@ -37,16 +60,27 @@ export default async function (req, res) {
 
   try {
     const judge = await openai.createChatCompletion({
+      //True なら同じ言葉 False なら違う言葉
       model: "gpt-3.5-turbo",
       messages: [systemText, { role: "user", content: judgeMessage }],
       temperature: 0,
     });
     const resText = judge.data.choices[0].message.content;
-    console.log("resText");
-    console.log(resText);
-    res.status(200).json({
-      result: resText,
-    });
+    console.log("resText:" + resText);
+    const judgeResult = resText === "True" ? true : false;
+    console.log("judgeResult:" + judgeResult);
+
+    if (!judgeResult) {
+      console.log("judge passed");
+      lastRes = mainChat(req, res);
+      res.status(200).json({
+        result: lastRes,
+      });
+    } else {
+      res.status(200).json({
+        result: "お題と同じ単語と判斷されました｡",
+      });
+    }
   } catch (error) {
     if (error.response) {
       console.log("error");

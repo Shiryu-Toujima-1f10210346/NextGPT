@@ -59,15 +59,13 @@ export default function Home() {
     event.preventDefault();
     try {
       console.log({ user: userInput + " NGワードは" + NG });
-      const response = await fetch("/api/judge", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user: userInput,
-          odai: odai,
-          NG: NG,
+          user: "ユーザーの入力:" + userInput + " NGワード:" + NG,
         }),
       });
 
@@ -79,10 +77,9 @@ export default function Home() {
         );
       }
       //data.result.contentにodaiが含まれていたら
-      if (data.result.includes(odai)) {
+      if (data.result.content.includes(odai)) {
         //勝ち
         setWin(true);
-        //result配列の一番最後の要素の背景を変える
       }
 
       // setResult(data.result);
