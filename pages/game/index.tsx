@@ -71,7 +71,9 @@ export default function Home() {
         }),
       });
 
+      console.log(response);
       const data = await response.json();
+      console.log(data);
       if (response.status !== 200) {
         throw (
           data.error ||

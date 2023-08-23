@@ -30,6 +30,7 @@ async function mainChat(req, res) {
     console.log("mainchat" + data);
     return data;
   } catch (error) {
+    console.log("MainChaterror");
     console.error(error);
     return error;
   }
@@ -66,7 +67,6 @@ export default async function (req, res) {
       temperature: 0,
     });
     const resText = judge.data.choices[0].message.content;
-    console.log("resText:" + resText);
     const judgeResult = resText === "True" ? true : false;
     console.log("judgeResult:" + judgeResult);
 
@@ -77,6 +77,7 @@ export default async function (req, res) {
         result: lastRes,
       });
     } else {
+      console.log("judge failed");
       res.status(200).json({
         result: "お題と同じ単語と判斷されました｡",
       });
