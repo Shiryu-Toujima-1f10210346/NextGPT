@@ -6,10 +6,9 @@ import global from "../../styles/global.module.css";
 
 export default function index() {
   const [odai, setOdai] = useState([
-    { odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },
+    /*{ odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },*/
   ]);
 
-  /*
   const fetchOdaiList = async () => {
     const res = await fetch("/api/getOdaiList");
     const data = await res.json();
@@ -30,7 +29,6 @@ export default function index() {
     }, 104000);
     return () => clearInterval(interval);
   }, []);
-  */
 
   return (
     <div>
@@ -44,7 +42,7 @@ export default function index() {
         <div>{odai.length == 0 ? <p>お題取得中･･･</p> : <p>お題一覧</p>}</div>
         <ul>
           {odai.map((item) => (
-            <div className="border-2 border-gray-500 p-4 rounded-xl">
+            <div className="border-2 border-gray-500 p-4 rounded-xl m-2">
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限時間: {item.limit}回</li>
