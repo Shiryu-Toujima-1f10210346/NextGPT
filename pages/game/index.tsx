@@ -89,11 +89,10 @@ export default function Home() {
 
       // setResult(data.result);
       //dataの中身をわかりやすく表示
-      console.log(data.result.content);
       setResult([
         ...result,
         "あなた:" + event.target.elements.user.value,
-        "GPT:" + data.result.content,
+        "GPT:" + data.result,
       ]);
       setLimit(limit - 1);
       setThiking(false);
