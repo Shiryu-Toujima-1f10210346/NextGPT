@@ -59,21 +59,17 @@ export default function Home() {
     event.preventDefault();
     try {
       console.log({ user: userInput + " NGワードは" + NG });
-      const response = await fetch("/api/judge", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user: userInput,
-          odai: odai,
-          NG: NG,
+          user: "ユーザーの入力:" + userInput + " NGワード:" + NG,
         }),
       });
 
-      console.log(response);
       const data = await response.json();
-      console.log(data);
       if (response.status !== 200) {
         throw (
           data.error ||
@@ -81,18 +77,18 @@ export default function Home() {
         );
       }
       //data.result.contentにodaiが含まれていたら
-      if (data.result.includes(odai)) {
+      if (data.result.content.includes(odai)) {
         //勝ち
         setWin(true);
-        //result配列の一番最後の要素の背景を変える
       }
 
       // setResult(data.result);
       //dataの中身をわかりやすく表示
+      console.log(data.result.content);
       setResult([
         ...result,
         "あなた:" + event.target.elements.user.value,
-        "GPT:" + data.result,
+        "GPT:" + data.result.content,
       ]);
       setLimit(limit - 1);
       setThiking(false);

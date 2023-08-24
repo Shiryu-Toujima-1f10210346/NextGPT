@@ -54,7 +54,7 @@ export default function Home() {
       <main>
         <div className={global.container}>
           {ranking.length == 0 ? (
-            <p>ランキングデータ読み込み中･･･</p>
+            <p>ランキングデータ取得中･･･</p>
           ) : (
             <p>ランキングデータ</p>
           )}

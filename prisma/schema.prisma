@@ -15,3 +15,11 @@ model Rank {
   score     Int
   createdAt DateTime @default(now())
 }
+
+model Odai {
+  id        Int      @id @default(autoincrement())
+  ng       String[]
+  odai     String
+  limit    Int
+  createdAt DateTime @default(now())
+}

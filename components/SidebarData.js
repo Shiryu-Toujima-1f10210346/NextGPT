@@ -31,4 +31,9 @@ export const SidebarData = [
     icon: <AdbIcon />,
     path: "/debug",
   },
+  {
+    title: "お題",
+    icon: <AdbIcon />,
+    path: "/odai",
+  },
 ];
