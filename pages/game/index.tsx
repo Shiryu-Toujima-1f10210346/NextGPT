@@ -2,7 +2,10 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Sideber from "../../components/Sidebar";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { get } from "http";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -17,6 +20,31 @@ export default function Home() {
   const resultRef = useRef<HTMLDivElement>(null);
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
+
+  const router = useRouter();
+
+  const { id } = router.query;
+
+  const getSpecificOdai = async () => {
+    const res = await fetch(`/api/getSpecificOdai?id=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(id);
+    const data = await res.json();
+    console.log(data);
+    setOdai(data.odai);
+    setNG(data.ng);
+    setLimit(data.limit);
+  };
+
+  useEffect(() => {
+    if (id) {
+      getSpecificOdai();
+    }
+  }, [id]);
 
   for (let i = 0; i < n; i++) {
     paragraphs.push(
