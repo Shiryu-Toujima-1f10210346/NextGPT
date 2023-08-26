@@ -14,11 +14,17 @@ export default function index() {
     const data = await res.json();
     console.table(data);
     const OdaiList = data.map((item) => ({
+      id: item.id,
       odai: item.odai,
       ng: item.ng,
       limit: item.limit,
     }));
     setOdai(OdaiList);
+  };
+
+  const playThisOdai = async (id: number) => {
+    //gameページに遷移
+    window.location.href = "/game?id=" + id;
   };
 
   //1分ごとにランキングデータを取得する
@@ -43,9 +49,16 @@ export default function index() {
         <ul>
           {odai.map((item) => (
             <div className="border-2 border-gray-500 p-4 rounded-xl m-2">
+              <li key={item.id}>ID: {item.id}</li>
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限時間: {item.limit}回</li>
+              <button
+                className={global.bluebtn}
+                onClick={() => playThisOdai(item.id)}
+              >
+                Play
+              </button>
             </div>
           ))}
         </ul>
