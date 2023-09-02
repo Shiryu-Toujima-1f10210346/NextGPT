@@ -22,4 +22,5 @@ model Odai {
   odai     String
   limit    Int
   createdAt DateTime @default(now())
+  like     Int 
 }

@@ -150,8 +150,7 @@ export default function Home() {
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
-         border-red-800 border-4 border-solid
-
+         border-red-800 border-2 rounded-xl border-solid lg:mt-16
          "
         >
           <div className={styles.left}>
@@ -159,7 +158,7 @@ export default function Home() {
               className="
               left 
               text-center
-              border-2 border-black mt-2
+              border-2 border-blue-500 rounded-xl border-solid
               "
             >
               <div
