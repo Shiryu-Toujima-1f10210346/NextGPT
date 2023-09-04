@@ -11,6 +11,7 @@ export default function index() {
   ]);
 
   //test用
+  /*
   for (let i = 0; i < 10; i++) {
     odai.push({
       id: i,
@@ -18,9 +19,8 @@ export default function index() {
       ng: ["黄色", "甘い", "酸っぱい"],
       limit: 10,
     });
-  }
+  }*/
 
-  /*
   const fetchOdaiList = async () => {
     const res = await fetch("/api/getOdaiList");
     const data = await res.json();
@@ -42,8 +42,6 @@ export default function index() {
     }, 104000);
     return () => clearInterval(interval);
   }, []);
-
-  */
 
   const likeThisOdai = async (id: number) => {};
 
