@@ -52,6 +52,7 @@ function debug() {
         ng: ngList,
         limit: limit,
         score: odaiScore,
+        official: official,
       }),
     });
     console.log(res);

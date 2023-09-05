@@ -8,6 +8,8 @@ export default async function POST(req, res) {
     const newOdai = req.body.odai;
     const ng = req.body.ng;
     let limit = 10;
+    const score = req.body.score;
+    const official = req.body.official;
 
     if (req.body.limit) {
       limit = req.body.limit;
@@ -24,7 +26,7 @@ export default async function POST(req, res) {
       return;
     }
 
-    const odai = await addOdai(newOdai, ng, limit);
+    const odai = await addOdai(newOdai, ng, limit, score, official);
     res.status(200).json(odai);
     return true;
   } catch (e) {
