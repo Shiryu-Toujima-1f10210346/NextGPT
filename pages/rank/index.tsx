@@ -60,7 +60,7 @@ export default function Home() {
           )}
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
-              <li key={index} className="border-2 m-4 my-8 p-2">
+              <li key={index} className="border-2">
                 <div className="">{index + 1}位</div>
                 <div id="rankContainer" className="">
                   <span className="">{item.name}さん: </span>

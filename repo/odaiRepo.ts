@@ -2,12 +2,22 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const addOdai = async (newOdai: string, ng: string[], limit: number) => {
+export const addOdai = async (
+  newOdai: string,
+  ng: string[],
+  limit: number,
+  score: number,
+  official: boolean
+) => {
   const odai = await prisma.odai.create({
     data: {
       odai: newOdai,
       ng: ng,
       limit: limit,
+      score: score,
+      like: 0,
+      dislike: 0,
+      official: official,
     },
   });
   return odai;

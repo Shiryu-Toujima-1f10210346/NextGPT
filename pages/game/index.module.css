@@ -7,7 +7,7 @@
   border-radius: 10px;
   box-shadow: inset 0 0 10px rgba(37, 255, 66, 0.24);
   overflow-y: scroll;
-  height: 55vh;
+  height: 60vh;
 }
 
 .main form {
@@ -17,7 +17,7 @@
 }
 
 .main input[type="submit"] {
-  padding: 10px 30px;
+  padding: 10px 20px;
   color: #fff;
   background-color: #10a31c;
   border: none;
@@ -29,7 +29,6 @@
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  z-index: 100;
 }
 
 /* 640~1199px */
@@ -68,4 +67,17 @@
     margin-left: 5vh;
     width: 35vw;
   }
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

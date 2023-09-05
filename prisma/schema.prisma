@@ -11,7 +11,7 @@ datasource db {
  
 model Rank {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String  
   score     Int
   createdAt DateTime @default(now())
 }
@@ -22,4 +22,8 @@ model Odai {
   odai     String
   limit    Int
   createdAt DateTime @default(now())
+  like     Int 
+  dislike  Int
+  score    Int
+  official Boolean
 }

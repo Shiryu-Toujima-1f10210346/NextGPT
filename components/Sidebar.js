@@ -1,12 +1,20 @@
 import React from "react";
 import { SidebarData } from "./SidebarData";
 import styles from "./Sidebar.module.css";
+import Head from "next/head";
 
 // css
 
 function Sidebar() {
   return (
     <div>
+      <Head>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
+        </style>
+      </Head>
       <ul className={styles.sidebar}>
         {SidebarData.map((val, key) => {
           return (
@@ -19,7 +27,7 @@ function Sidebar() {
                 className="
              md:m-4 lg:m-4 object-center flex flex-row justify-center items-center
               hover:bg-gray-200 rounded-xl text-gray-800
-              lg:p-6 shadow-md py-4
+              lg:p-6 shadow-md hover:shadow-2xl py-4
               "
               >
                 <div className={styles.icon}>{val.icon}</div>
