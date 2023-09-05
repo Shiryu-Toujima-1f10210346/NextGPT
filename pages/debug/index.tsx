@@ -71,7 +71,7 @@ function debug() {
       <main>
         <div className={global.container}>
           <p>デバッグ用ページ</p>
-          <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
+          <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <input
               placeholder="name"
               onChange={(e) => setName(e.target.value)}
@@ -91,7 +91,7 @@ function debug() {
             >
               ランキング更新
             </button>
-          </span>
+          </div>
           {/* <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>NG判別</p>
             <input
@@ -114,29 +114,33 @@ function debug() {
             </button>
             <div>結果:{result ? "同じ単語" : "違う単語"}</div>
           </span> */}
-          <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
+          <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>お題追加</p>
             <input
               placeholder="お題"
               onChange={(e) => setOdai(e.target.value)}
               className="border-2"
             />
+            <br />
             <input
               placeholder="NGワード"
               className="border-2"
               value={ngTmp.toString()}
               onChange={(e) => setNgTmp(e.target.value)}
             />
+            <br />
             <input
               placeholder="制限回数"
               className="border-2"
               onChange={(e) => setLimit(Number(e.target.value))}
             />
+            <br />
             <input
               placeholder="点数"
               className="border-2"
               onChange={(e) => setOdaiScore(Number(e.target.value))}
             />
+            <br />
             <button
               onClick={() => {
                 setNgList([...ngList, ngTmp]);
@@ -166,7 +170,7 @@ function debug() {
             >
               お題追加
             </button>
-          </span>
+          </div>
         </div>
       </main>
     </div>
