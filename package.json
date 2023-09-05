@@ -25,6 +25,7 @@
     "prisma": "^5.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-native-gesture-handler": "^2.12.1",
     "react-native-paper": "^5.10.1",
     "react-native-reanimated": "^3.4.2",

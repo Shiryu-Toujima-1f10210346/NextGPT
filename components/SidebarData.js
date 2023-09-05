@@ -4,6 +4,7 @@ import EmojiEventsSharpIcon from "@mui/icons-material/EmojiEventsSharp";
 import HomeSharpIcon from "@mui/icons-material/HomeSharp";
 import ThreePSharpIcon from "@mui/icons-material/ThreePSharp";
 import AdbIcon from "@mui/icons-material/Adb";
+import AddCardIcon from "@mui/icons-material/AddCard";
 
 export const SidebarData = [
   {
@@ -35,5 +36,10 @@ export const SidebarData = [
     title: "お題",
     icon: <AdbIcon />,
     path: "/odai",
+  },
+  {
+    title: "モーダル",
+    icon: <AddCardIcon />,
+    path: "/modal",
   },
 ];

@@ -6,6 +6,20 @@ import { useRef, useCallback } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { get } from "http";
+import Modal from "react-modal";
+import { Container } from "@mui/material";
+
+const customStyles = {
+  content: {
+    top: "20%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    minWidth: "40%",
+  },
+};
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -147,6 +161,12 @@ export default function Home() {
       </Head>
       <Sideber />
       <main className={styles.main}>
+        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
+          <div className="flex flex-col items-center">
+            <p className="text-3xl font-bold">あなたの勝ちです！</p>
+            <button onClick={() => setWin(!win)}>@</button>
+          </div>
+        </Modal>
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
@@ -167,7 +187,7 @@ export default function Home() {
                 style={{ color: win ? "red" : "" }}
               >
                 {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
-                {/* <button onClick={() => setDebug(!debug)}>@</button> */}
+                <button onClick={() => setWin(!win)}>@</button>
               </div>
 
               {/* <div className={`flex flex-row ${debug ? "hidden" : ""}`}>

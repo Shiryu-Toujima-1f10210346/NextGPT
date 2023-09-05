@@ -59,22 +59,24 @@ export default function index() {
       </Head>
       <Sideber />
       <main className={global.container}>
-        <div className="border-2 border-gray-600 px-32 py-2 rounded-xl">
+        <div className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
           {odai.length == 0 ? <p>お題取得中･･･</p> : <p>お題一覧</p>}
         </div>
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
-            <div className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-300 hover:bg-blue-200">
+            <div className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl">
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限時間: {item.limit}回</li>
 
-              <button
-                className={`${global.bluebtn} justify-end rounded-full px-8`}
-                onClick={() => playThisOdai(item.id)}
-              >
-                Play
-              </button>
+              <div className="flex justify-end ">
+                <button
+                  className={`${global.bluebtn} rounded-full px-8 hover:scale-110 hover:shadow-2xl duration-200 ease-in`}
+                  onClick={() => playThisOdai(item.id)}
+                >
+                  Play
+                </button>
+              </div>
             </div>
           ))}
         </ul>
