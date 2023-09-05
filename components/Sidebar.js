@@ -10,6 +10,10 @@ function Sidebar() {
     <div>
       <Head>
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
+        </style>
       </Head>
       <ul className={styles.sidebar}>
         {SidebarData.map((val, key) => {

@@ -6,6 +6,21 @@ import { useRef, useCallback } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { get } from "http";
+import Modal from "react-modal";
+import { Container } from "@mui/material";
+import { serialize } from "v8";
+
+const customStyles = {
+  content: {
+    top: "20%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    minWidth: "40%",
+  },
+};
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -18,6 +33,11 @@ export default function Home() {
   const [debug, setDebug] = useState(false);
   const [win, setWin] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
+  const [canRegister, setCanRegister] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [ranking, setRanking] = useState([]);
+  const [userScore, setUserScore] = useState(700);
+
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
 
@@ -38,6 +58,49 @@ export default function Home() {
     setOdai(data.odai);
     setNG(data.ng);
     setLimit(data.limit);
+  };
+
+  const fetchRanking = async () => {
+    console.log("Rankingdata取得中");
+    const res = await fetch("/api/getRanking");
+    const data = await res.json();
+    console.log("↓Rankingdata↓");
+    console.table(data);
+    const newRanking = data.map((item) => ({
+      name: item.name,
+      score: item.score,
+    }));
+
+    compareRanking();
+    setRanking(newRanking);
+  };
+
+  const compareRanking = async () => {
+    if (ranking.length == 0) setCanRegister(true);
+    //RankingにuserScoreが勝っているか
+    for (let i = 0; i < ranking.length; i++) {
+      if (userScore > ranking[i].score) {
+        setCanRegister(true);
+        console.log("canRegister:" + canRegister);
+      }
+    }
+    if (!canRegister) {
+      console.log("canRegister:" + canRegister);
+    }
+  };
+
+  const registerRanking = async () => {
+    console.log("ランキングに登録します");
+    const res = await fetch("/api/addRank", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: userName, score: userScore }),
+    });
+    const data = await res.json();
+    console.log(data);
+    setCanRegister(false);
   };
 
   useEffect(() => {
@@ -110,9 +173,10 @@ export default function Home() {
       }
       //data.result.contentにodaiが含まれていたら
       if (data.result.includes(odai)) {
-        //勝ち
-        setWin(true);
-        //result配列の一番最後の要素の背景を変える
+        fetchRanking();
+        setInterval(() => {
+          setWin(true);
+        }, 3000);
       }
 
       // setResult(data.result);
@@ -147,6 +211,42 @@ export default function Home() {
       </Head>
       <Sideber />
       <main className={styles.main}>
+        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
+          <div className="flex flex-col items-center">
+            <p className="text-3xl font-bold">ランキング入り！</p>
+            <p>canRegister:{canRegister.toString()}</p>
+            <button
+              onClick={() => {
+                setCanRegister(true);
+                console.log("canRegister:" + canRegister);
+                fetchRanking();
+              }}
+            >
+              ランキング登録
+            </button>
+            <button
+              onClick={() => {
+                setCanRegister(false);
+                setWin(false);
+                //遷移
+                window.location.href = "/modal";
+                console.log("canRegister:" + canRegister);
+              }}
+            >
+              非登録
+            </button>
+            <div className={canRegister ? "" : "hidden"}>
+              <p>名前を入力してください</p>
+              <input
+                type="text"
+                className="border-2"
+                placeholder="KEN"
+                onChange={(e) => setUserName(e.target.value)}
+              />
+              <button onClick={() => registerRanking()}>登録</button>
+            </div>
+          </div>
+        </Modal>
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
@@ -163,11 +263,11 @@ export default function Home() {
             >
               <div
                 id="title"
-                className="text-3xl font-bold"
+                className="text-2xl lg:text-3xl font-bold"
                 style={{ color: win ? "red" : "" }}
               >
                 {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
-                {/* <button onClick={() => setDebug(!debug)}>@</button> */}
+                <button onClick={() => setWin(!win)}>@</button>
               </div>
 
               {/* <div className={`flex flex-row ${debug ? "hidden" : ""}`}>
@@ -269,7 +369,7 @@ export default function Home() {
                 className="
             border border-gray-800 border-2 
             shadow-xl rounded-xl 
-            my-8 mx-16
+            my-4 mx-16
             text-xl font-bold text-gray-800 text-center
             "
               >

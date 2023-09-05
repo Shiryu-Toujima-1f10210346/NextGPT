@@ -34,12 +34,7 @@ export const SidebarData = [
   },
   {
     title: "お題",
-    icon: <AdbIcon />,
-    path: "/odai",
-  },
-  {
-    title: "モーダル",
     icon: <AddCardIcon />,
-    path: "/modal",
+    path: "/odai",
   },
 ];

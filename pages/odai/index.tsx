@@ -67,7 +67,12 @@ export default function index() {
             <div className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl">
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
-              <li key={item.limit}>制限時間: {item.limit}回</li>
+              <li key={item.limit}>制限回数: {item.limit}回</li>
+              {item.score != null ? (
+                <li key={item.score}>点数:{item.score}</li>
+              ) : (
+                <p>スコア未設定</p>
+              )}
 
               <div className="flex justify-end ">
                 <button

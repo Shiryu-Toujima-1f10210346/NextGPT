@@ -14,6 +14,8 @@ function debug() {
   const [ngList, setNgList] = useState<String[]>([]);
   const [ngTmp, setNgTmp] = useState<String>("");
   const [limit, setLimit] = useState<Number>(10);
+  const [odaiScore, setOdaiScore] = useState<Number>(0);
+
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
       method: "POST",
@@ -81,7 +83,7 @@ function debug() {
               ランキング更新
             </button>
           </span>
-          <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
+          {/* <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>NG判別</p>
             <input
               placeholder="お題"
@@ -102,7 +104,7 @@ function debug() {
               判定
             </button>
             <div>結果:{result ? "同じ単語" : "違う単語"}</div>
-          </span>
+          </span> */}
           <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>お題追加</p>
             <input
@@ -113,12 +115,18 @@ function debug() {
             <input
               placeholder="NGワード"
               className="border-2"
+              value={ngTmp.toString()}
               onChange={(e) => setNgTmp(e.target.value)}
             />
             <input
               placeholder="制限回数"
               className="border-2"
               onChange={(e) => setLimit(Number(e.target.value))}
+            />
+            <input
+              placeholder="点数"
+              className="border-2"
+              onChange={(e) => setOdaiScore(Number(e.target.value))}
             />
             <button
               onClick={() => {
@@ -129,10 +137,12 @@ function debug() {
             >
               NGワード追加
             </button>
+
             <div>
-              お題:{odai} NGワード:{ngList.join(",")} 制限回数:
-              {limit.toString()}
+              お題:{odai} 制限回数:
+              {limit.toString()}回 点数:{odaiScore.toString()}点
             </div>
+            <div>NGワード:{ngList.join(",")}</div>
             <button
               onClick={() => fetchAddOdai()}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
