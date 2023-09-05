@@ -33,8 +33,7 @@ function debug() {
       },
       body: JSON.stringify({ user: userInput, odai: odai }),
     });
-    console.log("res:");
-    console.log(res);
+    console.log("res:" + res);
     const data = await res.json();
     setResult(data.result);
   }
