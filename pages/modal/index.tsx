@@ -32,6 +32,9 @@ export default function Home() {
   const [debug, setDebug] = useState(false);
   const [win, setWin] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
+  const [canRegister, setCanRegister] = useState(false);
+  const [tmpUserName, setTmpUserName] = useState("");
+
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
 
@@ -165,6 +168,19 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <p className="text-3xl font-bold">あなたの勝ちです！</p>
             <button onClick={() => setWin(!win)}>@</button>
+            <button onClick={() => setCanRegister(!canRegister)}>
+              ランキング
+            </button>
+            <div className={canRegister ? "" : "hidden"}>
+              <p>名前を入力してください</p>
+              <input
+                type="text"
+                className="border-2"
+                placeholder="KEN"
+                onChange={(e) => setTmpUserName(e.target.value)}
+              />
+              <button>登録</button>
+            </div>
           </div>
         </Modal>
         <div

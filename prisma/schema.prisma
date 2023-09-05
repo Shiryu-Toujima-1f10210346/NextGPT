@@ -23,4 +23,7 @@ model Odai {
   limit    Int
   createdAt DateTime @default(now())
   like     Int 
+  dislike  Int
+  score    Int
+  official Boolean
 }
