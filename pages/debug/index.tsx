@@ -15,6 +15,7 @@ function debug() {
   const [ngTmp, setNgTmp] = useState<String>("");
   const [limit, setLimit] = useState<Number>(10);
   const [odaiScore, setOdaiScore] = useState<Number>(0);
+  const [official, setOfficial] = useState<Boolean>(false);
 
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
@@ -46,7 +47,12 @@ function debug() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ odai: odai, ng: ngList }),
+      body: JSON.stringify({
+        odai: odai,
+        ng: ngList,
+        limit: limit,
+        score: odaiScore,
+      }),
     });
     console.log(res);
   }
@@ -139,10 +145,18 @@ function debug() {
             </button>
 
             <div>
+              <div>
+                公式お題:
+                <input
+                  type="checkbox"
+                  onChange={() => setOfficial(!official)}
+                />
+              </div>
               お題:{odai} 制限回数:
               {limit.toString()}回 点数:{odaiScore.toString()}点
             </div>
             <div>NGワード:{ngList.join(",")}</div>
+
             <button
               onClick={() => fetchAddOdai()}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
