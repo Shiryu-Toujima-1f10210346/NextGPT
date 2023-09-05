@@ -56,6 +56,8 @@ function debug() {
       }),
     });
     console.log(res);
+    //遷移
+    window.location.href = "/odai";
   }
 
   return (
