@@ -43,7 +43,9 @@ export default function index() {
     return () => clearInterval(interval);
   }, []);
 
-  const likeThisOdai = async (id: number) => {};
+  const likeThisOdai = async (id: number) => {
+    console.log("like");
+  };
 
   const playThisOdai = async (id: number) => {
     //gameページに遷移
