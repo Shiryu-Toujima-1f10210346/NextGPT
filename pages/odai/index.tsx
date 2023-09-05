@@ -30,6 +30,10 @@ export default function index() {
       odai: item.odai,
       ng: item.ng,
       limit: item.limit,
+      like: item.like,
+      dislike: item.dislike,
+      score: item.score,
+      official: item.official,
     }));
     setOdai(OdaiList);
   };
@@ -43,7 +47,9 @@ export default function index() {
     return () => clearInterval(interval);
   }, []);
 
-  const likeThisOdai = async (id: number) => {};
+  const likeThisOdai = async (id: number) => {
+    console.log("like");
+  };
 
   const playThisOdai = async (id: number) => {
     //gameページに遷移
@@ -68,11 +74,17 @@ export default function index() {
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限回数: {item.limit}回</li>
-              {item.score != null ? (
-                <li key={item.score}>点数:{item.score}</li>
+              {item.official ? (
+                <li key={item.official}>公式お題</li>
               ) : (
-                <p>スコア未設定</p>
+                <li key={item.official}>ユーザーお題</li>
               )}
+              {item.score ? (
+                <li key={item.score}>スコア: {item.score}</li>
+              ) : (
+                <li key={item.score}>スコア: 未設定</li>
+              )}
+              <li key={item.like}>いいね: {item.like}</li>
 
               <div className="flex justify-end ">
                 <button

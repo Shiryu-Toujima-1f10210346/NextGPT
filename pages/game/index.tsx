@@ -37,6 +37,7 @@ export default function Home() {
   const [userName, setUserName] = useState("");
   const [ranking, setRanking] = useState([]);
   const [userScore, setUserScore] = useState(700);
+  const [count, setCount] = useState(0);
 
   const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
@@ -58,6 +59,8 @@ export default function Home() {
     setOdai(data.odai);
     setNG(data.ng);
     setLimit(data.limit);
+    setUserScore(data.score);
+    setCount(0);
   };
 
   const fetchRanking = async () => {
@@ -177,6 +180,9 @@ export default function Home() {
         setInterval(() => {
           setWin(true);
         }, 3000);
+      } else {
+        setCount(count + 1);
+        setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
       }
 
       // setResult(data.result);
@@ -214,6 +220,7 @@ export default function Home() {
         <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
           <div className="flex flex-col items-center">
             <p className="text-3xl font-bold">ランキング入り！</p>
+            <p className="text-2xl font-bold">スコア:{userScore}点</p>
             <p>canRegister:{canRegister.toString()}</p>
             <button
               onClick={() => {
@@ -229,7 +236,7 @@ export default function Home() {
                 setCanRegister(false);
                 setWin(false);
                 //遷移
-                window.location.href = "/modal";
+                window.location.href = "/game";
                 console.log("canRegister:" + canRegister);
               }}
             >
@@ -293,14 +300,13 @@ export default function Home() {
                   />
                 </div>
               </div> */}
-              <p
-                id="odai"
-                className="
-        text-lg 
-        "
-              >
+              <p id="odai" className="text-lg">
                 お題:{odai} NGワード:{NG.join(",")}
               </p>
+              <p id="score" className="text-lg">
+                スコア:{userScore}点
+              </p>
+
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
