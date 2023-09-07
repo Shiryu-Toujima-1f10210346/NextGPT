@@ -53,14 +53,16 @@ export default function Home() {
       <Sideber />
       <main>
         <div className={global.container}>
-          {ranking.length == 0 ? (
-            <p>ランキングデータ取得中･･･</p>
-          ) : (
-            <p>ランキングデータ</p>
-          )}
+          <span className="text-xl mt-6">
+            {ranking.length == 0 ? (
+              <p>ランキングデータ取得中･･･</p>
+            ) : (
+              <p>ランキングデータ</p>
+            )}
+          </span>
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
-              <li key={index} className="border-2">
+              <li key={index} className="border-2 p-2 rounded-xl my-4">
                 <div className="">{index + 1}位</div>
                 <div id="rankContainer" className="">
                   <span className="">{item.name}さん: </span>
