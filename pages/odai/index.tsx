@@ -97,7 +97,7 @@ export default function index() {
                 "
                   onClick={() => playThisOdai(item.id)}
                 >
-                  <span className="flex flex-col justify-center items-center h-full text-white font-bold text-lg  hover:scale-125">
+                  <span className="flex flex-col justify-center items-center h-full text-white font-bold text-xl  hover:scale-125">
                     Play
                   </span>
                 </button>
