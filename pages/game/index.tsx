@@ -9,18 +9,7 @@ import { get } from "http";
 import Modal from "react-modal";
 import { Container } from "@mui/material";
 import { serialize } from "v8";
-
-const customStyles = {
-  content: {
-    top: "20%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: "40%",
-  },
-};
+import { TwitterShareButton, TwitterIcon } from "react-share";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -208,6 +197,22 @@ export default function Home() {
     }
   }
 
+  const shareURL = "Jissyu-Example.com";
+  const customStyles = {
+    content: {
+      marginTop: "20%",
+      top: "20%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-40%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "40%",
+      borderRight: "solid 8px #f79999",
+      borderBottom: "solid 8px #f79999",
+      borderRadius: "15px",
+    },
+  };
   return (
     <div>
       <Head>
@@ -252,6 +257,14 @@ export default function Home() {
               />
               <button onClick={() => registerRanking()}>登録</button>
             </div>
+            <TwitterShareButton
+              url={shareURL}
+              title={`${userScore}点を獲得しました！\n `}
+              hashtags={["INIADFES", "JissyuTeam5"]}
+              className="mt-4"
+            >
+              <TwitterIcon size={40} round={true} />
+            </TwitterShareButton>
           </div>
         </Modal>
         <div
