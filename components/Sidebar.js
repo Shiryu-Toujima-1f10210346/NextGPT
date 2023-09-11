@@ -23,14 +23,14 @@ function Sidebar() {
                 }}
                 key={key}
                 className={`md:m-4 lg:m-4 
-                object-center   
+                object-center
                 flex flex-row justify-center items-center 
                 lg:justify-around lg:text-xl
                 text-gray-800 
                 lg:p-6 shadow-md 
                 hover:shadow-2xl py-4 rounded-full ${
                   router.pathname == val.path
-                    ? "bg-gray-900 text-white"
+                    ? "bg-gray-900 text-white scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0"
                     : "hover:bg-gray-200 "
                 }`}
               >

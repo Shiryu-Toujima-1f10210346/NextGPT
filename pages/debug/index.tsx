@@ -74,6 +74,7 @@ function debug() {
           <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <input
               placeholder="name"
+              maxLength={10}
               onChange={(e) => setName(e.target.value)}
               className="border-2"
             />
