@@ -25,12 +25,12 @@ export default function Home() {
     setRanking(newRanking);
   };
 
-  //1分ごとにランキングデータを取得する
+  //3分ごとにランキングデータを取得する
   useEffect(() => {
     fetchRanking();
     const interval = setInterval(() => {
       fetchRanking();
-    }, 60000);
+    }, 1000 * 60 * 3);
     return () => clearInterval(interval);
   }, []);
 
@@ -56,7 +56,9 @@ export default function Home() {
               <li key={index} className="border-2 p-2 rounded-xl my-4">
                 <div className="">{index + 1}位</div>
                 <div id="rankContainer" className="">
-                  <span className="">{item.name}さん: </span>
+                  <span>{item.name} </span>
+                  <span className={styles.san}>さん: </span>
+
                   <span className="float-right">{item.score}点</span>
                 </div>
               </li>

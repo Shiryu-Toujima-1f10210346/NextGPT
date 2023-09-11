@@ -256,7 +256,8 @@ export default function Home() {
               <input
                 type="text"
                 className="border-2"
-                placeholder="名前を入力してください"
+                placeholder="名前を入力 (10文字以内)"
+                maxLength={10}
                 onChange={(e) => setUserName(e.target.value)}
               />
               <button onClick={() => registerRanking()}>登録</button>

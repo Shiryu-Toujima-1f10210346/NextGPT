@@ -9,13 +9,19 @@
 @media (min-width: 1200px) {
   .resultContainer {
     font-size: 2rem;
-    width: 20vw;
+    width: 30vw;
     height: 20vw;
+  }
+  .san {
+    font-size: 1.5rem;
   }
 }
 @media (max-width: 500px) {
   .resultContainer {
     font-size: 1.5rem;
     width: 80vw;
+  }
+  .san {
+    font-size: 1rem;
   }
 }
