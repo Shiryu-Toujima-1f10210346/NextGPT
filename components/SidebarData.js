@@ -28,13 +28,7 @@ export const SidebarData = [
     selected: <EmojiEventsSharpIcon style={{ color: "white" }} />,
     path: "/rank",
   },
-  {
-    id: "info",
-    title: "インフォ",
-    icon: <ThreePSharpIcon />,
-    selected: <ThreePSharpIcon style={{ color: "white" }} />,
-    path: "/about",
-  },
+
   {
     id: "debug",
     title: "デバッグ",
