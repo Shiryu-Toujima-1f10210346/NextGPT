@@ -20,7 +20,6 @@
   }
   .icon {
     transform: scale(1.4);
-    margin-right: 1rem;
   }
 }
 @media (max-width: 1199px) {
@@ -45,7 +44,6 @@
   }
   .icon {
     transform: scale(1.6);
-    margin-right: 0.5rem;
   }
 }
 
@@ -62,5 +60,7 @@
   }
   .icon {
     transform: scale(1.6);
+    margin: auto;
+    padding: auto;
   }
 }
