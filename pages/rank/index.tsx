@@ -6,22 +6,13 @@ import styles from "./index.module.css";
 
 export default function Home() {
   //ランキングデータの配列
-  const [ranking, setRanking] = useState([
-    // { name: "ごーた", score: 0 },
-    // { name: "ばくしんち", score: 100 },
-    // { name: "けだ", score: 200 },
-    // { name: "ふじ", score: 300 },
-  ]);
-
-  // ランキングデータを昇順に並び替える
-  //   const sortRanking = () => {
-  //     const newRanking = [...ranking];
-  //     newRanking.sort((a, b) => a.score - b.score);
-  //     setRanking(newRanking);
-  //   };
+  const [ranking, setRanking] = useState([]);
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
+    const chachedData = localStorage.getItem("rankingData");
+    if (chachedData) setRanking(JSON.parse(chachedData));
+
     const res = await fetch("/api/getRanking");
     const data = await res.json();
     console.log("data");
@@ -30,7 +21,7 @@ export default function Home() {
       name: item.name,
       score: item.score,
     }));
-
+    localStorage.setItem("rankingData", JSON.stringify(newRanking));
     setRanking(newRanking);
   };
 
@@ -53,14 +44,16 @@ export default function Home() {
       <Sideber />
       <main>
         <div className={global.container}>
-          {ranking.length == 0 ? (
-            <p>ランキングデータ取得中･･･</p>
-          ) : (
-            <p>ランキングデータ</p>
-          )}
+          <span className="text-xl mt-6">
+            {ranking.length == 0 ? (
+              <p>ランキングデータ取得中･･･</p>
+            ) : (
+              <p>ランキングデータ</p>
+            )}
+          </span>
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
-              <li key={index} className="border-2">
+              <li key={index} className="border-2 p-2 rounded-xl my-4">
                 <div className="">{index + 1}位</div>
                 <div id="rankContainer" className="">
                   <span className="">{item.name}さん: </span>

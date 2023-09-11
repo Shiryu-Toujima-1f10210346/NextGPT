@@ -9,18 +9,7 @@ import { get } from "http";
 import Modal from "react-modal";
 import { Container } from "@mui/material";
 import { serialize } from "v8";
-
-const customStyles = {
-  content: {
-    top: "20%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: "40%",
-  },
-};
+import { TwitterShareButton, TwitterIcon } from "react-share";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
@@ -90,6 +79,9 @@ export default function Home() {
     if (!canRegister) {
       console.log("canRegister:" + canRegister);
     }
+    if (userScore == 0) {
+      setCanRegister(false);
+    }
   };
 
   const registerRanking = async () => {
@@ -104,6 +96,8 @@ export default function Home() {
     const data = await res.json();
     console.log(data);
     setCanRegister(false);
+    setWin(false);
+    window.location.href = "/rank";
   };
 
   useEffect(() => {
@@ -208,6 +202,22 @@ export default function Home() {
     }
   }
 
+  const shareURL = "Jissyu-Example.com";
+  const customStyles = {
+    content: {
+      marginTop: "20%",
+      top: "20%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-40%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "40%",
+      borderRight: "solid 8px #f79999",
+      borderBottom: "solid 8px #f79999",
+      borderRadius: "15px",
+    },
+  };
   return (
     <div>
       <Head>
@@ -235,23 +245,31 @@ export default function Home() {
               onClick={() => {
                 setCanRegister(false);
                 setWin(false);
-                //遷移
-                window.location.href = "/game";
+                //クエリの初期化
+                router.push("/game");
                 console.log("canRegister:" + canRegister);
               }}
             >
-              非登録
+              登録しない
             </button>
             <div className={canRegister ? "" : "hidden"}>
-              <p>名前を入力してください</p>
               <input
                 type="text"
                 className="border-2"
-                placeholder="KEN"
+                placeholder="名前を入力してください"
                 onChange={(e) => setUserName(e.target.value)}
               />
               <button onClick={() => registerRanking()}>登録</button>
             </div>
+            <TwitterShareButton
+              url={shareURL}
+              title={`${userScore}点を獲得しました！\n `}
+              hashtags={["INIADFES", "JissyuTeam5"]}
+              className="mt-4 flex items-center"
+            >
+              <TwitterIcon size={40} round={true} />
+              <span>結果をシェアする</span>
+            </TwitterShareButton>
           </div>
         </Modal>
         <div
@@ -263,6 +281,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
+              lg:p-12 lg:m-4
               left 
               text-center
               border-2 border-blue-500 rounded-xl border-solid
@@ -270,7 +289,10 @@ export default function Home() {
             >
               <div
                 id="title"
-                className="text-2xl lg:text-3xl font-bold"
+                className="
+                text-2xl lg:text-3xl font-bold
+                lg:mb-8 mb-4
+                "
                 style={{ color: win ? "red" : "" }}
               >
                 {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
@@ -300,11 +322,26 @@ export default function Home() {
                   />
                 </div>
               </div> */}
-              <p id="odai" className="text-lg">
-                お題:{odai} NGワード:{NG.join(",")}
+              <p
+                id="odai"
+                className="
+              lg:text-4xl text-2xl
+              lg:mb-4 mb-2
+              "
+              >
+                お題:{odai}
               </p>
-              <p id="score" className="text-lg">
-                スコア:{userScore}点
+              <p
+                id="odai"
+                className="
+              lg:text-2xl text-xl
+              lg:mb-4 mb-2
+              "
+              >
+                NGワード:{NG.join(",")}
+              </p>
+              <p id="score" className="lg:text-2xl text-xl">
+                {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
               </p>
 
               <p id="alert" className="text-xl mb-4">

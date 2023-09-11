@@ -4,8 +4,10 @@ import Sideber from "../../components/Sidebar";
 import Head from "next/head";
 import global from "../../styles/global.module.css";
 import style from "./index.module.css";
+import { useRouter } from "next/router";
 
 export default function index() {
+  const router = useRouter();
   const [odai, setOdai] = useState([
     /*{ odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },*/
   ]);
@@ -22,28 +24,42 @@ export default function index() {
   }*/
 
   const fetchOdaiList = async () => {
+    const chachedData = localStorage.getItem("odaiList");
+    if (chachedData) setOdai(JSON.parse(chachedData));
     const res = await fetch("/api/getOdaiList");
     const data = await res.json();
     console.table(data);
-    const OdaiList = data.map((item) => ({
-      id: item.id,
-      odai: item.odai,
-      ng: item.ng,
-      limit: item.limit,
-      like: item.like,
-      dislike: item.dislike,
-      score: item.score,
-      official: item.official,
-    }));
+    const OdaiList = data.map(
+      (item: {
+        id: number;
+        odai: string;
+        ng: string[];
+        limit: number;
+        like: number;
+        dislike: number;
+        score: number;
+        official: boolean;
+      }) => ({
+        id: item.id,
+        odai: item.odai,
+        ng: item.ng,
+        limit: item.limit,
+        like: item.like,
+        dislike: item.dislike,
+        score: item.score,
+        official: item.official,
+      })
+    );
+    localStorage.setItem("odaiList", JSON.stringify(OdaiList));
     setOdai(OdaiList);
   };
 
-  //1分ごとにランキングデータを取得する
+  //2分ごとにランキングデータを取得する
   useEffect(() => {
     fetchOdaiList();
     const interval = setInterval(() => {
       fetchOdaiList();
-    }, 104000);
+    }, 120000);
     return () => clearInterval(interval);
   }, []);
 
@@ -53,7 +69,10 @@ export default function index() {
 
   const playThisOdai = async (id: number) => {
     //gameページに遷移
-    window.location.href = "/game?id=" + id;
+    router.push({
+      pathname: "/game",
+      query: { id: id },
+    });
   };
 
   return (
@@ -88,10 +107,18 @@ export default function index() {
 
               <div className="flex justify-end ">
                 <button
-                  className={`${global.bluebtn} rounded-full px-8 hover:scale-110 hover:shadow-2xl duration-200 ease-in`}
+                  className="button w-40 h-16 bg-blue-500  cursor-pointer select-none
+                  active:translate-y-2  active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]
+                  active:border-b-[0px]
+                  transition-all duration-150 [box-shadow:0_10px_0_0_#1b6ff8,0_15px_0_0_#1b70f841]
+                  rounded-full  border-[1px] border-blue-400
+                  
+                "
                   onClick={() => playThisOdai(item.id)}
                 >
-                  Play
+                  <span className="flex flex-col justify-center items-center h-full text-white font-bold text-xl  hover:scale-125">
+                    Play
+                  </span>
                 </button>
               </div>
             </div>
