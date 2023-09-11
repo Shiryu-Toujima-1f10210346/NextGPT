@@ -245,19 +245,18 @@ export default function Home() {
               onClick={() => {
                 setCanRegister(false);
                 setWin(false);
-                //遷移
-                window.location.href = "/game";
+                //クエリの初期化
+                router.push("/game");
                 console.log("canRegister:" + canRegister);
               }}
             >
-              非登録
+              登録しない
             </button>
             <div className={canRegister ? "" : "hidden"}>
-              <p>名前を入力してください</p>
               <input
                 type="text"
                 className="border-2"
-                placeholder="KEN"
+                placeholder="名前を入力してください"
                 onChange={(e) => setUserName(e.target.value)}
               />
               <button onClick={() => registerRanking()}>登録</button>
@@ -266,9 +265,10 @@ export default function Home() {
               url={shareURL}
               title={`${userScore}点を獲得しました！\n `}
               hashtags={["INIADFES", "JissyuTeam5"]}
-              className="mt-4"
+              className="mt-4 flex items-center"
             >
               <TwitterIcon size={40} round={true} />
+              <span>結果をシェアする</span>
             </TwitterShareButton>
           </div>
         </Modal>
