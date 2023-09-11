@@ -6,22 +6,13 @@ import styles from "./index.module.css";
 
 export default function Home() {
   //ランキングデータの配列
-  const [ranking, setRanking] = useState([
-    // { name: "ごーた", score: 0 },
-    // { name: "ばくしんち", score: 100 },
-    // { name: "けだ", score: 200 },
-    // { name: "ふじ", score: 300 },
-  ]);
-
-  // ランキングデータを昇順に並び替える
-  //   const sortRanking = () => {
-  //     const newRanking = [...ranking];
-  //     newRanking.sort((a, b) => a.score - b.score);
-  //     setRanking(newRanking);
-  //   };
+  const [ranking, setRanking] = useState([]);
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
+    const chachedData = localStorage.getItem("rankingData");
+    if (chachedData) setRanking(JSON.parse(chachedData));
+
     const res = await fetch("/api/getRanking");
     const data = await res.json();
     console.log("data");
@@ -30,7 +21,7 @@ export default function Home() {
       name: item.name,
       score: item.score,
     }));
-
+    localStorage.setItem("rankingData", JSON.stringify(newRanking));
     setRanking(newRanking);
   };
 

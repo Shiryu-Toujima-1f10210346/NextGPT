@@ -4,8 +4,10 @@ import Sideber from "../../components/Sidebar";
 import Head from "next/head";
 import global from "../../styles/global.module.css";
 import style from "./index.module.css";
+import { useRouter } from "next/router";
 
 export default function index() {
+  const router = useRouter();
   const [odai, setOdai] = useState([
     /*{ odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },*/
   ]);
@@ -22,28 +24,42 @@ export default function index() {
   }*/
 
   const fetchOdaiList = async () => {
+    const chachedData = localStorage.getItem("odaiList");
+    if (chachedData) setOdai(JSON.parse(chachedData));
     const res = await fetch("/api/getOdaiList");
     const data = await res.json();
     console.table(data);
-    const OdaiList = data.map((item) => ({
-      id: item.id,
-      odai: item.odai,
-      ng: item.ng,
-      limit: item.limit,
-      like: item.like,
-      dislike: item.dislike,
-      score: item.score,
-      official: item.official,
-    }));
+    const OdaiList = data.map(
+      (item: {
+        id: number;
+        odai: string;
+        ng: string[];
+        limit: number;
+        like: number;
+        dislike: number;
+        score: number;
+        official: boolean;
+      }) => ({
+        id: item.id,
+        odai: item.odai,
+        ng: item.ng,
+        limit: item.limit,
+        like: item.like,
+        dislike: item.dislike,
+        score: item.score,
+        official: item.official,
+      })
+    );
+    localStorage.setItem("odaiList", JSON.stringify(OdaiList));
     setOdai(OdaiList);
   };
 
-  //1分ごとにランキングデータを取得する
+  //2分ごとにランキングデータを取得する
   useEffect(() => {
     fetchOdaiList();
     const interval = setInterval(() => {
       fetchOdaiList();
-    }, 104000);
+    }, 120000);
     return () => clearInterval(interval);
   }, []);
 
@@ -53,7 +69,10 @@ export default function index() {
 
   const playThisOdai = async (id: number) => {
     //gameページに遷移
-    window.location.href = "/game?id=" + id;
+    router.push({
+      pathname: "/game",
+      query: { id: id },
+    });
   };
 
   return (
