@@ -18,9 +18,12 @@ function Sidebar() {
           return (
             <div className="">
               <li
+                onClick={() => {
+                  router.push(val.path);
+                }}
                 key={key}
                 className={`md:m-4 lg:m-4 
-                object-center 
+                object-center   
                 flex flex-row justify-center items-center 
                 lg:justify-around lg:text-xl
                 text-gray-800 
@@ -31,16 +34,14 @@ function Sidebar() {
                     : "hover:bg-gray-200 "
                 }`}
               >
-                <Link href={val.path}>
-                  <div className={styles.icon}>
-                    {/* urlとval.idが一緒なら */}
-                    {router.pathname == val.path ? val.selected : val.icon}
-                  </div>
-                </Link>
-                {router.pathname == val.path ? (
-                  ""
-                ) : (
+                <div className={styles.icon}>
+                  {/* urlとval.idが一緒なら */}
+                  {router.pathname == val.path ? val.selected : val.icon}
+                </div>
+                {router.pathname != val.path ? (
                   <div className={`${styles.title} ml-4`}>{val.title}</div>
+                ) : (
+                  ""
                 )}
               </li>
             </div>
