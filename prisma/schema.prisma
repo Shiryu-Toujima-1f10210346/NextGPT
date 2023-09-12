@@ -11,7 +11,7 @@ datasource db {
  
 model Rank {
   id        Int      @id @default(autoincrement())
-  name      String  
+  name      String   
   score     Int
   createdAt DateTime @default(now())
 }

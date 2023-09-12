@@ -256,7 +256,8 @@ export default function Home() {
               <input
                 type="text"
                 className="border-2"
-                placeholder="名前を入力してください"
+                placeholder="名前を入力 (10文字以内)"
+                maxLength={10}
                 onChange={(e) => setUserName(e.target.value)}
               />
               <button onClick={() => registerRanking()}>登録</button>
@@ -275,7 +276,7 @@ export default function Home() {
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
-         border-red-800 border-2 rounded-xl border-solid lg:mt-16
+          border-2 rounded-xl border-solid lg:mt-16
          "
         >
           <div className={styles.left}>
@@ -284,14 +285,13 @@ export default function Home() {
               lg:p-12 lg:m-4
               left 
               text-center
-              border-2 border-blue-500 rounded-xl border-solid
               "
             >
               <div
                 id="title"
                 className="
                 text-2xl lg:text-3xl font-bold
-                lg:mb-8 mb-4
+                lg:mb-8 
                 "
                 style={{ color: win ? "red" : "" }}
               >
@@ -354,8 +354,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="border-2 border-black text-center
-        "
+                  className="border-2 border-gray-600 text-center rounded-full"
                 />
                 <input
                   type="submit"
@@ -366,6 +365,16 @@ export default function Home() {
                   }
                 />
               </form>
+              <p
+                className="
+            border border-gray-800 border-2 
+            shadow-xl rounded-xl 
+            my-4 mx-16
+            text-xl font-bold text-gray-800 text-center lg:hidden
+            "
+              >
+                会話履歴
+              </p>
               <div>
                 {result.length > 0 && (
                   <p
@@ -407,17 +416,17 @@ export default function Home() {
           </div>{" "}
           {/* left */}
           <div className={styles.resultContainer} id="right">
-            <div className={styles.result}>
-              <p
-                className="
+            <p
+              className="
             border border-gray-800 border-2 
             shadow-xl rounded-xl 
-            my-4 mx-16
-            text-xl font-bold text-gray-800 text-center
+            my-4 mx-16 py-4
+            text-2xl font-bold text-gray-800 text-center hidden lg:block 
             "
-              >
-                会話履歴
-              </p>
+            >
+              会話履歴
+            </p>
+            <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
               {paragraphs}
               {result.map((fact, index) => (

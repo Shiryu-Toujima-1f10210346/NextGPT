@@ -14,13 +14,7 @@ export const SidebarData = [
     selected: <HomeSharpIcon style={{ color: "white" }} />,
     path: "/",
   },
-  {
-    id: "game",
-    title: "ゲーム",
-    icon: <SportsEsportsSharpIcon />,
-    selected: <SportsEsportsSharpIcon style={{ color: "white" }} />,
-    path: "/game",
-  },
+
   {
     id: "rank",
     title: "ランキング",
@@ -28,7 +22,13 @@ export const SidebarData = [
     selected: <EmojiEventsSharpIcon style={{ color: "white" }} />,
     path: "/rank",
   },
-
+  {
+    id: "game",
+    title: "ゲーム",
+    icon: <SportsEsportsSharpIcon />,
+    selected: <SportsEsportsSharpIcon style={{ color: "white" }} />,
+    path: "/game",
+  },
   {
     id: "debug",
     title: "デバッグ",
