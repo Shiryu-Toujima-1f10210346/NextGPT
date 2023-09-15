@@ -405,17 +405,7 @@ export default function Home() {
               >
                 会話履歴
               </p>
-              <button
-                onClick={() => {
-                  localStorage.setItem(
-                    "exampleHide",
-                    JSON.stringify(!exampleHide)
-                  );
-                  setExampleHide(!exampleHide);
-                }}
-              >
-                {exampleHide ? "説明を表示" : "説明を非表示"}
-              </button>
+
               {/* <div>
                 {result.length > 0 && (
                   <p
@@ -470,84 +460,103 @@ export default function Home() {
             </p>
             <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
-              {example.map((example, key) => (
-                <div key={key} className={exampleHide ? "hidden" : ""}>
-                  <div className="my-4">
-                    <div
-                      className={`flex flex-row-reverse ${
-                        example.userInput.length == 0 ? "hidden" : ""
-                      }`}
-                    >
-                      <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
-                        あなた
+              <div>
+                {example.map((example, key) => (
+                  <div key={key} className={exampleHide ? "hidden" : ""}>
+                    <div className="my-4">
+                      <div
+                        className={`flex flex-row-reverse ${
+                          example.userInput.length == 0 ? "hidden" : ""
+                        }`}
+                      >
+                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
+                          あなた
+                        </div>
+                      </div>
+                      <div
+                        className={`flex flex-row-reverse ${
+                          example.userInput.length == 0 ? "hidden" : ""
+                        }`}
+                      >
+                        <div className="relative bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
+                          <p
+                            className={`text-xl lg:text-3xl text-left text-white ${
+                              example.userInput.length > 20
+                                ? "text-2xl"
+                                : "mx-10"
+                            } `}
+                          >
+                            {example.userInput}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      className={`flex flex-row-reverse ${
-                        example.userInput.length == 0 ? "hidden" : ""
-                      }`}
-                    >
-                      <div className="relative bg-blue-500 p-4 rounded-full shadow-xl  border-r-4 border-b-4 mt-1 border-gray-400">
-                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-400"></div>
-                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
-                        <p
-                          className={`text-xl lg:text-3xl text-left text-white ${
-                            example.userInput.length > 20 ? "text-2xl" : "mx-10"
-                          } `}
-                        >
-                          {example.userInput}
-                        </p>
+                    <div className="my-4">
+                      <div
+                        className={`flex ${
+                          example.gptOutput.length == 0 ? "hidden" : ""
+                        }`}
+                      >
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
+                          GPTくん
+                        </div>
+                      </div>
+                      <div
+                        className={`flex ${
+                          example.gptOutput.length == 0 ? "hidden" : ""
+                        }`}
+                      >
+                        <div className="relative bg-gray-100 p-4 rounded-2xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 -z-10"></div>
+                          <p
+                            className={`text-gray-800 text-xl lg:text-3xl text-left ${
+                              example.gptOutput.length > 20
+                                ? "text-2xl"
+                                : "mx-10"
+                            } `}
+                          >
+                            {example.gptOutput}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="my-4">
-                    <div
-                      className={`flex ${
-                        example.gptOutput.length == 0 ? "hidden" : ""
-                      }`}
-                    >
-                      <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
-                        GPTくん
-                      </div>
-                    </div>
-                    <div
-                      className={`flex ${
-                        example.gptOutput.length == 0 ? "hidden" : ""
-                      }`}
-                    >
-                      <div className="relative bg-gray-100 p-4 rounded-full shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
-                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-400"></div>
-                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-                        <p
-                          className={`text-gray-800 text-xl lg:text-3xl text-left ${
-                            example.gptOutput.length > 20 ? "text-2xl" : "mx-10"
-                          } `}
-                        >
-                          {example.gptOutput}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                ))}
+                <div className="flex justify-center">
+                  <button
+                    className="bg-gray-200 rounded-full px-4 py-2 text-gray-8"
+                    onClick={() => {
+                      localStorage.setItem(
+                        "exampleHide",
+                        JSON.stringify(!exampleHide)
+                      );
+                      setExampleHide(!exampleHide);
+                    }}
+                  >
+                    {exampleHide ? "説明を表示" : "説明を非表示"}
+                  </button>
                 </div>
-              ))}
-
+              </div>
               {/* 会話履歴 */}
               {result.map((result, key) => (
                 <div key={key}>
                   {result.userInput && result[key] != "" && (
                     <div>
                       <div className="flex flex-row-reverse">
-                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
                           あなた
                         </div>
                       </div>
                       <div className="flex flex-row-reverse ">
-                        <div className="relative bg-blue-500 p-4 rounded-full shadow-xl  border-r-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-400"></div>
-                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+                        <div className="relative bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
-                            className={`text-xl lg:text-3xl text-left text-white ${
-                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                            className={`text-2xl lg:text-3xl text-left text-white ${
+                              result[key]?.length > 20 ? "text-xl" : "mx-10"
                             } `}
                           >
                             {result.userInput}
@@ -559,13 +568,13 @@ export default function Home() {
                   {result.gptOutput && result[key] != "" && (
                     <div>
                       <div className="flex">
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
                           GPTくん
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-400"></div>
+                        <div className="relative bg-gray-100 p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
