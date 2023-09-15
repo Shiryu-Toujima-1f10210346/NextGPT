@@ -248,12 +248,7 @@ export default function Home() {
             </div>
           </div>
         </Modal>
-        <Modal
-          isOpen={win}
-          ariaHideApp={false}
-          style={customStyles}
-          className="opacity-0 transition-opacity duration-500"
-        >
+        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
           <div className="flex flex-col items-center">
             <p className="text-3xl font-bold">ランキング入り！</p>
             <p className="text-2xl font-bold">スコア:{userScore}点</p>
