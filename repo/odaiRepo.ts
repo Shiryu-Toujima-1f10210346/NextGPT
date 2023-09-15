@@ -9,36 +9,48 @@ export const addOdai = async (
   score: number,
   official: boolean
 ) => {
-  const odai = await prisma.odai.create({
-    data: {
-      odai: newOdai,
-      ng: ng,
-      limit: limit,
-      score: score,
-      like: 0,
-      dislike: 0,
-      official: official,
-    },
-  });
-  return odai;
+  try {
+    const odai = await prisma.odai.create({
+      data: {
+        odai: newOdai,
+        ng: ng,
+        limit: limit,
+        score: score,
+        like: 0,
+        dislike: 0,
+        official: official,
+      },
+    });
+    return odai;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getSpecificOdai = async (id: number) => {
-  const odai = await prisma.odai.findUnique({
-    where: {
-      id: id,
-    },
-  });
-  return odai;
+  try {
+    const odai = await prisma.odai.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return odai;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getOdaiList = async () => {
-  const odai = await prisma.odai.findMany({
-    orderBy: {
-      id: "desc",
-    },
-  });
-  return odai;
+  try {
+    const odai = await prisma.odai.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    });
+    return odai;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const updateOdai = async (
@@ -47,15 +59,19 @@ export const updateOdai = async (
   limit: number,
   id: number
 ) => {
-  const odai = await prisma.odai.update({
-    where: {
-      id: id,
-    },
-    data: {
-      odai: newOdai,
-      ng: ng,
-      limit: limit,
-    },
-  });
-  return odai;
+  try {
+    const odai = await prisma.odai.update({
+      where: {
+        id: id,
+      },
+      data: {
+        odai: newOdai,
+        ng: ng,
+        limit: limit,
+      },
+    });
+    return odai;
+  } catch (error) {
+    console.error(error);
+  }
 };

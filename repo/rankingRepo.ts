@@ -3,22 +3,30 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const addRanking = async (userName: string, userScore: number) => {
-  const ranking = await prisma.rank.create({
-    data: {
-      name: userName,
-      score: userScore,
-    },
-  });
-  return ranking;
+  try {
+    const ranking = await prisma.rank.create({
+      data: {
+        name: userName,
+        score: userScore,
+      },
+    });
+    return ranking;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getRanking = async () => {
-  const ranking = await prisma.rank.findMany({
-    orderBy: {
-      score: "desc",
-    },
-  });
-  return ranking;
+  try {
+    const ranking = await prisma.rank.findMany({
+      orderBy: {
+        score: "desc",
+      },
+    });
+    return ranking;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const updateRanking = async (
@@ -26,14 +34,18 @@ export const updateRanking = async (
   userScore: number,
   id: number
 ) => {
-  const ranking = await prisma.rank.update({
-    where: {
-      id: id,
-    },
-    data: {
-      name: userName,
-      score: userScore,
-    },
-  });
-  return ranking;
+  try {
+    const ranking = await prisma.rank.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: userName,
+        score: userScore,
+      },
+    });
+    return ranking;
+  } catch (error) {
+    console.error(error);
+  }
 };
