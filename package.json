@@ -22,6 +22,7 @@
     "@vercel/postgres": "^0.4.1",
     "dicer": "^0.3.1",
     "framer-motion": "^10.16.4",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "^13.1.1",
     "openai": "^3.3.0",
