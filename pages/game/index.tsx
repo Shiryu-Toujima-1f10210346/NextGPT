@@ -24,7 +24,7 @@ export default function Home() {
   const [userScore, setUserScore] = useState<number>(700);
   const [count, setCount] = useState<number>(0);
   const paragraphs = [];
-
+  const n = 2; // 生成する<p>要素の数
   const router = useRouter();
 
   const { id } = router.query;
@@ -100,9 +100,9 @@ export default function Home() {
     }
   }, [id]);
 
-  const n = 0; // 生成する<p>要素の数
-
   for (let i = 0; i < n; i++) {
+    result.push({ userInput: "ユーザーの入力", gptOutput: "GPTの出力" });
+    /*
     paragraphs.push(
       <div>
         <div key={i} id="user">
@@ -123,6 +123,7 @@ export default function Home() {
         </div>
       </div>
     );
+    */
   }
 
   async function onSubmit(event) {
@@ -434,13 +435,13 @@ export default function Home() {
                   {result.userInput && result[key] != "" && (
                     <div>
                       <div className="flex flex-row-reverse">
-                        <div className="text-xl lg:text-3xl text-right mx-4 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
                           あなた
                         </div>
                       </div>
                       <div className="flex flex-row-reverse ">
-                        <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
-                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+                        <div className="relative bg-blue-500 p-4 rounded-full shadow-xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-xl lg:text-3xl text-left text-white ${
@@ -456,13 +457,13 @@ export default function Home() {
                   {result.gptOutput && result[key] != "" && (
                     <div>
                       <div className="flex">
-                        <div className="text-xl lg:text-3xl text-left mx-4 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
                           GPTくん
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+                        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-400"></div>
                           <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
