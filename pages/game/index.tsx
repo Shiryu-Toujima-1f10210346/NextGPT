@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import global from "../../styles/global.module.css";
+import { useLocalStorage } from "react-use";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -24,12 +25,57 @@ export default function Home() {
   const [ranking, setRanking] = useState([]);
   const [userScore, setUserScore] = useState<number>(700);
   const [count, setCount] = useState<number>(0);
-  const paragraphs = [];
-  const n = 2; // 生成する<p>要素の数
+  const [exampleHide, setExampleHide] = useLocalStorage("exampleHide", false);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      setExampleHide(exampleHide);
+    }
+  }, [exampleHide, isClient]);
+
   const router = useRouter();
+  const [example, setExample] = useState([
+    {
+      userInput: "",
+      gptOutput: "このサイトはChatGPTとお題当てゲームができるサイトです",
+    },
+    {
+      userInput: "",
+      gptOutput:
+        "ルール お題の単語とNGワードに近い言葉を使わずにGPTからお題の単語を引き出そう！",
+    },
+    {
+      userInput: "",
+      gptOutput: "例) お題: 寿司",
+    },
+    {
+      userInput: "",
+      gptOutput: "NGワード: 寿司 回転 シャリ ネタ",
+    },
+    {
+      userInput:
+        "日本の料理で､皿に盛った､酢飯の上に､生魚や野菜などをのせたもの",
+      gptOutput: "",
+    },
+    {
+      userInput: "",
+      gptOutput: "それは寿司ですか？",
+    },
+    {
+      userInput: "正解！これでクリアです！",
+      gptOutput: "",
+    },
+    {
+      userInput: "",
+      gptOutput: "さあ君も色々なお題にチャレンジしてみよう！",
+    },
+  ]);
 
-  const { id } = router.query;
-
+  const id = router.query.id;
   const getSpecificOdai = async () => {
     const res = await fetch(`/api/getSpecificOdai?id=${id}`, {
       method: "GET",
@@ -95,37 +141,24 @@ export default function Home() {
     window.location.href = "/rank";
   };
 
+  const submitResult = async () => {
+    console.log("対戦結果を送信します");
+    const res = await fetch("/api/addResult", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(result),
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
   useEffect(() => {
     if (id) {
       getSpecificOdai();
     }
   }, [id]);
-
-  for (let i = 0; i < n; i++) {
-    result.push({ userInput: "ユーザーの入力", gptOutput: "GPTの出力" });
-    /*
-    paragraphs.push(
-      <div>
-        <div key={i} id="user">
-          <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
-            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
-            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
-            <p className="text-white text-xl lg:text-3xl text-right">
-              ここにユーザーのテキスト
-            </p>
-          </div>
-          <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
-            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
-            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-            <p className="text-gray-800 text-xl lg:text-3xl text-left">
-              ここにGPTのテキスト
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-    */
-  }
 
   async function onSubmit(event) {
     //エラー処理
@@ -369,12 +402,15 @@ export default function Home() {
                 className="
             border-gray-800 border-2 
             shadow-xl rounded-xl 
-            my-4 mx-16
+            my-4 mx-16 px-4
             text-xl font-bold text-gray-800 text-center lg:hidden
             "
               >
                 会話履歴
               </p>
+              <button onClick={() => setExampleHide(!exampleHide)}>
+                {exampleHide ? "説明を表示" : "説明を非表示"}
+              </button>
               {/* <div>
                 {result.length > 0 && (
                   <p
@@ -429,7 +465,67 @@ export default function Home() {
             </p>
             <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
-              {paragraphs}
+              {example.map((example, key) => (
+                <div key={key} className={exampleHide ? "hidden" : ""}>
+                  <div className="my-4">
+                    <div
+                      className={`flex flex-row-reverse ${
+                        example.userInput.length == 0 ? "hidden" : ""
+                      }`}
+                    >
+                      <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
+                        あなた
+                      </div>
+                    </div>
+                    <div
+                      className={`flex flex-row-reverse ${
+                        example.userInput.length == 0 ? "hidden" : ""
+                      }`}
+                    >
+                      <div className="relative bg-blue-500 p-4 rounded-full shadow-xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-400"></div>
+                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+                        <p
+                          className={`text-xl lg:text-3xl text-left text-white ${
+                            example.userInput.length > 20 ? "text-2xl" : "mx-10"
+                          } `}
+                        >
+                          {example.userInput}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-4">
+                    <div
+                      className={`flex ${
+                        example.gptOutput.length == 0 ? "hidden" : ""
+                      }`}
+                    >
+                      <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
+                        GPTくん
+                      </div>
+                    </div>
+                    <div
+                      className={`flex ${
+                        example.gptOutput.length == 0 ? "hidden" : ""
+                      }`}
+                    >
+                      <div className="relative bg-gray-100 p-4 rounded-full shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-400"></div>
+                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                        <p
+                          className={`text-gray-800 text-xl lg:text-3xl text-left ${
+                            example.gptOutput.length > 20 ? "text-2xl" : "mx-10"
+                          } `}
+                        >
+                          {example.gptOutput}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
               {/* 会話履歴 */}
               {result.map((result, key) => (
                 <div key={key}>
