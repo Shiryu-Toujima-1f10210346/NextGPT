@@ -3,7 +3,6 @@ import { SidebarData } from "./SidebarData";
 import styles from "./Sidebar.module.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Link from "next/link";
 // css
 
 function Sidebar() {
@@ -11,12 +10,19 @@ function Sidebar() {
   return (
     <div>
       <Head>
+        {/* router.pathでSidebarDataから検索*/}
+        {SidebarData.map((val, key) => {
+          if (router.pathname == val.path) {
+            return <title>わからせンクラテス！{val.title}</title>;
+          }
+        })}
+        <link rel="icon" href="/Ncrates.png" />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
       <ul className={styles.sidebar}>
         {SidebarData.map((val, key) => {
           return (
-            <div className="">
+            <div className="" key={key}>
               <li
                 onClick={() => {
                   router.push(val.path);
@@ -30,7 +36,7 @@ function Sidebar() {
                 lg:p-6 shadow-md 
                 hover:shadow-2xl py-4 rounded-full ${
                   router.pathname == val.path
-                    ? "bg-gray-900 text-white scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0"
+                    ? "bg-gray-900 text-white scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0 transition ease-in-out duration-500"
                     : "hover:bg-gray-200 "
                 }`}
               >

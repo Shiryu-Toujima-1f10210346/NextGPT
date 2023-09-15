@@ -20,6 +20,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@vercel/postgres": "^0.4.1",
+    "framer-motion": "^10.16.4",
     "next": "^13.1.1",
     "openai": "^3.3.0",
     "prisma": "^5.1.1",

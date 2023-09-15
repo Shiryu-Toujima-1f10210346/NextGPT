@@ -62,11 +62,6 @@ function debug() {
 
   return (
     <div>
-      <Head>
-        <title>デバッグ</title>
-        <link rel="icon" href="/gpt.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sidebar />
       <main>
         <div className={global.container}>

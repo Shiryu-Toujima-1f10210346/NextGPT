@@ -1,19 +1,17 @@
 import React from "react";
 import Sideber from "../components/Sidebar";
-import Head from "next/head";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
 function index() {
   return (
     <div>
-      <Head>
-        <title>ホーム</title>
-        <link rel="icon" href="/gpt.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main>
         <div className={global.container}>
+          <img src="/logo.png" alt="logo" className={styles.logo} />
+          <p className="text-center font-serif text-4xl font-bold">
+            わからせンクラテス
+          </p>
           <div className={styles.text}>
             <p>このサイトはGPTとお題当てゲームができるサイトです</p>
             <p>

@@ -1,34 +1,28 @@
-import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Sideber from "../../components/Sidebar";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { get } from "http";
 import Modal from "react-modal";
-import { Container } from "@mui/material";
-import { serialize } from "v8";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 
 export default function Home() {
-  const [userInput, setUserInput] = useState("");
-  const [result, setResult] = useState<string[]>([]); // add type annotation for result state
-  const [limit, setLimit] = useState(10);
-  const [odai, setOdai] = useState("バナナ");
-  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
-  const [alert, setAlert] = useState("");
-  const [thiking, setThiking] = useState(false);
-  const [debug, setDebug] = useState(false);
-  const [win, setWin] = useState(false);
+  const [userInput, setUserInput] = useState<string>("");
+  const [result, setResult] = useState([]);
+  const [limit, setLimit] = useState<number>(10);
+  const [odai, setOdai] = useState<string>("バナナ");
+  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
+  const [alert, setAlert] = useState<string>("");
+  const [thiking, setThiking] = useState<boolean>(false);
+  const [debug, setDebug] = useState<boolean>(false);
+  const [win, setWin] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
-  const [canRegister, setCanRegister] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [canRegister, setCanRegister] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("");
   const [ranking, setRanking] = useState([]);
-  const [userScore, setUserScore] = useState(700);
-  const [count, setCount] = useState(0);
-
-  const n = 10; // 生成する<p>要素の数
+  const [userScore, setUserScore] = useState<number>(700);
+  const [count, setCount] = useState<number>(0);
   const paragraphs = [];
 
   const router = useRouter();
@@ -106,19 +100,28 @@ export default function Home() {
     }
   }, [id]);
 
+  const n = 0; // 生成する<p>要素の数
+
   for (let i = 0; i < n; i++) {
     paragraphs.push(
-      <p
-        key={i}
-        className="
-          border border-gray-800 border-2 
-          shadow-xl rounded-xl 
-          p-6 m-4
-          text-xl font-bold text-gray-800
-        "
-      >
-        デバッグ用会話ダミー
-      </p>
+      <div>
+        <div key={i} id="user">
+          <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+            <p className="text-white text-xl lg:text-3xl text-right">
+              ここにユーザーのテキスト
+            </p>
+          </div>
+          <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+            <p className="text-gray-800 text-xl lg:text-3xl text-left">
+              ここにGPTのテキスト
+            </p>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -171,21 +174,18 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.includes(odai)) {
         fetchRanking();
+
         setInterval(() => {
           setWin(true);
-        }, 3000);
+        }, 2000);
       } else {
         setCount(count + 1);
         setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
       }
 
-      // setResult(data.result);
-      //dataの中身をわかりやすく表示
-      setResult([
-        ...result,
-        "あなた:" + event.target.elements.user.value,
-        "GPT:" + data.result,
-      ]);
+      //userの入力をuserというkeyでresultに追加､GPTの回答をGPTというkeyでresultに追加
+      setResult([...result, { userInput: userInput, gptOutput: data.result }]);
+      console.table(result);
       setLimit(limit - 1);
       setThiking(false);
       //0.5秒後にスクロール､その要素の背景を変える
@@ -220,14 +220,40 @@ export default function Home() {
   };
   return (
     <div>
-      <Head>
-        <title>ほげほげ</title>
-        <link rel="icon" href="/dog.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main className={styles.main}>
-        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
+        <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
+          <button onClick={() => setDebug(!debug)}>閉じる</button>
+          <div className={`${debug ? "" : "hidden"}`}>
+            <div>
+              <p className="m-2">デバッグ用:お題を設定</p>
+              <input
+                type="text"
+                placeholder="お題を入力してください"
+                value={odai}
+                onChange={(e) => setOdai(e.target.value)}
+                className="border-2 border-black text-center"
+              />
+            </div>
+
+            <div>
+              <p className="m-2">デバッグ用:NGワードを設定</p>
+              <input
+                type="text"
+                placeholder="NGワードを入力してください"
+                value={NG}
+                onChange={(e) => setNG([e.target.value])}
+                className="border-2 border-black text-center"
+              />
+            </div>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={win}
+          ariaHideApp={false}
+          style={customStyles}
+          className="opacity-0 transition-opacity duration-500"
+        >
           <div className="flex flex-col items-center">
             <p className="text-3xl font-bold">ランキング入り！</p>
             <p className="text-2xl font-bold">スコア:{userScore}点</p>
@@ -243,10 +269,8 @@ export default function Home() {
             </button>
             <button
               onClick={() => {
-                setCanRegister(false);
-                setWin(false);
                 //クエリの初期化
-                router.push("/game");
+                window.location.href = "/game";
                 console.log("canRegister:" + canRegister);
               }}
             >
@@ -297,31 +321,9 @@ export default function Home() {
               >
                 {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
                 <button onClick={() => setWin(!win)}>@</button>
+                <button onClick={() => setDebug(!debug)}>デバ</button>
               </div>
 
-              {/* <div className={`flex flex-row ${debug ? "hidden" : ""}`}>
-                <div>
-                  <p className="m-2">デバッグ用:お題を設定</p>
-                  <input
-                    type="text"
-                    placeholder="お題を入力してください"
-                    value={odai}
-                    onChange={(e) => setOdai(e.target.value)}
-                    className="border-2 border-black text-center"
-                  />
-                </div>
-
-                <div>
-                  <p className="m-2">デバッグ用:NGワードを設定</p>
-                  <input
-                    type="text"
-                    placeholder="NGワードを入力してください"
-                    value={NG}
-                    onChange={(e) => setNG([e.target.value])}
-                    className="border-2 border-black text-center"
-                  />
-                </div>
-              </div> */}
               <p
                 id="odai"
                 className="
@@ -354,7 +356,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="border-2 border-gray-600 text-center rounded-full"
+                  className="border-2 border-gray-600 text-center rounded-full text-xl lg:text-3xl lg:w-96"
                 />
                 <input
                   type="submit"
@@ -363,11 +365,12 @@ export default function Home() {
                   disabled={
                     limit <= 0 || userInput.length === 0 || thiking || win
                   }
+                  className="text-center rounded-full lg:text-3xl lg:w-96"
                 />
               </form>
               <p
                 className="
-            border border-gray-800 border-2 
+            border-gray-800 border-2 
             shadow-xl rounded-xl 
             my-4 mx-16
             text-xl font-bold text-gray-800 text-center lg:hidden
@@ -375,11 +378,11 @@ export default function Home() {
               >
                 会話履歴
               </p>
-              <div>
+              {/* <div>
                 {result.length > 0 && (
                   <p
                     className="
-          border border-gray-800 border-2 
+          border-gray-800 border-2 
           shadow-xl rounded-xl 
           lg:p-6 lg:m-4 p-2 m-2
           text-xl font-bold text-gray-800
@@ -395,7 +398,8 @@ export default function Home() {
                       : "GPTの回答"}
                   </p>
                 )}
-              </div>
+              </div> */}
+
               {/* <div
                 id="limit"
                 className="
@@ -418,7 +422,7 @@ export default function Home() {
           <div className={styles.resultContainer} id="right">
             <p
               className="
-            border border-gray-800 border-2 
+            border-gray-800 border-2 
             shadow-xl rounded-xl 
             my-4 mx-16 py-4
             text-2xl font-bold text-gray-800 text-center hidden lg:block 
@@ -429,21 +433,54 @@ export default function Home() {
             <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
               {paragraphs}
-              {result.map((fact, index) => (
-                <p
-                  key={index}
-                  className="
-            border border-gray-800 border-2 
-            shadow-xl rounded-xl 
-            p-6 m-4
-            text-xl font-bold text-gray-800
-            "
-                  style={{
-                    backgroundColor: fact.includes(odai) ? "#f79999" : "",
-                  }}
-                >
-                  {fact}
-                </p>
+              {/* 会話履歴 */}
+              {result.map((result, key) => (
+                <div key={key}>
+                  {result.userInput && result[key] != "" && (
+                    <div>
+                      <div className="flex flex-row-reverse">
+                        <div className="text-xl lg:text-3xl text-right mx-4 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
+                          あなた
+                        </div>
+                      </div>
+                      <div className="flex flex-row-reverse ">
+                        <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+                          <p
+                            className={`text-xl lg:text-3xl text-left text-white ${
+                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                            } `}
+                          >
+                            {result.userInput}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {result.gptOutput && result[key] != "" && (
+                    <div>
+                      <div className="flex">
+                        <div className="text-xl lg:text-3xl text-left mx-4 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
+                          GPTくん
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                          <p
+                            className={`text-gray-800 text-xl lg:text-3xl text-left ${
+                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                            } `}
+                          >
+                            {result.gptOutput}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
               <div ref={resultRef} />
             </div>

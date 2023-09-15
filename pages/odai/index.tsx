@@ -77,11 +77,6 @@ export default function index() {
 
   return (
     <div>
-      <Head>
-        <title>お題一覧</title>
-        <link rel="icon" href="/dog.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main className={global.container}>
         <div className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
@@ -89,7 +84,10 @@ export default function index() {
         </div>
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
-            <div className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl">
+            <div
+              className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl"
+              key={item.id}
+            >
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限回数: {item.limit}回</li>
