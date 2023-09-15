@@ -115,11 +115,6 @@ export default function Home() {
           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
           <p className="text-gray-800">ここに吹き出しのテキスト</p>
         </div>
-        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6">
-          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 "></div>
-          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-          <p className="text-gray-800">ここに吹き出しのテキスト</p>
-        </div>
       </div>
     );
   }
@@ -369,7 +364,7 @@ export default function Home() {
               </form>
               <p
                 className="
-            border border-gray-800 border-2 
+            border-gray-800 border-2 
             shadow-xl rounded-xl 
             my-4 mx-16
             text-xl font-bold text-gray-800 text-center lg:hidden
@@ -381,7 +376,7 @@ export default function Home() {
                 {result.length > 0 && (
                   <p
                     className="
-          border border-gray-800 border-2 
+          border-gray-800 border-2 
           shadow-xl rounded-xl 
           lg:p-6 lg:m-4 p-2 m-2
           text-xl font-bold text-gray-800
@@ -420,7 +415,7 @@ export default function Home() {
           <div className={styles.resultContainer} id="right">
             <p
               className="
-            border border-gray-800 border-2 
+            border-gray-800 border-2 
             shadow-xl rounded-xl 
             my-4 mx-16 py-4
             text-2xl font-bold text-gray-800 text-center hidden lg:block 
@@ -435,7 +430,7 @@ export default function Home() {
                 <p
                   key={index}
                   className="
-            border border-gray-800 border-2 
+            border-gray-800 border-2 
             shadow-xl rounded-xl 
             p-6 m-4
             text-xl font-bold text-gray-800
