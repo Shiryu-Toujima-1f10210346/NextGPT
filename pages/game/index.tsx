@@ -2,21 +2,19 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Sideber from "../../components/Sidebar";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { get } from "http";
 import Modal from "react-modal";
-import { Container } from "@mui/material";
-import { serialize } from "v8";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 
 export default function Home() {
   const [userInput, setUserInput] = useState("");
-  const [result, setResult] = useState<string[]>([]); // add type annotation for result state
+  // userInputとgptOutputというkeyを持つオブジェクトを格納する
+  const [result, setResult] = useState({ userInput: "", gptOutput: "" });
   const [limit, setLimit] = useState(10);
   const [odai, setOdai] = useState("バナナ");
-  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]); // add type annotation for NG state
+  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
   const [alert, setAlert] = useState("");
   const [thiking, setThiking] = useState(false);
   const [debug, setDebug] = useState(false);
@@ -187,13 +185,12 @@ export default function Home() {
         setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
       }
 
-      // setResult(data.result);
-      //dataの中身をわかりやすく表示
-      setResult([
-        ...result,
-        "あなた:" + event.target.elements.user.value,
-        "GPT:" + data.result,
-      ]);
+      //userの入力をuserというkeyでresultに追加､GPTの回答をGPTというkeyでresultに追加
+      setResult((prev) => ({
+        ...prev,
+        userInput: event.target.elements.user.value,
+        gptOutput: data.result,
+      }));
       setLimit(limit - 1);
       setThiking(false);
       //0.5秒後にスクロール､その要素の背景を変える
@@ -362,7 +359,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="border-2 border-gray-600 text-center rounded-full"
+                  className="border-2 border-gray-600 text-center rounded-full text-2xl lg:text-3xl lg:w-96"
                 />
                 <input
                   type="submit"
@@ -371,6 +368,7 @@ export default function Home() {
                   disabled={
                     limit <= 0 || userInput.length === 0 || thiking || win
                   }
+                  className="text-center rounded-full text-2xl lg:text-3xl lg:w-96"
                 />
               </form>
               <p
@@ -383,7 +381,7 @@ export default function Home() {
               >
                 会話履歴
               </p>
-              <div>
+              {/* <div>
                 {result.length > 0 && (
                   <p
                     className="
@@ -403,7 +401,8 @@ export default function Home() {
                       : "GPTの回答"}
                   </p>
                 )}
-              </div>
+              </div> */}
+
               {/* <div
                 id="limit"
                 className="
@@ -437,21 +436,37 @@ export default function Home() {
             <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
               {paragraphs}
-              {result.map((fact, index) => (
-                <p
-                  key={index}
-                  className="
-            border-gray-800 border-2 
-            shadow-xl rounded-xl 
-            p-6 m-4
-            text-xl font-bold text-gray-800
-            "
-                  style={{
-                    backgroundColor: fact.includes(odai) ? "#f79999" : "",
-                  }}
-                >
-                  {fact}
-                </p>
+              {Object.keys(result).map((key) => (
+                <div key={key}>
+                  {key === "userInput" && result[key] != "" && (
+                    <div>
+                      <div className="text-xl lg:text-3xl text-right">
+                        あなた
+                      </div>
+                      <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+                        <p className="text-white text-xl lg:text-3xl text-right">
+                          {result[key]}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {key === "gptOutput" && result[key] != "" && (
+                    <div>
+                      <div className="text-xl lg:text-3xl text-left">
+                        GPTくん
+                      </div>
+                      <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                        <p className="text-gray-800 text-xl lg:text-3xl text-left">
+                          {result[key]}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
               <div ref={resultRef} />
             </div>
