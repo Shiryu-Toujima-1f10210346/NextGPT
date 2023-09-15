@@ -8,6 +8,10 @@ function index() {
       <Sideber />
       <main>
         <div className={global.container}>
+          <img src="/logo.png" alt="logo" className={styles.logo} />
+          <p className="text-center font-serif text-4xl font-bold">
+            わからせンクラテス
+          </p>
           <div className={styles.text}>
             <p>このサイトはGPTとお題当てゲームができるサイトです</p>
             <p>
