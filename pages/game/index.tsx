@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Sideber from "../../components/Sidebar";
@@ -9,23 +8,21 @@ import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 
 export default function Home() {
-  const [userInput, setUserInput] = useState("");
-  // userInputとgptOutputというkeyを持つオブジェクトを格納する
+  const [userInput, setUserInput] = useState<string>("");
   const [result, setResult] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [odai, setOdai] = useState("バナナ");
+  const [limit, setLimit] = useState<number>(10);
+  const [odai, setOdai] = useState<string>("バナナ");
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
-  const [alert, setAlert] = useState("");
-  const [thiking, setThiking] = useState(false);
-  const [debug, setDebug] = useState(false);
-  const [win, setWin] = useState(false);
+  const [alert, setAlert] = useState<string>("");
+  const [thiking, setThiking] = useState<boolean>(false);
+  const [debug, setDebug] = useState<boolean>(false);
+  const [win, setWin] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
-  const [canRegister, setCanRegister] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [canRegister, setCanRegister] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("");
   const [ranking, setRanking] = useState([]);
-  const [userScore, setUserScore] = useState(700);
-  const [count, setCount] = useState(0);
-
+  const [userScore, setUserScore] = useState<number>(700);
+  const [count, setCount] = useState<number>(0);
   const paragraphs = [];
 
   const router = useRouter();
@@ -177,9 +174,10 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.includes(odai)) {
         fetchRanking();
+
         setInterval(() => {
           setWin(true);
-        }, 3000);
+        }, 2000);
       } else {
         setCount(count + 1);
         setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
@@ -224,7 +222,38 @@ export default function Home() {
     <div>
       <Sideber />
       <main className={styles.main}>
-        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
+        <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
+          <button onClick={() => setDebug(!debug)}>閉じる</button>
+          <div className={`${debug ? "" : "hidden"}`}>
+            <div>
+              <p className="m-2">デバッグ用:お題を設定</p>
+              <input
+                type="text"
+                placeholder="お題を入力してください"
+                value={odai}
+                onChange={(e) => setOdai(e.target.value)}
+                className="border-2 border-black text-center"
+              />
+            </div>
+
+            <div>
+              <p className="m-2">デバッグ用:NGワードを設定</p>
+              <input
+                type="text"
+                placeholder="NGワードを入力してください"
+                value={NG}
+                onChange={(e) => setNG([e.target.value])}
+                className="border-2 border-black text-center"
+              />
+            </div>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={win}
+          ariaHideApp={false}
+          style={customStyles}
+          className="opacity-0 transition-opacity duration-500"
+        >
           <div className="flex flex-col items-center">
             <p className="text-3xl font-bold">ランキング入り！</p>
             <p className="text-2xl font-bold">スコア:{userScore}点</p>
@@ -240,8 +269,6 @@ export default function Home() {
             </button>
             <button
               onClick={() => {
-                setCanRegister(false);
-                setWin(false);
                 //クエリの初期化
                 window.location.href = "/game";
                 console.log("canRegister:" + canRegister);
@@ -294,31 +321,9 @@ export default function Home() {
               >
                 {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
                 <button onClick={() => setWin(!win)}>@</button>
+                <button onClick={() => setDebug(!debug)}>デバ</button>
               </div>
 
-              {/* <div className={`flex flex-row ${debug ? "hidden" : ""}`}>
-                <div>
-                  <p className="m-2">デバッグ用:お題を設定</p>
-                  <input
-                    type="text"
-                    placeholder="お題を入力してください"
-                    value={odai}
-                    onChange={(e) => setOdai(e.target.value)}
-                    className="border-2 border-black text-center"
-                  />
-                </div>
-
-                <div>
-                  <p className="m-2">デバッグ用:NGワードを設定</p>
-                  <input
-                    type="text"
-                    placeholder="NGワードを入力してください"
-                    value={NG}
-                    onChange={(e) => setNG([e.target.value])}
-                    className="border-2 border-black text-center"
-                  />
-                </div>
-              </div> */}
               <p
                 id="odai"
                 className="
