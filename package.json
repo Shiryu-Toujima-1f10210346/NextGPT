@@ -35,7 +35,7 @@
     "react-native-screens": "^3.24.0",
     "react-navigation": "^4.4.4",
     "react-share": "^4.4.1",
-    "tailwind": "^2.2.0",
+    "tailwind": "^4.0.0",
     "vercel": "^24.2.4"
   },
   "engines": {
