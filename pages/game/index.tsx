@@ -109,11 +109,22 @@ export default function Home() {
 
   for (let i = 0; i < n; i++) {
     paragraphs.push(
-      <div key={i}>
-        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6">
-          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 "></div>
-          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-          <p className="text-gray-800">ここに吹き出しのテキスト</p>
+      <div>
+        <div key={i} id="user">
+          <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+            <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+            <p className="text-white text-xl lg:text-3xl text-right">
+              ここにユーザーのテキスト
+            </p>
+          </div>
+          <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
+            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+            <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+            <p className="text-gray-800 text-xl lg:text-3xl text-left">
+              ここにGPTのテキスト
+            </p>
+          </div>
         </div>
       </div>
     );
