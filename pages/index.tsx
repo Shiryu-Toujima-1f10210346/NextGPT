@@ -7,7 +7,7 @@ function index() {
     <div>
       <Sideber />
       <main>
-        <div className={global.container}>
+        <div className={`${global.container} text-center`}>
           <img src="/logo.png" alt="logo" className={styles.logo} />
           <p className="text-center font-serif text-4xl font-bold">
             わからせンクラテス

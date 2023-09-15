@@ -1,11 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   font-size: 1.5rem;
+  font-family: "Noto Sans JP", sans-serif;
 }
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+
 .body {
   font-family: "Zen Maru Gothic", sans-serif;
 }

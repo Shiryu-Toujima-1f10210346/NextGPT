@@ -48,7 +48,10 @@ export default function Home() {
           </span>
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
-              <li key={index} className="border-2 p-2 rounded-xl my-4">
+              <li
+                key={index}
+                className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
+              >
                 {index + 1 == 1 ? (
                   <div className="">🥇{index + 1}位</div>
                 ) : index + 1 == 2 ? (

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
+import global from "../../styles/global.module.css";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -222,7 +223,7 @@ export default function Home() {
   return (
     <div>
       <Sideber />
-      <main className={styles.main}>
+      <main className={`${global.container} ${styles.main} `}>
         <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
           <button onClick={() => setDebug(!debug)}>閉じる</button>
           <div className={`${debug ? "" : "hidden"}`}>
