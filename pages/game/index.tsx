@@ -351,7 +351,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="border-2 border-gray-600 text-center rounded-full text-2xl lg:text-3xl lg:w-96"
+                  className="border-2 border-gray-600 text-center rounded-full text-xl lg:text-3xl lg:w-96"
                 />
                 <input
                   type="submit"
@@ -360,7 +360,7 @@ export default function Home() {
                   disabled={
                     limit <= 0 || userInput.length === 0 || thiking || win
                   }
-                  className="text-center rounded-full text-2xl lg:text-3xl lg:w-96"
+                  className="text-center rounded-full lg:text-3xl lg:w-96"
                 />
               </form>
               <p

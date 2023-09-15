@@ -1,6 +1,5 @@
 import React from "react";
 import Sideber from "../components/Sidebar";
-import Head from "next/head";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
 function index() {
