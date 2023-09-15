@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import global from "../../styles/global.module.css";
-import { useLocalStorage } from "react-use";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -25,18 +24,16 @@ export default function Home() {
   const [ranking, setRanking] = useState([]);
   const [userScore, setUserScore] = useState<number>(700);
   const [count, setCount] = useState<number>(0);
-  const [exampleHide, setExampleHide] = useLocalStorage("exampleHide", false);
-  const [isClient, setIsClient] = useState(false);
+  const [exampleHide, setExampleHide] = useState<boolean>(false);
+
+  const setExampleHideCache = () => {
+    const exampleHideCache = localStorage.getItem("exampleHide");
+    if (exampleHideCache) setExampleHide(JSON.parse(exampleHideCache));
+  };
+
   useEffect(() => {
-    setIsClient(true);
+    setExampleHideCache();
   }, []);
-
-  useEffect(() => {
-    if (isClient) {
-      setExampleHide(exampleHide);
-    }
-  }, [exampleHide, isClient]);
-
   const router = useRouter();
   const [example, setExample] = useState([
     {
@@ -408,7 +405,15 @@ export default function Home() {
               >
                 会話履歴
               </p>
-              <button onClick={() => setExampleHide(!exampleHide)}>
+              <button
+                onClick={() => {
+                  localStorage.setItem(
+                    "exampleHide",
+                    JSON.stringify(!exampleHide)
+                  );
+                  setExampleHide(!exampleHide);
+                }}
+              >
                 {exampleHide ? "説明を表示" : "説明を非表示"}
               </button>
               {/* <div>
