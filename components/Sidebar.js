@@ -10,6 +10,13 @@ function Sidebar() {
   return (
     <div>
       <Head>
+        {/* router.pathでSidebarDataから検索*/}
+        {SidebarData.map((val, key) => {
+          if (router.pathname == val.path) {
+            return <title>わからせンクラテス！{val.title}</title>;
+          }
+        })}
+        <link rel="icon" href="/Ncrates.png" />
         <script src="https://cdn.tailwindcss.com"></script>
       </Head>
       <ul className={styles.sidebar}>

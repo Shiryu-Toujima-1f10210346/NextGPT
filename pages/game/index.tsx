@@ -11,7 +11,7 @@ import { TwitterShareButton, TwitterIcon } from "react-share";
 export default function Home() {
   const [userInput, setUserInput] = useState("");
   // userInputとgptOutputというkeyを持つオブジェクトを格納する
-  const [result, setResult] = useState({ userInput: "", gptOutput: "" });
+  const [result, setResult] = useState([]);
   const [limit, setLimit] = useState(10);
   const [odai, setOdai] = useState("バナナ");
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
@@ -103,7 +103,7 @@ export default function Home() {
     }
   }, [id]);
 
-  const n = 5; // 生成する<p>要素の数
+  const n = 0; // 生成する<p>要素の数
 
   for (let i = 0; i < n; i++) {
     paragraphs.push(
@@ -186,11 +186,8 @@ export default function Home() {
       }
 
       //userの入力をuserというkeyでresultに追加､GPTの回答をGPTというkeyでresultに追加
-      setResult((prev) => ({
-        ...prev,
-        userInput: event.target.elements.user.value,
-        gptOutput: data.result,
-      }));
+      setResult([...result, { userInput: userInput, gptOutput: data.result }]);
+      console.table(result);
       setLimit(limit - 1);
       setThiking(false);
       //0.5秒後にスクロール､その要素の背景を変える
@@ -225,11 +222,6 @@ export default function Home() {
   };
   return (
     <div>
-      <Head>
-        <title>ほげほげ</title>
-        <link rel="icon" href="/dog.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main className={styles.main}>
         <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
@@ -251,7 +243,7 @@ export default function Home() {
                 setCanRegister(false);
                 setWin(false);
                 //クエリの初期化
-                router.push("/game");
+                window.location.href = "/game";
                 console.log("canRegister:" + canRegister);
               }}
             >
@@ -436,33 +428,50 @@ export default function Home() {
             <div className={styles.result}>
               {/* デバッグ用の会話ダミー */}
               {paragraphs}
-              {Object.keys(result).map((key) => (
+              {/* 会話履歴 */}
+              {result.map((result, key) => (
                 <div key={key}>
-                  {key === "userInput" && result[key] != "" && (
+                  {result.userInput && result[key] != "" && (
                     <div>
-                      <div className="text-xl lg:text-3xl text-right">
-                        あなた
+                      <div className="flex flex-row-reverse">
+                        <div className="text-xl lg:text-3xl text-right mx-4 px-4 py-1 bg-blue-500 text-white rounded-full border-2 border-gray-300">
+                          あなた
+                        </div>
                       </div>
-                      <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
-                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
-                        <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
-                        <p className="text-white text-xl lg:text-3xl text-right">
-                          {result[key]}
-                        </p>
+                      <div className="flex flex-row-reverse ">
+                        <div className="relative bg-blue-500 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r border-b border-gray-300"></div>
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 shadow-xl -z-10"></div>
+                          <p
+                            className={`text-xl lg:text-3xl text-left text-white ${
+                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                            } `}
+                          >
+                            {result.userInput}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
-                  {key === "gptOutput" && result[key] != "" && (
+                  {result.gptOutput && result[key] != "" && (
                     <div>
-                      <div className="text-xl lg:text-3xl text-left">
-                        GPTくん
+                      <div className="flex">
+                        <div className="text-xl lg:text-3xl text-left mx-4 px-4 py-1 bg-gray-100 rounded-full border-2 border-gray-300">
+                          GPTくん
+                        </div>
                       </div>
-                      <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6 border-4 border-gray-300">
-                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
-                        <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-                        <p className="text-gray-800 text-xl lg:text-3xl text-left">
-                          {result[key]}
-                        </p>
+                      <div className="flex">
+                        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-4 border-4 border-gray-300">
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r border-b border-gray-300"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                          <p
+                            className={`text-gray-800 text-xl lg:text-3xl text-left ${
+                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                            } `}
+                          >
+                            {result.gptOutput}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}

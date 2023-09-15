@@ -6,11 +6,6 @@ import styles from "./index.module.css";
 function index() {
   return (
     <div>
-      <Head>
-        <title>ホーム</title>
-        <link rel="icon" href="/gpt.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main>
         <div className={global.container}>

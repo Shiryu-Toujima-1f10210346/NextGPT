@@ -36,11 +36,6 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>ほげほげ</title>
-        <link rel="icon" href="/dog.png" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
       <Sideber />
       <main>
         <div className={global.container}>
