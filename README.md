@@ -1,6 +1,6 @@
 ## チーム実習3　グループ4　チーム5　教育
 
-## Visit this site!
+## ↓↓↓ ロゴをクリックしてサイトにアクセス↓↓↓
 
 [![ncrates](https://github.com/Shiryu-Toujima-1f10210346/NextGPT/blob/master/public/logo2.png)](https://wakarates.vercel.app/)
 
