@@ -28,7 +28,6 @@ export default function Home() {
   const [userScore, setUserScore] = useState(700);
   const [count, setCount] = useState(0);
 
-  const n = 10; // 生成する<p>要素の数
   const paragraphs = [];
 
   const router = useRouter();
@@ -106,19 +105,22 @@ export default function Home() {
     }
   }, [id]);
 
+  const n = 5; // 生成する<p>要素の数
+
   for (let i = 0; i < n; i++) {
     paragraphs.push(
-      <p
-        key={i}
-        className="
-          border border-gray-800 border-2 
-          shadow-xl rounded-xl 
-          p-6 m-4
-          text-xl font-bold text-gray-800
-        "
-      >
-        デバッグ用会話ダミー
-      </p>
+      <div key={i}>
+        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6">
+          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 "></div>
+          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+          <p className="text-gray-800">ここに吹き出しのテキスト</p>
+        </div>
+        <div className="relative bg-gray-100 p-4 rounded-full shadow-xl my-6">
+          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 "></div>
+          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+          <p className="text-gray-800">ここに吹き出しのテキスト</p>
+        </div>
+      </div>
     );
   }
 

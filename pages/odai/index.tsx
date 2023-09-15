@@ -89,7 +89,10 @@ export default function index() {
         </div>
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
-            <div className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl">
+            <div
+              className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl"
+              key={item.id}
+            >
               <li key={item.odai}>お題: {item.odai}</li>
               <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
               <li key={item.limit}>制限回数: {item.limit}回</li>
