@@ -140,12 +140,18 @@ export default function Home() {
 
   const submitResult = async () => {
     console.log("対戦結果を送信します");
-    const res = await fetch("/api/addResult", {
+    const jsonResult = JSON.stringify(result);
+    const res = await fetch("/api/submitResult", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(result),
+      body: JSON.stringify({
+        playerName: userName,
+        odaiId: id ? id : "0",
+        result: jsonResult,
+        score: userScore,
+      }),
     });
     const data = await res.json();
     console.log(data);
@@ -322,6 +328,12 @@ export default function Home() {
               <TwitterIcon size={40} round={true} />
               <span>結果をシェアする</span>
             </TwitterShareButton>
+            <button
+              onClick={() => submitResult()}
+              className={`${userName.length > 0 ? "" : "hidden"}`}
+            >
+              対戦結果を保存
+            </button>
           </div>
         </Modal>
         <div

@@ -27,3 +27,12 @@ model Odai {
   score    Int
   official Boolean
 }
+
+model Result {
+  id        Int      @id @default(autoincrement())
+  name      String  @default("unknown")
+  odaiId    String
+  result    Json
+  score     Int
+  createdAt DateTime @default(now())
+}
