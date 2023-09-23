@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import global from "../../styles/global.module.css";
+import Conv from "../../components/conversation";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -471,12 +472,30 @@ export default function Home() {
               会話履歴
             </p>
             <div className={styles.result}>
+              {/*  浮くやつ
+              <div className="mx-6">
+                {example.map((example, key) =>
+                  example.userInput.length > 0 ? (
+                    <div key={key} className={exampleHide ? "hidden" : ""}>
+                      <div className="my-16 ml-32">
+                        <Conv target={"user"} text={example.userInput} />
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={key} className={exampleHide ? "hidden" : ""}>
+                      <div className="my-16 mr-32">
+                        <Conv target={"bot"} text={example.gptOutput} />
+                      </div>
+                    </div>
+                  )
+                )}
+              */}
               {/* デバッグ用の会話ダミー */}
               <div>
                 {example.map((example, key) => (
                   <div key={key} className={exampleHide ? "hidden" : ""}>
                     <div className="my-4">
-                      <div
+                      {/* <div
                         className={`flex flex-row-reverse ${
                           example.userInput.length == 0 ? "hidden" : ""
                         }`}
@@ -484,20 +503,18 @@ export default function Home() {
                         <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
                           あなた
                         </div>
-                      </div>
+                      </div> */}
                       <div
                         className={`flex flex-row-reverse ${
                           example.userInput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="relative bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="relative ml-8 bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
                           <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
                             className={`text-xl lg:text-3xl text-left text-white ${
-                              example.userInput.length > 20
-                                ? "text-2xl"
-                                : "mx-10"
+                              example.userInput.length > 200 ? "text-2xl" : ""
                             } `}
                           >
                             {example.userInput}
@@ -525,9 +542,7 @@ export default function Home() {
                           <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
-                              example.gptOutput.length > 20
-                                ? "text-2xl"
-                                : "mx-10"
+                              example.gptOutput.length > 200 ? "text-2xl" : ""
                             } `}
                           >
                             {example.gptOutput}

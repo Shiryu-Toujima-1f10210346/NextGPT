@@ -14,7 +14,7 @@ export default async function POST(req, res) {
     console.log("score: " + score);
     const resultData = await submitResult(playerName, odaiId, result, score);
     res.status(200).json(resultData);
-    return true;
+    return;
   } catch (e) {
     console.error("結果送信失敗");
     console.error(e);
@@ -23,6 +23,6 @@ export default async function POST(req, res) {
         message: "結果送信失敗",
       },
     });
-    return false;
+    return;
   }
 }

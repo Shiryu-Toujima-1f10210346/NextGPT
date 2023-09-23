@@ -2,6 +2,7 @@ import React from "react";
 import Sideber from "../components/Sidebar";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
+import Conv from "../components/conversation";
 function index() {
   return (
     <div>

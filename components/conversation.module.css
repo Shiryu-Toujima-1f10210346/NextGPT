@@ -1,0 +1,110 @@
+.body-root {
+  background-color: #f9cdad; /* 背景色 */
+}
+
+.bot {
+  transform: translateY(0px);
+  animation: float 5s ease-in-out infinite;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 15px;
+  color: #774f38; /* テキストの色 */
+  background-color: #ece5ce; /* テキストの背景色 */
+  padding: 20px;
+  border-radius: 11px;
+  position: relative;
+  box-shadow: 20px 20px #83af9b; /* ボックスシャドウの色 */
+  font-family: "Baloo 2", cursive;
+}
+
+.bot:after {
+  transform: translateY(0px);
+  animation: float2 5s ease-in-out infinite;
+  content: ".";
+  font-weight: bold;
+  -webkit-text-fill-color: #ece5ce; /* テキストの色 */
+  text-shadow: 22px 22px #83af9b; /* テキストシャドウの色 */
+  text-align: left;
+  font-size: 55px;
+  width: 55px;
+  height: 11px;
+  line-height: 30px;
+  border-radius: 11px;
+  background-color: #ece5ce; /* テキストの背景色 */
+  position: absolute;
+  display: block;
+  bottom: -30px;
+  left: 0;
+  box-shadow: 22px 22px #83af9b; /* ボックスシャドウの色 */
+  z-index: -2;
+}
+
+.user {
+  transform: translateY(0px);
+  animation: float 5s ease-in-out infinite;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 15px;
+  color: #774f38; /* テキストの色 */
+  background-color: #ece5ce; /* テキストの背景色 */
+  padding: 20px;
+  border-radius: 11px;
+  position: relative;
+  box-shadow: 20px 20px #83af9b; /* ボックスシャドウの色 */
+  font-family: "Baloo 2", cursive;
+}
+
+.user:after {
+  transform: translateY(0px);
+  animation: float2 5s ease-in-out infinite;
+  content: ".";
+  font-weight: bold;
+  -webkit-text-fill-color: #ece5ce; /* テキストの色 */
+  text-shadow: 22px 22px #83af9b; /* テキストシャドウの色 */
+  text-align: right;
+  font-size: 55px;
+  width: 55px;
+  height: 11px;
+  line-height: 30px;
+  border-radius: 11px;
+  background-color: #ece5ce; /* テキストの背景色 */
+  position: absolute;
+  display: block;
+  bottom: -30px;
+  right: 0;
+  box-shadow: 22px 22px #83af9b; /* ボックスシャドウの色 */
+  z-index: -2;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    line-height: 30px;
+    transform: translateY(0px);
+  }
+  55% {
+    transform: translateY(-20px);
+  }
+  60% {
+    line-height: 10px;
+  }
+  100% {
+    line-height: 30px;
+    transform: translateY(0px);
+  }
+}
