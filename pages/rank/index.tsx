@@ -12,17 +12,21 @@ export default function Home() {
   const fetchRanking = async () => {
     const chachedData = localStorage.getItem("rankingData");
     if (chachedData) setRanking(JSON.parse(chachedData));
+    try {
+      const res = await fetch("/api/getRanking");
+      const data = await res.json();
+      console.log("data");
+      console.table(data);
 
-    const res = await fetch("/api/getRanking");
-    const data = await res.json();
-    console.log("data");
-    console.table(data);
-    const newRanking = data.map((item) => ({
-      name: item.name,
-      score: item.score,
-    }));
-    localStorage.setItem("rankingData", JSON.stringify(newRanking));
-    setRanking(newRanking);
+      const newRanking = data.map((item) => ({
+        name: item.name,
+        score: item.score,
+      }));
+      localStorage.setItem("rankingData", JSON.stringify(newRanking));
+      setRanking(newRanking);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //3分ごとにランキングデータを取得する
