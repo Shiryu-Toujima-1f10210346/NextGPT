@@ -126,7 +126,10 @@ export default function index() {
         <div className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
           {odai.length == 0 ? <p>お題取得中･･･</p> : <p>お題一覧</p>}
         </div>
-        <CircularProgress className={loading ? "opacity-100" : "opacity-0"} />
+        <CircularProgress
+          size={20}
+          className={loading ? "opacity-100" : "opacity-0"}
+        />
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
             <Odai {...item} />

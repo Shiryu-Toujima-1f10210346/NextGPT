@@ -308,7 +308,7 @@ export default function Home() {
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
-          border-2 rounded-xl border-solid lg:mt-16
+           rounded-xl lg:mt-16 
          "
         >
           <div className={styles.left}>
@@ -532,7 +532,7 @@ export default function Home() {
                 ))}
                 <div className="flex justify-center">
                   <button
-                    className="bg-gray-200 rounded-full px-4 py-2 text-gray-8"
+                    className="bg-gray-200 rounded-full mb-8 px-4 py-2 text-gray-8"
                     onClick={() => {
                       localStorage.setItem(
                         "exampleHide",

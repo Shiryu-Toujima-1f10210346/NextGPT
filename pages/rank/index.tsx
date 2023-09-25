@@ -53,7 +53,10 @@ export default function Home() {
               <p>ランキングデータ</p>
             )}
           </span>
-          <CircularProgress className={loading ? "opacity-100" : "opacity-0"} />
+          <CircularProgress
+            size={20}
+            className={loading ? "opacity-100" : "opacity-0"}
+          />
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
               <li
