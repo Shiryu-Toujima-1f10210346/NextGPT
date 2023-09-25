@@ -3,10 +3,12 @@ import Sideber from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 import Head from "next/head";
 import styles from "./index.module.css";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
   //ランキングデータの配列
   const [ranking, setRanking] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
@@ -24,6 +26,7 @@ export default function Home() {
       }));
       localStorage.setItem("rankingData", JSON.stringify(newRanking));
       setRanking(newRanking);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +53,7 @@ export default function Home() {
               <p>ランキングデータ</p>
             )}
           </span>
+          <CircularProgress className={loading ? "opacity-100" : "opacity-0"} />
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
               <li
