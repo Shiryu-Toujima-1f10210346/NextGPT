@@ -17,37 +17,50 @@ export default function Home() {
   const [tmp, setTmp] = useState<string>("");
   const [result, setResult] = useState([]);
   const [fetching, setFetching] = useState<boolean>(true);
-
+  const [error, setError] = useState<boolean>(false);
   const router = useRouter();
-  const id = router.query.id;
+  const id = Number(router.query.id);
+
   const getResult = async () => {
-    const res = await fetch("/api/getResult?id=" + id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    try {
+      const res = await fetch("/api/getResult?id=" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.table(data);
+      console.log(data.result);
+      console.table(JSON.parse(data.result));
+      console.log(typeof JSON.parse(data.result));
+      setResult(JSON.parse(data.result));
+      setFetching(false);
+      setOdai("ここにお題");
+    } catch (e) {
+      console.log(e);
+      setOdai("IDが不正です!");
+      setNG(["URLのIDを再確認してください"]);
+      setFetching(false);
+      setError(true);
+    }
+  };
+
+  const playThisOdai = async (id: number) => {
+    //gameページに遷移
+    router.push({
+      pathname: "/game",
+      query: { id: id },
     });
-    const data = await res.json();
-    console.table(data);
-    console.log(data.result);
-    console.table(JSON.parse(data.result));
-    console.log(typeof JSON.parse(data.result));
-    setResult(JSON.parse(data.result));
-    setFetching(false);
   };
 
   useEffect(() => {
-    if (id) {
-      getResult();
-    }
+    getResult();
   }, [id]);
   return (
     <div>
       <Sideber />
       <main className={`${global.container} ${styles.main} `}>
-        <button onClick={() => console.table(result)}>result</button>
-        <button onClick={() => console.log(typeof result)}>type</button>
-
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
@@ -69,7 +82,8 @@ export default function Home() {
               lg:mb-4 mb-2 mt-2
               "
               >
-                お題:{odai}
+                {error ? "" : "お題:"}
+                {odai}
               </p>
               <p
                 id="odai"
@@ -78,13 +92,29 @@ export default function Home() {
               lg:mb-4 mb-2
               "
               >
-                NGワード:{NG.join(",")}
+                {error ? "" : "NGワード:"}
+                {NG.join(",")}
               </p>
               <span
                 id="score"
                 className="lg:text-2xl text-xl flex justify-around"
               >
-                {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
+                {error
+                  ? ""
+                  : userScore > 0
+                  ? `スコア:${userScore}点`
+                  : "スコアなし"}
+                {error && (
+                  <div>
+                    <span>問い合わせ先:</span>
+                    <a
+                      href="https://twitter.com/shiryu_dev"
+                      className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
+                    >
+                      Twitter(X)
+                    </a>
+                  </div>
+                )}
               </span>
 
               <p
@@ -97,6 +127,9 @@ export default function Home() {
               >
                 会話履歴
               </p>
+              <button onClick={() => playThisOdai(id)} hidden={error}>
+                このお題で遊ぶ！
+              </button>
             </div>
           </div>{" "}
           {/* left */}
@@ -111,6 +144,7 @@ export default function Home() {
             >
               会話履歴
             </p>
+
             <div className={styles.result}>
               {fetching && (
                 <div className="flex justify-center items-center mt-10">

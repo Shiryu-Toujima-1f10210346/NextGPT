@@ -27,7 +27,7 @@ function index() {
           </div>
           <p className={styles.text}>サイト制作者</p>
           <a
-            href="https://twitter.com/bkt_iniad5th"
+            href="https://twitter.com/shiryu_dev"
             className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
           >
             Twitter(X)

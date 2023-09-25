@@ -407,8 +407,6 @@ export default function Home() {
                   }`}
                 />
               </form>
-              <button onClick={() => console.table(result)}>result</button>
-              <button onClick={() => console.log(typeof result)}>type</button>
               <p
                 className="
             border-gray-800 border

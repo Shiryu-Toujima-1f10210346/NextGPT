@@ -34,4 +34,8 @@ model Result {
   result    Json
   score     Int
   createdAt DateTime @default(now())
+  // odai      String
+  // official  Boolean
+  // ng        String[]
+  // count     Int
 }
