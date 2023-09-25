@@ -220,90 +220,111 @@ export default function Home() {
       marginRight: "-40%",
       transform: "translate(-50%, -50%)",
       minWidth: "40%",
-      borderRight: "solid 8px #f79999",
-      borderBottom: "solid 8px #f79999",
+      borderRight: "solid 6px #3B82F6",
+      borderBottom: "solid 6px #3B82F6",
       borderRadius: "15px",
     },
   };
+
+  const debugModal = () => {
+    return (
+      <div>
+        <button onClick={() => setDebug(!debug)}>閉じる</button>
+        <div className={`${debug ? "" : "hidden"}`}>
+          <div>
+            <p className="m-2">デバッグ用:お題を設定</p>
+            <input
+              type="text"
+              placeholder="お題を入力してください"
+              value={odai}
+              onChange={(e) => setOdai(e.target.value)}
+              className="border-2 border-black text-center"
+            />
+          </div>
+
+          <div>
+            <p className="m-2">デバッグ用:NGワードを設定</p>
+            <input
+              type="text"
+              placeholder="NGワードを入力してください"
+              value={NG}
+              onChange={(e) => setNG([e.target.value])}
+              className="border-2 border-black text-center"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const submitModal = () => {
+    return (
+      <div className="flex flex-col items-center">
+        <p className="text-3xl font-bold">ランキング入り！</p>
+        <p className="text-2xl font-bold">スコア:{userScore}点</p>
+        <p>canRegister:{canRegister.toString()}</p>
+        <button
+          onClick={() => {
+            setCanRegister(true);
+            console.log("canRegister:" + canRegister);
+            fetchRanking();
+          }}
+        >
+          ランキング登録
+        </button>
+        <button
+          onClick={() => {
+            //クエリの初期化
+            window.location.href = "/game";
+            console.log("canRegister:" + canRegister);
+          }}
+        >
+          登録しない
+        </button>
+        <div className={canRegister ? "" : "hidden"}>
+          <input
+            type="text"
+            className="border-2"
+            placeholder="名前を入力 (10文字以内)"
+            maxLength={10}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button
+            onClick={() => registerRanking()}
+            className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+          >
+            登録
+          </button>
+        </div>
+        <TwitterShareButton
+          url={shareURL}
+          title={`${userScore}点を獲得しました！\n `}
+          hashtags={["INIADFES", "JissyuTeam5"]}
+          className="mt-4 flex items-center"
+        >
+          <TwitterIcon size={40} round={true} />
+          <span>結果をシェアする</span>
+        </TwitterShareButton>
+        <button
+          onClick={() => submitResult()}
+          disabled={userName.length > 0 ? false : true}
+          className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+        >
+          対戦結果を保存
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Sideber />
       <main className={`${global.container} ${styles.main} `}>
         <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
-          <button onClick={() => setDebug(!debug)}>閉じる</button>
-          <div className={`${debug ? "" : "hidden"}`}>
-            <div>
-              <p className="m-2">デバッグ用:お題を設定</p>
-              <input
-                type="text"
-                placeholder="お題を入力してください"
-                value={odai}
-                onChange={(e) => setOdai(e.target.value)}
-                className="border-2 border-black text-center"
-              />
-            </div>
-
-            <div>
-              <p className="m-2">デバッグ用:NGワードを設定</p>
-              <input
-                type="text"
-                placeholder="NGワードを入力してください"
-                value={NG}
-                onChange={(e) => setNG([e.target.value])}
-                className="border-2 border-black text-center"
-              />
-            </div>
-          </div>
+          {debugModal()}
         </Modal>
         <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
-          <div className="flex flex-col items-center">
-            <p className="text-3xl font-bold">ランキング入り！</p>
-            <p className="text-2xl font-bold">スコア:{userScore}点</p>
-            <p>canRegister:{canRegister.toString()}</p>
-            <button
-              onClick={() => {
-                setCanRegister(true);
-                console.log("canRegister:" + canRegister);
-                fetchRanking();
-              }}
-            >
-              ランキング登録
-            </button>
-            <button
-              onClick={() => {
-                //クエリの初期化
-                window.location.href = "/game";
-                console.log("canRegister:" + canRegister);
-              }}
-            >
-              登録しない
-            </button>
-            <div className={canRegister ? "" : "hidden"}>
-              <input
-                type="text"
-                className="border-2"
-                placeholder="名前を入力 (10文字以内)"
-                maxLength={10}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <button onClick={() => registerRanking()}>登録</button>
-            </div>
-            <TwitterShareButton
-              url={shareURL}
-              title={`${userScore}点を獲得しました！\n `}
-              hashtags={["INIADFES", "JissyuTeam5"]}
-              className="mt-4 flex items-center"
-            >
-              <TwitterIcon size={40} round={true} />
-              <span>結果をシェアする</span>
-            </TwitterShareButton>
-            <button
-              onClick={() => submitResult()}
-              className={`${userName.length > 0 ? "" : "hidden"}`}
-            >
-              対戦結果を保存
-            </button>
-          </div>
+          {submitModal()}
         </Modal>
         <div
           className="
@@ -386,6 +407,8 @@ export default function Home() {
                   }`}
                 />
               </form>
+              <button onClick={() => console.table(result)}>result</button>
+              <button onClick={() => console.log(typeof result)}>type</button>
               <p
                 className="
             border-gray-800 border
