@@ -2,12 +2,13 @@ import React from "react";
 import Sideber from "../components/Sidebar";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
+import Conv from "../components/conversation";
 function index() {
   return (
     <div>
       <Sideber />
       <main>
-        <div className={global.container}>
+        <div className={`${global.container} text-center`}>
           <img src="/logo.png" alt="logo" className={styles.logo} />
           <p className="text-center font-serif text-4xl font-bold">
             わからせンクラテス
@@ -26,7 +27,7 @@ function index() {
           </div>
           <p className={styles.text}>サイト制作者</p>
           <a
-            href="https://twitter.com/bkt_iniad5th"
+            href="https://twitter.com/shiryu_dev"
             className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
           >
             Twitter(X)

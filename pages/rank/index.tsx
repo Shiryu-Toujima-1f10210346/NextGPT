@@ -3,26 +3,33 @@ import Sideber from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 import Head from "next/head";
 import styles from "./index.module.css";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
   //ランキングデータの配列
   const [ranking, setRanking] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
     const chachedData = localStorage.getItem("rankingData");
     if (chachedData) setRanking(JSON.parse(chachedData));
+    try {
+      const res = await fetch("/api/getRanking");
+      const data = await res.json();
+      console.log("data");
+      console.table(data);
 
-    const res = await fetch("/api/getRanking");
-    const data = await res.json();
-    console.log("data");
-    console.table(data);
-    const newRanking = data.map((item) => ({
-      name: item.name,
-      score: item.score,
-    }));
-    localStorage.setItem("rankingData", JSON.stringify(newRanking));
-    setRanking(newRanking);
+      const newRanking = data.map((item) => ({
+        name: item.name,
+        score: item.score,
+      }));
+      localStorage.setItem("rankingData", JSON.stringify(newRanking));
+      setRanking(newRanking);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //3分ごとにランキングデータを取得する
@@ -46,9 +53,16 @@ export default function Home() {
               <p>ランキングデータ</p>
             )}
           </span>
+          <CircularProgress
+            size={20}
+            className={loading ? "opacity-100" : "opacity-0"}
+          />
           <ul className={styles.resultContainer}>
             {ranking.map((item, index) => (
-              <li key={index} className="border-2 p-2 rounded-xl my-4">
+              <li
+                key={index}
+                className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
+              >
                 {index + 1 == 1 ? (
                   <div className="">🥇{index + 1}位</div>
                 ) : index + 1 == 2 ? (

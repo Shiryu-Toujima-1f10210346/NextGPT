@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
 }
  
 datasource db {
@@ -26,4 +25,17 @@ model Odai {
   dislike  Int
   score    Int
   official Boolean
+}
+
+model Result {
+  id        Int      @id @default(autoincrement())
+  name      String  @default("unknown")
+  odaiId    String
+  result    Json
+  score     Int
+  createdAt DateTime @default(now())
+  // odai      String
+  // official  Boolean
+  // ng        String[]
+  // count     Int
 }
