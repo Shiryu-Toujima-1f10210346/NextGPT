@@ -9,6 +9,7 @@ import { TwitterShareButton, TwitterIcon } from "react-share";
 import global from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
+import SendIcon from "@mui/icons-material/Send";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -17,7 +18,7 @@ export default function Home() {
   const [odai, setOdai] = useState<string>("バナナ");
   const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
   const [alert, setAlert] = useState<string>("");
-  const [thiking, setThiking] = useState<boolean>(false);
+  const [thinking, setthinking] = useState<boolean>(false);
   const [debug, setDebug] = useState<boolean>(false);
   const [win, setWin] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -150,7 +151,7 @@ export default function Home() {
       return;
     }
 
-    setThiking(true);
+    setthinking(true);
 
     event.preventDefault();
     try {
@@ -192,16 +193,17 @@ export default function Home() {
       setResult([...result, { userInput: userInput, gptOutput: data.result }]);
       console.table(result);
       setLimit(limit - 1);
-      setThiking(false);
+
       //0.5秒後にスクロール､その要素の背景を変える
       setTimeout(() => {
         if (resultRef.current) {
           resultRef.current.scrollIntoView({ behavior: "smooth" });
         }
       }, 300);
+      setthinking(false);
     } catch (error) {
       // Consider implementing your own error handling logic here
-      setThiking(false);
+      setthinking(false);
       console.error(error);
       setAlert(error.message);
     }
@@ -348,9 +350,13 @@ export default function Home() {
               >
                 NGワード:{NG.join(",")}
               </p>
-              <p id="score" className="lg:text-2xl text-xl">
+              <span
+                id="score"
+                className="lg:text-2xl text-xl flex justify-around"
+              >
                 {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
-              </p>
+                <span>残り{limit}回</span>
+              </span>
 
               <p id="alert" className="text-xl mb-4">
                 {alert}
@@ -362,21 +368,27 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="border-2 border-gray-600 text-center rounded-full text-xl lg:text-3xl lg:w-96"
+                  className="border border-gray-200 text-center rounded-xl text-xl lg:text-3xl lg:w-96"
                 />
+
                 <input
                   type="submit"
                   id="submit"
-                  value={`残り${limit}回 ➣`}
+                  value="送信"
                   disabled={
-                    limit <= 0 || userInput.length === 0 || thiking || win
+                    limit <= 0 || userInput.length === 0 || thinking || win
                   }
-                  className="text-center rounded-full lg:text-3xl lg:w-96"
+                  className={`"text-center rounded-full lg:text-3xl lg:w-96 bg-blue-500 text-white"
+                  ${
+                    limit <= 0 || userInput.length === 0 || thinking || win
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
                 />
               </form>
               <p
                 className="
-            border-gray-800 border-2 
+            border-gray-800 border
             shadow-xl rounded-xl 
             my-4 mx-16 px-4
             text-xl font-bold text-gray-800 text-center lg:hidden
@@ -417,7 +429,7 @@ export default function Home() {
               >
                 {limit <= 0 ? (
                   <p>もう終わりです</p>
-                ) : thiking ? (
+                ) : thinking ? (
                   <p>GPTくん考え中</p>
                 ) : (
                   <p>残り{limit}回</p>
