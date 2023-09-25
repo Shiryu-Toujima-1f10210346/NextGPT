@@ -81,7 +81,7 @@ export default function index() {
   const Odai = (item) => {
     return (
       <div
-        className="border-2 border-blue-500 p-4 rounded-xl m-2 ease-in transition-all duration-100 shadow-xl"
+        className="border-2 border-blue-500 p-4 rounded-xl m-2 mx-10 lg:mx-2 ease-in transition-all duration-100 shadow-xl"
         key={item.id}
       >
         <li key={item.odai}>お題: {item.odai}</li>
