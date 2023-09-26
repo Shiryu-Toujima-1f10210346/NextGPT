@@ -34,6 +34,7 @@ export default function Home() {
   const [exampleHide, setExampleHide] = useState<boolean>(false);
   const [example, setExample] = useState(examples);
   const [resultSaved, setResultSaved] = useState<boolean>(false);
+  const [resultId, setResultId] = useState<number>();
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -129,7 +130,9 @@ export default function Home() {
     });
     const data = await res.json();
     console.log(data);
+    console.log("対戦履歴ID:" + data.id);
     setResultSaved(true);
+    setResultId(data.id);
   };
 
   useEffect(() => {
@@ -272,7 +275,7 @@ export default function Home() {
   };
 
   const resultURL = "localhost:3000/result"; //本番環境では変更する
-  // const shareURL = "wakarates.vercel.app/result"
+  //const resultURL = "wakarates.vercel.app/result";
 
   const copyToClipboard = async () => {
     await global.navigator.clipboard.writeText(resultURL + "?id=" + id);
@@ -319,7 +322,9 @@ export default function Home() {
         </div>
         <TwitterShareButton
           url={shareURL}
-          title={`${userScore}点を獲得しました！\n `}
+          title={`${userScore}点を獲得しました！ \n ${
+            resultSaved ? resultURL + "?id=" + resultId : ""
+          }`}
           hashtags={["INIADFES", "JissyuTeam5"]}
           className="mt-4 flex items-center"
         >
@@ -333,15 +338,15 @@ export default function Home() {
         >
           対戦結果を保存
         </button>
-        <div hidden={resultSaved}>
+        <div hidden={!resultSaved}>
           <Tooltip title="Copy" placement="top" arrow>
             <IconButton
               color="primary"
               size="small"
               onClick={() => copyToClipboard()}
             >
-              <Link href={resultURL + "?id=" + id}>
-                {resultURL + "?id=" + id}
+              <Link href={resultURL + "?id=" + resultId}>
+                {resultURL + "?id=" + resultId}
               </Link>
               <ContentCopyIcon fontSize="small" />
             </IconButton>
