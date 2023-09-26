@@ -22,6 +22,8 @@ export default function Home() {
   const id = Number(router.query.id);
 
   const getResult = async () => {
+    console.log("getresult");
+    console.log("id:" + id);
     try {
       const res = await fetch("/api/getResult?id=" + id, {
         method: "GET",
@@ -37,12 +39,14 @@ export default function Home() {
       setResult(JSON.parse(data.result));
       setFetching(false);
       setOdai("ここにお題");
+      return true;
     } catch (e) {
       console.log(e);
       setOdai("IDが不正です!");
       setNG(["URLのIDを再確認してください"]);
       setFetching(false);
       setError(true);
+      return false;
     }
   };
 
@@ -55,7 +59,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getResult();
+    if (id) getResult();
+    else {
+      setOdai("IDが不正です!");
+      setNG(["URLのIDを再確認してください"]);
+      setFetching(false);
+      setError(true);
+    }
   }, [id]);
   return (
     <div>

@@ -6,10 +6,14 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
-import global from "../../styles/global.module.css";
+import globalCss from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
 import SendIcon from "@mui/icons-material/Send";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import IconButton from "@mui/material/IconButton";
+import Link from "next/link";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -29,6 +33,7 @@ export default function Home() {
   const [count, setCount] = useState<number>(0);
   const [exampleHide, setExampleHide] = useState<boolean>(false);
   const [example, setExample] = useState(examples);
+  const [resultSaved, setResultSaved] = useState<boolean>(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -41,6 +46,7 @@ export default function Home() {
   const router = useRouter();
 
   const id = router.query.id;
+
   const getSpecificOdai = async () => {
     const res = await fetch(`/api/getSpecificOdai?id=${id}`, {
       method: "GET",
@@ -123,11 +129,19 @@ export default function Home() {
     });
     const data = await res.json();
     console.log(data);
+    setResultSaved(true);
   };
 
   useEffect(() => {
     if (id) {
+      console.log("idがあります");
       getSpecificOdai();
+    } else {
+      console.log("idがありません");
+
+      router.push({
+        pathname: "/resultList",
+      });
     }
   }, [id]);
 
@@ -257,6 +271,13 @@ export default function Home() {
     );
   };
 
+  const resultURL = "localhost:3000/result"; //本番環境では変更する
+  // const shareURL = "wakarates.vercel.app/result"
+
+  const copyToClipboard = async () => {
+    await global.navigator.clipboard.writeText(resultURL + "?id=" + id);
+  };
+
   const submitModal = () => {
     return (
       <div className="flex flex-col items-center">
@@ -312,6 +333,20 @@ export default function Home() {
         >
           対戦結果を保存
         </button>
+        <div hidden={resultSaved}>
+          <Tooltip title="Copy" placement="top" arrow>
+            <IconButton
+              color="primary"
+              size="small"
+              onClick={() => copyToClipboard()}
+            >
+              <Link href={resultURL + "?id=" + id}>
+                {resultURL + "?id=" + id}
+              </Link>
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
     );
   };
@@ -319,7 +354,7 @@ export default function Home() {
   return (
     <div>
       <Sideber />
-      <main className={`${global.container} ${styles.main} `}>
+      <main className={`${globalCss.container} ${styles.main} `}>
         <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
           {debugModal()}
         </Modal>

@@ -36,3 +36,16 @@ export const findResult = async (id: number) => {
     console.error(error);
   }
 };
+
+export const getResultList = async () => {
+  try {
+    const result = await prisma.result.findMany({
+      orderBy: {
+        score: "desc",
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};

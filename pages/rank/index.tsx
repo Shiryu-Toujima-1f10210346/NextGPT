@@ -43,6 +43,9 @@ export default function Home() {
 
   return (
     <div>
+      <Head>
+        <title>わからせンクラテス！ 対戦履歴</title>
+      </Head>
       <Sideber />
       <main>
         <div className={global.container}>
