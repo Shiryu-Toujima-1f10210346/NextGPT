@@ -48,7 +48,19 @@ export default function Home() {
 
   const id = router.query.id;
 
+  const cacheOdai = () => {
+    const cacheOdai = localStorage.getItem("odai");
+    const cacheNG = localStorage.getItem("NG");
+    const cacheLimit = localStorage.getItem("limit");
+    const cacheScore = localStorage.getItem("score");
+    if (cacheOdai) setOdai(cacheOdai);
+    if (cacheNG) setNG(JSON.parse(cacheNG));
+    if (cacheLimit) setLimit(JSON.parse(cacheLimit));
+    if (cacheScore) setUserScore(JSON.parse(cacheScore));
+  };
+
   const getSpecificOdai = async () => {
+    cacheOdai();
     const res = await fetch(`/api/getSpecificOdai?id=${id}`, {
       method: "GET",
       headers: {
@@ -63,6 +75,10 @@ export default function Home() {
     setLimit(data.limit);
     setUserScore(data.score);
     setCount(0);
+    localStorage.setItem("odai", data.odai);
+    localStorage.setItem("NG", JSON.stringify(data.ng));
+    localStorage.setItem("limit", JSON.stringify(data.limit));
+    localStorage.setItem("score", JSON.stringify(data.score));
   };
 
   const fetchRanking = async () => {
@@ -141,10 +157,6 @@ export default function Home() {
       getSpecificOdai();
     } else {
       console.log("idがありません");
-
-      router.push({
-        pathname: "/resultList",
-      });
     }
   }, [id]);
 
@@ -237,8 +249,8 @@ export default function Home() {
       marginRight: "-40%",
       transform: "translate(-50%, -50%)",
       minWidth: "40%",
-      borderRight: "solid 6px #3B82F6",
-      borderBottom: "solid 6px #3B82F6",
+      borderRight: "solid 6px #172439",
+      borderBottom: "solid 6px #172439",
       borderRadius: "15px",
     },
   };
@@ -274,8 +286,8 @@ export default function Home() {
     );
   };
 
-  const resultURL = "localhost:3000/result"; //本番環境では変更する
-  //const resultURL = "wakarates.vercel.app/result";
+  //const resultURL = "localhost:3000/result"; //本番環境では変更する
+  const resultURL = "wakarates.vercel.app/result";
 
   const copyToClipboard = async () => {
     await global.navigator.clipboard.writeText(resultURL + "?id=" + id);
@@ -286,7 +298,6 @@ export default function Home() {
       <div className="flex flex-col items-center">
         <p className="text-3xl font-bold">ランキング入り！</p>
         <p className="text-2xl font-bold">スコア:{userScore}点</p>
-        <p>canRegister:{canRegister.toString()}</p>
         <button
           onClick={() => {
             setCanRegister(true);
@@ -320,17 +331,19 @@ export default function Home() {
             登録
           </button>
         </div>
-        <TwitterShareButton
-          url={shareURL}
-          title={`${userScore}点を獲得しました！ \n ${
-            resultSaved ? resultURL + "?id=" + resultId : ""
-          }`}
-          hashtags={["INIADFES", "JissyuTeam5"]}
-          className="mt-4 flex items-center"
-        >
-          <TwitterIcon size={40} round={true} />
-          <span>結果をシェアする</span>
-        </TwitterShareButton>
+        <div hidden={!resultSaved}>
+          <TwitterShareButton
+            url={shareURL}
+            title={`${userScore}点を獲得しました！ \n ${
+              resultSaved ? resultURL + "?id=" + resultId : ""
+            }`}
+            hashtags={["INIADFES", "JissyuTeam5"]}
+            className="mt-4 flex items-center"
+          >
+            <TwitterIcon size={40} round={true} />
+            <span>結果をシェアする</span>
+          </TwitterShareButton>
+        </div>
         <button
           onClick={() => submitResult()}
           disabled={userName.length > 0 ? false : true}

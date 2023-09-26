@@ -5,7 +5,8 @@ import Sidebar from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { CircularProgress, Button } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import Button from "@mui/material/Button";
 function resultList() {
   const [resultList, setResultList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,24 +65,41 @@ function resultList() {
             size={20}
             className={loading ? "opacity-100" : "opacity-0"}
           />
-          {resultList.map((item) => {
-            return (
-              <div key={item.id}>
-                <p>{item.name}</p>
-                <p>{item.score}</p>
-                {/* <p>{item.odai}<p> */}
-                {/* <p>{item.NG}<p> */}
+          <div className={style.resultListContainer}>
+            {resultList.map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
+                >
+                  <p className={style.player}>プレイヤー名</p>
+                  <p>
+                    {item.name}
+                    <span className={style.san}>さん</span>
+                  </p>
+                  <p>スコア:{item.score}点</p>
+                  {/* <p>{item.odai}<p> */}
+                  {/* <p>{item.NG}<p> */}
 
-                <Button onClick={() => loadThisResult(item.id)}>
-                  この対戦履歴を見る！
-                </Button>
-                <br />
-                <Button onClick={() => playThisOdai(item.OdaiId)}>
-                  このお題で遊ぶ！
-                </Button>
-              </div>
-            );
-          })}
+                  <Button
+                    variant="contained"
+                    className="bg-blue-500 mb-2"
+                    onClick={() => loadThisResult(item.id)}
+                  >
+                    この対戦履歴を見る！
+                  </Button>
+                  <br />
+                  <Button
+                    variant="contained"
+                    className="bg-blue-500"
+                    onClick={() => playThisOdai(item.OdaiId)}
+                  >
+                    このお題で遊ぶ！
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </main>
     </div>

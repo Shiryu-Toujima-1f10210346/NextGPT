@@ -25,7 +25,10 @@ function Sidebar() {
             <div className="" key={key}>
               <li
                 onClick={() => {
-                  router.push(val.path);
+                  router.push({
+                    pathname: val.path,
+                    query: { ...router.query },
+                  });
                 }}
                 key={key}
                 className={`md:m-4 lg:m-4 

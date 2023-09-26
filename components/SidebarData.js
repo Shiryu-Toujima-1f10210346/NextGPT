@@ -7,14 +7,20 @@ import AdbIcon from "@mui/icons-material/Adb";
 import AddCardIcon from "@mui/icons-material/AddCard";
 
 export const SidebarData = [
+  // {
+  //   id: "home",
+  //   title: "ホーム",
+  //   icon: <HomeSharpIcon />,
+  //   selected: <HomeSharpIcon style={{ color: "white" }} />,
+  //   path: "/",
+  // },
   {
-    id: "home",
-    title: "ホーム",
+    id: "resultList",
+    title: "対戦履歴",
     icon: <HomeSharpIcon />,
     selected: <HomeSharpIcon style={{ color: "white" }} />,
-    path: "/",
+    path: "/resultList",
   },
-
   {
     id: "rank",
     title: "ランキング",
