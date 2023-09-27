@@ -10,6 +10,8 @@ function Sidebar() {
   return (
     <div>
       <Head>
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <meta name="mobile-web-app-capable" content="yes"></meta>
         {/* router.pathでSidebarDataから検索*/}
         {SidebarData.map((val, key) => {
           if (router.pathname == val.path) {

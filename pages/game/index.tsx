@@ -238,7 +238,6 @@ export default function Home() {
     }
   }
 
-  const shareURL = "Jissyu-Example.com";
   const customStyles = {
     content: {
       marginTop: "20%",
@@ -333,7 +332,7 @@ export default function Home() {
         </div>
         <div hidden={!resultSaved}>
           <TwitterShareButton
-            url={shareURL}
+            url={resultURL}
             title={`${userScore}点を獲得しました！ \n ${
               resultSaved ? resultURL + "?id=" + resultId : ""
             }`}
