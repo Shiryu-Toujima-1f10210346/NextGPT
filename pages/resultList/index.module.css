@@ -1,0 +1,28 @@
+@media (max-width: 500px) {
+  .resultListContainer {
+    overflow-y: scroll;
+    font-size: 1.5rem;
+    width: 80vw;
+    padding-bottom: 20%;
+  }
+  .san {
+    font-size: 1rem;
+  }
+  .player {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .resultListContainer {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 2rem;
+    margin-left: 10vw;
+    width: 70vw;
+  }
+  .san {
+    font-size: 1.5rem;
+  }
+}

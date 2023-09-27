@@ -6,10 +6,14 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { TwitterShareButton, TwitterIcon } from "react-share";
-import global from "../../styles/global.module.css";
+import globalCss from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
 import SendIcon from "@mui/icons-material/Send";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import IconButton from "@mui/material/IconButton";
+import Link from "next/link";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
@@ -29,6 +33,8 @@ export default function Home() {
   const [count, setCount] = useState<number>(0);
   const [exampleHide, setExampleHide] = useState<boolean>(false);
   const [example, setExample] = useState(examples);
+  const [resultSaved, setResultSaved] = useState<boolean>(false);
+  const [resultId, setResultId] = useState<number>();
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -41,7 +47,20 @@ export default function Home() {
   const router = useRouter();
 
   const id = router.query.id;
+
+  const cacheOdai = () => {
+    const cacheOdai = localStorage.getItem("odai");
+    const cacheNG = localStorage.getItem("NG");
+    const cacheLimit = localStorage.getItem("limit");
+    const cacheScore = localStorage.getItem("score");
+    if (cacheOdai) setOdai(cacheOdai);
+    if (cacheNG) setNG(JSON.parse(cacheNG));
+    if (cacheLimit) setLimit(JSON.parse(cacheLimit));
+    if (cacheScore) setUserScore(JSON.parse(cacheScore));
+  };
+
   const getSpecificOdai = async () => {
+    cacheOdai();
     const res = await fetch(`/api/getSpecificOdai?id=${id}`, {
       method: "GET",
       headers: {
@@ -56,6 +75,10 @@ export default function Home() {
     setLimit(data.limit);
     setUserScore(data.score);
     setCount(0);
+    localStorage.setItem("odai", data.odai);
+    localStorage.setItem("NG", JSON.stringify(data.ng));
+    localStorage.setItem("limit", JSON.stringify(data.limit));
+    localStorage.setItem("score", JSON.stringify(data.score));
   };
 
   const fetchRanking = async () => {
@@ -123,11 +146,17 @@ export default function Home() {
     });
     const data = await res.json();
     console.log(data);
+    console.log("対戦履歴ID:" + data.id);
+    setResultSaved(true);
+    setResultId(data.id);
   };
 
   useEffect(() => {
     if (id) {
+      console.log("idがあります");
       getSpecificOdai();
+    } else {
+      console.log("idがありません");
     }
   }, [id]);
 
@@ -220,8 +249,8 @@ export default function Home() {
       marginRight: "-40%",
       transform: "translate(-50%, -50%)",
       minWidth: "40%",
-      borderRight: "solid 6px #3B82F6",
-      borderBottom: "solid 6px #3B82F6",
+      borderRight: "solid 6px #172439",
+      borderBottom: "solid 6px #172439",
       borderRadius: "15px",
     },
   };
@@ -257,12 +286,18 @@ export default function Home() {
     );
   };
 
+  //const resultURL = "localhost:3000/result"; //本番環境では変更する
+  const resultURL = "wakarates.vercel.app/result";
+
+  const copyToClipboard = async () => {
+    await global.navigator.clipboard.writeText(resultURL + "?id=" + id);
+  };
+
   const submitModal = () => {
     return (
       <div className="flex flex-col items-center">
         <p className="text-3xl font-bold">ランキング入り！</p>
         <p className="text-2xl font-bold">スコア:{userScore}点</p>
-        <p>canRegister:{canRegister.toString()}</p>
         <button
           onClick={() => {
             setCanRegister(true);
@@ -296,15 +331,19 @@ export default function Home() {
             登録
           </button>
         </div>
-        <TwitterShareButton
-          url={shareURL}
-          title={`${userScore}点を獲得しました！\n `}
-          hashtags={["INIADFES", "JissyuTeam5"]}
-          className="mt-4 flex items-center"
-        >
-          <TwitterIcon size={40} round={true} />
-          <span>結果をシェアする</span>
-        </TwitterShareButton>
+        <div hidden={!resultSaved}>
+          <TwitterShareButton
+            url={shareURL}
+            title={`${userScore}点を獲得しました！ \n ${
+              resultSaved ? resultURL + "?id=" + resultId : ""
+            }`}
+            hashtags={["INIADFES", "JissyuTeam5"]}
+            className="mt-4 flex items-center"
+          >
+            <TwitterIcon size={40} round={true} />
+            <span>結果をシェアする</span>
+          </TwitterShareButton>
+        </div>
         <button
           onClick={() => submitResult()}
           disabled={userName.length > 0 ? false : true}
@@ -312,6 +351,20 @@ export default function Home() {
         >
           対戦結果を保存
         </button>
+        <div hidden={!resultSaved}>
+          <Tooltip title="Copy" placement="top" arrow>
+            <IconButton
+              color="primary"
+              size="small"
+              onClick={() => copyToClipboard()}
+            >
+              <Link href={resultURL + "?id=" + resultId}>
+                {resultURL + "?id=" + resultId}
+              </Link>
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
     );
   };
@@ -319,7 +372,7 @@ export default function Home() {
   return (
     <div>
       <Sideber />
-      <main className={`${global.container} ${styles.main} `}>
+      <main className={`${globalCss.container} ${styles.main} `}>
         <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
           {debugModal()}
         </Modal>

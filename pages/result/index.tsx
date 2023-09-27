@@ -7,6 +7,8 @@ import global from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import styles from "./index.module.css";
 import { CircularProgress } from "@mui/material";
+import Head from "next/head";
+import Button from "@mui/material/Button";
 import { json } from "stream/consumers";
 import { type } from "os";
 export default function Home() {
@@ -18,10 +20,13 @@ export default function Home() {
   const [result, setResult] = useState([]);
   const [fetching, setFetching] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
+  const [odaiId, setOdaiId] = useState<number>(0);
   const router = useRouter();
   const id = Number(router.query.id);
 
   const getResult = async () => {
+    console.log("getresult");
+    console.log("id:" + id);
     try {
       const res = await fetch("/api/getResult?id=" + id, {
         method: "GET",
@@ -32,17 +37,23 @@ export default function Home() {
       const data = await res.json();
       console.table(data);
       console.log(data.result);
+
       console.table(JSON.parse(data.result));
       console.log(typeof JSON.parse(data.result));
+      setUserName(data.name);
       setResult(JSON.parse(data.result));
       setFetching(false);
       setOdai("ここにお題");
+      setNG(["ここにNGワード"]);
+      setOdaiId(data.odaiId);
+      return true;
     } catch (e) {
       console.log(e);
       setOdai("IDが不正です!");
       setNG(["URLのIDを再確認してください"]);
       setFetching(false);
       setError(true);
+      return false;
     }
   };
 
@@ -55,10 +66,19 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getResult();
+    if (id) getResult();
+    else {
+      setOdai("IDが不正です!");
+      setNG(["URLのIDを再確認してください"]);
+      setFetching(false);
+      setError(true);
+    }
   }, [id]);
   return (
     <div>
+      <Head>
+        <title>わからせンクラテス！ 対戦履歴</title>
+      </Head>
       <Sideber />
       <main className={`${global.container} ${styles.main} `}>
         <div
@@ -127,9 +147,14 @@ export default function Home() {
               >
                 会話履歴
               </p>
-              <button onClick={() => playThisOdai(id)} hidden={error}>
+              <Button
+                variant="contained"
+                className="bg-blue-500"
+                onClick={() => playThisOdai(odaiId)}
+                hidden={error}
+              >
                 このお題で遊ぶ！
-              </button>
+              </Button>
             </div>
           </div>{" "}
           {/* left */}
@@ -157,7 +182,7 @@ export default function Home() {
                     <div>
                       <div className="flex flex-row-reverse">
                         <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
-                          あなた
+                          {userName}さん
                         </div>
                       </div>
                       <div className="flex flex-row-reverse ">
