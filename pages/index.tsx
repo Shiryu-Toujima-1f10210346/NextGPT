@@ -2,10 +2,13 @@ import React from "react";
 import Sideber from "../components/Sidebar";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
-import Conv from "../components/conversation";
+import Head from "next/head";
 function index() {
   return (
     <div>
+      <Head>
+        <title>わからせンクラテス！ ホーム</title>
+      </Head>
       <Sideber />
       <main>
         <div className={`${global.container} text-center`}>
