@@ -1,6 +1,6 @@
 ---
-name: USE THIS TEMPLETE
-about: ここに要約
+name: ISSUEを立てる前に読んで
+about: よろしく
 title: ''
 labels: bug, enhancement, improve
 assignees: ''
@@ -9,7 +9,8 @@ assignees: ''
 
 # 欲しい機能がある場合
 
- [enhancement]ラベルを割り当ててください｡
+ [feature request](https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=feature-request&projects=&template=feature_request.yml)
+
 
  思うがまま書きなぐってもらって大丈夫です｡
 
