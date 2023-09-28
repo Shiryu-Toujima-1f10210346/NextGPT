@@ -16,12 +16,12 @@ assignees: ''
 
 # バグを見つけた場合
 
- [bug]ラベルを割り当ててください｡
+[bug report](https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml)
 
  ｢どこのページで｣  ｢何をしたら｣  ｢どうなった｣ を出来るだけ具体的に書いていただけると助かります｡
 
 # 改善案がある場合
 
- [improve]ラベルを割り当ててください｡
+ [improve request](https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=enhancement&projects=&template=improve-request.md&title=)
 
  **開発者にリスペクトを込めて送ってください**｡
