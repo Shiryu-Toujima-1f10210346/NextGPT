@@ -36,11 +36,11 @@ export const SidebarData = [
     path: "/game",
   },
   {
-    id: "debug",
-    title: "デバッグ",
+    id: "info",
+    title: "インフォ",
     icon: <AdbIcon />,
     selected: <AdbIcon style={{ color: "white" }} />,
-    path: "/debug",
+    path: "/info",
   },
   {
     id: "odai",

@@ -16,6 +16,7 @@ import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function Home() {
+  const [game, setGame] = useState<"win" | "lose" | "playing">("playing");
   const [userInput, setUserInput] = useState<string>("");
   const [result, setResult] = useState([]);
   const [limit, setLimit] = useState<number>(10);
@@ -47,6 +48,20 @@ export default function Home() {
   const router = useRouter();
 
   const id = router.query.id;
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUserInput(value);
+
+    for (let i = 0; i < NG.length; i++) {
+      if (value.includes(NG[i]) || value.includes(odai)) {
+        setAlert("NGワードが含まれています");
+        return;
+      }
+    }
+    //アラート以外にする
+    setAlert("");
+  };
 
   const cacheOdai = () => {
     const cacheOdai = localStorage.getItem("odai");
@@ -124,8 +139,6 @@ export default function Home() {
     });
     const data = await res.json();
     console.log(data);
-    setCanRegister(false);
-    setWin(false);
     window.location.href = "/rank";
   };
 
@@ -211,7 +224,7 @@ export default function Home() {
         fetchRanking();
 
         setInterval(() => {
-          setWin(true);
+          setGame("win");
         }, 2000);
       } else {
         setCount(count + 1);
@@ -375,7 +388,7 @@ export default function Home() {
         <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
           {debugModal()}
         </Modal>
-        <Modal isOpen={win} ariaHideApp={false} style={customStyles}>
+        <Modal isOpen={game === "win"} ariaHideApp={false} style={customStyles}>
           {submitModal()}
         </Modal>
         <div
@@ -398,10 +411,12 @@ export default function Home() {
                 text-2xl lg:text-3xl font-bold
                 lg:mb-8 
                 "
-                style={{ color: win ? "red" : "" }}
+                style={{ color: game === "win" && "red" }}
               >
-                {win ? "あなたの勝ちです！" : "GPTからお題を引き出せ！"}
-                <button onClick={() => setWin(!win)}>@</button>
+                {game === "win"
+                  ? "あなたの勝ちです！"
+                  : "GPTからお題を引き出せ！"}
+                <button onClick={() => setGame("playing")}>@</button>
                 <button onClick={() => setDebug(!debug)}>デバ</button>
               </div>
 
@@ -440,7 +455,7 @@ export default function Home() {
                   name="user"
                   placeholder="お題を引き出そう！"
                   value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
+                  onChange={(e) => onInputChange(e)}
                   className="border border-gray-200 text-center rounded-xl text-xl lg:text-3xl lg:w-96"
                 />
 
@@ -449,11 +464,17 @@ export default function Home() {
                   id="submit"
                   value="送信"
                   disabled={
-                    limit <= 0 || userInput.length === 0 || thinking || win
+                    limit <= 0 ||
+                    userInput.length === 0 ||
+                    thinking ||
+                    game === "win"
                   }
                   className={`"text-center rounded-full lg:text-3xl lg:w-96 bg-blue-500 text-white"
                   ${
-                    limit <= 0 || userInput.length === 0 || thinking || win
+                    limit <= 0 ||
+                    userInput.length === 0 ||
+                    thinking ||
+                    game === "win"
                       ? "opacity-50 cursor-not-allowed"
                       : ""
                   }`}

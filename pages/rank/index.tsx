@@ -12,8 +12,8 @@ export default function Home() {
 
   // ランキングデータを取得する
   const fetchRanking = async () => {
-    const chachedData = localStorage.getItem("rankingData");
-    if (chachedData) setRanking(JSON.parse(chachedData));
+    const cacheData = localStorage.getItem("rankingData");
+    if (cacheData) setRanking(JSON.parse(cacheData));
     try {
       const res = await fetch("/api/getRanking");
       const data = await res.json();
