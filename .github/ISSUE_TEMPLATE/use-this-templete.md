@@ -1,5 +1,5 @@
 ---
-name: バグ､改善案､機能提案  テンプレート
+name: USE THIS TEMPLETE
 about: ここに要約
 title: ''
 labels: bug, enhancement, improve
