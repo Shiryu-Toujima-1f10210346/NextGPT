@@ -1,7 +1,10 @@
 ---
 name: 改善案 Improve request
 about: リスペクトを忘れずに
-title: ""
+title: ''
 labels: enhancement
-assignees: ""
+assignees: ''
+
 ---
+
+

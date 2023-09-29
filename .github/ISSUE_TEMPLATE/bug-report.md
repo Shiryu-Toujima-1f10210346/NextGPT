@@ -1,9 +1,10 @@
 ---
 name: バグ報告 Bug report
 about: 具体的に報告してください。 Please report specifically.
-title: ""
+title: ''
 labels: bug
-assignees: ""
+assignees: ''
+
 ---
 
 ## このページで
