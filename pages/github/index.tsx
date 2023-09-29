@@ -62,7 +62,6 @@ const HomePage = () => {
               改善要望はこちらから
             </a>
           </li>
-          <marquee className="text-center">☆キリ番報告はこちらから☆</marquee>
         </ul>
         <h1>既知のバグ</h1>
         <ul>
@@ -83,7 +82,7 @@ const HomePage = () => {
                 </li>
               );
             }
-            return null; // バグでない場合はnullを返す
+            return null;
           })}
         </ul>
         <br />
@@ -106,16 +105,16 @@ const HomePage = () => {
                 </li>
               );
             }
-            return null; // 機能追加でない場合はnullを返す
+            return null;
           })}
         </ul>
 
         <br />
 
-        <h1>その他</h1>
+        <h1>改善案</h1>
         <ul>
           {issues.map((issue) => {
-            if (issue.labels.some((label) => label.name === "")) {
+            if (issue.labels.some((label) => label.name === "improve")) {
               return (
                 <li key={issue.id}>
                   <span>･</span>
@@ -131,7 +130,7 @@ const HomePage = () => {
                 </li>
               );
             }
-            return null; // 質問でない場合はnullを返す
+            return null;
           })}
         </ul>
       </main>
