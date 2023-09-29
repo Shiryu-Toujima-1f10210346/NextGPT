@@ -1,6 +1,6 @@
 ---
-name: Improve request
-about: Suggest an idea for this project
+name: 改善案 Improve request
+about: リスペクトを忘れずに
 title: ""
 labels: enhancement
 assignees: ""
