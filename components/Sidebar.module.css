@@ -15,7 +15,6 @@
     background: #ffffff3a;
     z-index: 100;
     transition: all 0.5s ease;
-    box-shadow: 0 0 10px rgba(37, 255, 66, 0.24);
     background-color: rgba(127, 255, 212, 0.198);
   }
   .icon {
@@ -35,7 +34,6 @@
     transition: all 0.5s ease;
     font-size: 90%;
     user-select: none;
-    border-top: 3px solid #00000010;
     background-color: aliceblue;
     display: grid;
     grid-auto-flow: column;
@@ -49,7 +47,7 @@
 
 @media (max-width: 500px) {
   .sidebar {
-    background-color: #ffffff;
+    background-color: #000000;
     display: grid;
     grid-auto-flow: column;
     flex-direction: row;

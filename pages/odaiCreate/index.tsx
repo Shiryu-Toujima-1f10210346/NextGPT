@@ -48,13 +48,24 @@ function odaiCreate() {
               className="border-2"
             />
             <br />
-            <input
-              placeholder="NGワード"
-              className="border-2"
-              value={ngTmp.toString()}
-              onChange={(e) => setNgTmp(e.target.value)}
-            />
-            <br />
+            <div className="flex flex-row">
+              <input
+                placeholder="NGワード"
+                className="border-2"
+                value={ngTmp.toString()}
+                onChange={(e) => setNgTmp(e.target.value)}
+              />
+              <button
+                onClick={() => {
+                  setNgList([...ngList, ngTmp]);
+                  setNgTmp("");
+                }}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                +
+              </button>
+            </div>
+
             <input
               placeholder="制限回数"
               className="border-2"
@@ -67,15 +78,6 @@ function odaiCreate() {
               onChange={(e) => setOdaiScore(Number(e.target.value))}
             />
             <br />
-            <button
-              onClick={() => {
-                setNgList([...ngList, ngTmp]);
-                setNgTmp("");
-              }}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              NGワード追加
-            </button>
 
             <div>
               <div>

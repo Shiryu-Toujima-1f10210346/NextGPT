@@ -1,10 +1,8 @@
-// pages/index.js
-
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
 
-const HomePage = () => {
+const Github = () => {
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
@@ -158,4 +156,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Github;

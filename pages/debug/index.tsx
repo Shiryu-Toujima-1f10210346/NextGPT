@@ -186,7 +186,7 @@ function debug() {
             </button>
           </div>
 
-          {/* <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
+          <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>NG判別</p>
             <input
               placeholder="お題"
@@ -207,7 +207,7 @@ function debug() {
               判定
             </button>
             <div>結果:{result ? "同じ単語" : "違う単語"}</div>
-          </span> */}
+          </span>
         </div>
       </main>
     </div>
