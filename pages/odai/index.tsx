@@ -74,7 +74,7 @@ export default function index() {
     //gameページに遷移
     router.push({
       pathname: "/game",
-      query: { id: id },
+      query: { OdaiId: id },
     });
   };
 

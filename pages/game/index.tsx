@@ -47,7 +47,7 @@ export default function Home() {
   }, []);
   const router = useRouter();
 
-  const id = router.query.id;
+  const id = router.query.OdaiId;
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

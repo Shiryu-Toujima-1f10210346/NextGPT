@@ -45,7 +45,7 @@ function Sidebar() {
                 hover:shadow-2xl py-4 rounded-full ${
                   router.pathname == val.path
                     ? "bg-white text-black scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0 transition ease-in-out duration-500"
-                    : "hover:bg-gray-200 "
+                    : " "
                 }`}
               >
                 <div className={`${styles.icon} `}>
