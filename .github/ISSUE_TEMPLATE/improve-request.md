@@ -2,7 +2,7 @@
 name: 改善案 Improve request
 about: リスペクトを忘れずに
 title: ''
-labels: Improve
+labels: improve
 assignees: ''
 
 ---
