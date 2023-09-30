@@ -71,7 +71,7 @@ const HomePage = () => {
             </a>
           </li>
         </ul>
-        <h1>既知のバグ</h1>
+        <h1 className="text-2xl">既知のバグ</h1>
         <ul>
           {issues.map((issue) => {
             if (
@@ -98,7 +98,7 @@ const HomePage = () => {
           })}
         </ul>
         <br />
-        <h1>機能要望</h1>
+        <h1 className="text-2xl">機能要望</h1>
         <ul>
           {issues.map((issue) => {
             if (
@@ -127,7 +127,7 @@ const HomePage = () => {
 
         <br />
 
-        <h1>改善案</h1>
+        <h1 className="text-2xl">改善案</h1>
         <ul>
           {issues.map((issue) => {
             if (
