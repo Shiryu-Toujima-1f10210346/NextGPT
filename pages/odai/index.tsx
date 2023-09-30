@@ -134,7 +134,7 @@ export default function index() {
         </button>
         <CircularProgress
           size={20}
-          className={loading ? "opacity-100" : "opacity-0"}
+          className={`loading ? "opacity-100" : "opacity-0"`}
         />
 
         <ul className={style.odaiContainer}>

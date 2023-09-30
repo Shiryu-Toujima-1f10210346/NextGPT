@@ -3,7 +3,7 @@ import Sideber from "../components/Sidebar";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
 import Head from "next/head";
-function index() {
+function Home() {
   return (
     <div>
       <Head>
@@ -49,4 +49,4 @@ function index() {
   );
 }
 
-export default index;
+export default Home;
