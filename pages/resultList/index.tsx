@@ -32,7 +32,7 @@ function resultList() {
     //gameページに遷移
     router.push({
       pathname: "/game",
-      query: { id: id },
+      query: { OdaiId: id },
     });
   };
 
@@ -40,7 +40,7 @@ function resultList() {
     //resultページに遷移
     router.push({
       pathname: "/result",
-      query: { id: id },
+      query: { resultId: id },
     });
   };
 

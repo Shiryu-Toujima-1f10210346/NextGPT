@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SidebarData } from "./SidebarData";
 import styles from "./Sidebar.module.css";
 import Head from "next/head";
@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 function Sidebar() {
   const router = useRouter();
+  const [samePath, setSamePath] = useState(false);
   return (
     <div>
       <Head>
@@ -24,7 +25,7 @@ function Sidebar() {
       <ul className={styles.sidebar}>
         {SidebarData.map((val, key) => {
           return (
-            <div className="" key={key}>
+            <div className="bg-black" key={key}>
               <li
                 onClick={() => {
                   router.push({
@@ -33,24 +34,27 @@ function Sidebar() {
                   });
                 }}
                 key={key}
-                className={`md:m-4 lg:m-4 
+                className={`
+                ${router.pathname == val.path && "border-4 border-gray-800"}
+                md:m-4 lg:m-4 
                 object-center
                 flex flex-row justify-center items-center 
                 lg:justify-around lg:text-xl
-                text-gray-800 
-                lg:p-6 shadow-md 
+                lg:p-6 
                 hover:shadow-2xl py-4 rounded-full ${
                   router.pathname == val.path
-                    ? "bg-gray-900 text-white scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0 transition ease-in-out duration-500"
-                    : "hover:bg-gray-200 "
+                    ? "bg-white text-black scale-125 lg:scale-100 -translate-y-2 lg:-translate-y-0 transition ease-in-out duration-500"
+                    : " "
                 }`}
               >
-                <div className={styles.icon}>
+                <div className={`${styles.icon} `}>
                   {/* urlとval.idが一緒なら */}
                   {router.pathname == val.path ? val.selected : val.icon}
                 </div>
                 {router.pathname != val.path ? (
-                  <div className={`${styles.title} ml-4`}>{val.title}</div>
+                  <div className={`${styles.title} ml-4 text-white font-bold`}>
+                    {val.title}
+                  </div>
                 ) : (
                   ""
                 )}

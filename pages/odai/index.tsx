@@ -74,7 +74,7 @@ export default function index() {
     //gameページに遷移
     router.push({
       pathname: "/game",
-      query: { id: id },
+      query: { OdaiId: id },
     });
   };
 
@@ -126,10 +126,17 @@ export default function index() {
         <div className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
           {odai.length == 0 ? <p>お題取得中･･･</p> : <p>お題一覧</p>}
         </div>
+        <button
+          onClick={() => router.push("/odaiCreate")}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          お題投稿フォーム
+        </button>
         <CircularProgress
           size={20}
-          className={loading ? "opacity-100" : "opacity-0"}
+          className={`loading ? "opacity-100" : "opacity-0"`}
         />
+
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
             <Odai {...item} />

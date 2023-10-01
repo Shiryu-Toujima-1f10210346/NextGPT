@@ -22,13 +22,13 @@ export default function Home() {
   const [error, setError] = useState<boolean>(false);
   const [odaiId, setOdaiId] = useState<number>(0);
   const router = useRouter();
-  const id = Number(router.query.id);
+  const id = Number(router.query.resultId);
 
   const getResult = async () => {
     console.log("getresult");
     console.log("id:" + id);
     try {
-      const res = await fetch("/api/getResult?id=" + id, {
+      const res = await fetch("/api/getResult?resultId=" + id, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export default function Home() {
     //gameページに遷移
     router.push({
       pathname: "/game",
-      query: { id: id },
+      query: { resultId: id },
     });
   };
 

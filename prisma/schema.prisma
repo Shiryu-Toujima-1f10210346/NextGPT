@@ -39,3 +39,10 @@ model Result {
   // ng        String[]
   // count     Int
 }
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  name      String  @default("unknown")
+  comment   String
+  createdAt DateTime @default(now())
+}

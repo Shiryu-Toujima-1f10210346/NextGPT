@@ -16,6 +16,8 @@ function debug() {
   const [limit, setLimit] = useState<Number>(10);
   const [odaiScore, setOdaiScore] = useState<Number>(0);
   const [official, setOfficial] = useState<Boolean>(false);
+  const [password, setPassword] = useState("");
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   async function fetchAddRank() {
     const res = await fetch("/api/addRank", {
@@ -58,8 +60,45 @@ function debug() {
     console.log(res);
   }
 
+  const handlePasswordSubmit = (event) => {
+    event.preventDefault();
+    if (password === process.env.NEXT_PUBLIC_ADMIN_PASS) {
+      setIsAuthorized(true);
+    } else {
+      alert("パスワードが正しくありません。");
+    }
+  };
+
+  if (!isAuthorized) {
+    return (
+      <div>
+        <Head>
+          <title>Debug</title>
+        </Head>
+        <Sidebar />
+        <form onSubmit={handlePasswordSubmit}>
+          <label>
+            パスワード：
+            <input
+              type="password"
+              value={password}
+              className="border-2"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <button type="submit" className="border-2 bg-gray-300">
+            ログイン
+          </button>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div>
+      <Head>
+        <title>Debug</title>
+      </Head>
       <Sidebar />
       <main>
         <div className={global.container}>
@@ -147,7 +186,7 @@ function debug() {
             </button>
           </div>
 
-          {/* <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
+          <span className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>NG判別</p>
             <input
               placeholder="お題"
@@ -168,7 +207,7 @@ function debug() {
               判定
             </button>
             <div>結果:{result ? "同じ単語" : "違う単語"}</div>
-          </span> */}
+          </span>
         </div>
       </main>
     </div>
