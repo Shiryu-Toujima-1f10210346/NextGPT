@@ -20,8 +20,8 @@ export default function Home() {
   const [userInput, setUserInput] = useState<string>("");
   const [result, setResult] = useState([]);
   const [limit, setLimit] = useState<number>(10);
-  const [odai, setOdai] = useState<string>("バナナ");
-  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
+  const [odai, setOdai] = useState<string>("ランダムなお題を取得中");
+  const [NG, setNG] = useState<string[]>(["ちょっとまってね"]);
   const [alert, setAlert] = useState<string>("");
   const [thinking, setthinking] = useState<boolean>(false);
   const [debug, setDebug] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export default function Home() {
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [ranking, setRanking] = useState([]);
-  const [userScore, setUserScore] = useState<number>(700);
+  const [userScore, setUserScore] = useState<number>();
   const [count, setCount] = useState<number>(0);
   const [exampleHide, setExampleHide] = useState<boolean>(false);
   const [example, setExample] = useState(examples);
@@ -170,8 +170,26 @@ export default function Home() {
       getSpecificOdai();
     } else {
       console.log("idがありません");
+      randomOdai();
     }
   }, [id]);
+
+  const randomOdai = async () => {
+    console.log("ランダムなお題を取得中");
+    const res = await fetch("/api/getRandomOdai");
+    const data = await res.json();
+    console.log(data);
+    setOdai(data.odai);
+    setNG(data.ng);
+    setLimit(data.limit);
+    setUserScore(data.score);
+    setCount(0);
+    localStorage.setItem("odai", data.odai);
+    localStorage.setItem("NG", JSON.stringify(data.ng));
+    localStorage.setItem("limit", JSON.stringify(data.limit));
+    localStorage.setItem("score", JSON.stringify(data.score));
+    router.push("/game?OdaiId=" + data.id);
+  };
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -434,7 +452,7 @@ export default function Home() {
               text-center
               "
             >
-              <div
+              {/* <div
                 id="title"
                 className="
                 text-2xl lg:text-3xl font-bold
@@ -445,7 +463,7 @@ export default function Home() {
                 {game === "win"
                   ? "あなたの勝ちです！"
                   : "GPTからお題を引き出せ！"}
-              </div>
+              </div> */}
 
               <div hidden={true}>
                 <button onClick={() => setGame("playing")}>@</button>
@@ -512,7 +530,7 @@ export default function Home() {
                   }`}
                 />
               </form>
-              <p
+              {/* <p
                 className="
             border-gray-800 border
             shadow-xl rounded-xl 
@@ -521,7 +539,7 @@ export default function Home() {
             "
               >
                 会話履歴
-              </p>
+              </p> */}
 
               {/* <div>
                 {result.length > 0 && (
@@ -565,16 +583,6 @@ export default function Home() {
           </div>{" "}
           {/* left */}
           <div className={styles.resultContainer} id="right">
-            <p
-              className="
-            border-gray-800 border-2 
-            shadow-xl rounded-xl 
-            my-4 mx-16 py-4
-            text-2xl font-bold text-gray-800 text-center hidden lg:block 
-            "
-            >
-              会話履歴
-            </p>
             <div className={styles.result}>
               {/*  浮くやつ
               <div className="mx-6">
