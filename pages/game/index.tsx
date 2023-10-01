@@ -25,7 +25,6 @@ export default function Home() {
   const [alert, setAlert] = useState<string>("");
   const [thinking, setthinking] = useState<boolean>(false);
   const [debug, setDebug] = useState<boolean>(false);
-  const [win, setWin] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
@@ -36,6 +35,7 @@ export default function Home() {
   const [example, setExample] = useState(examples);
   const [resultSaved, setResultSaved] = useState<boolean>(false);
   const [resultId, setResultId] = useState<number>();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -48,6 +48,14 @@ export default function Home() {
   const router = useRouter();
 
   const id = router.query.OdaiId;
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalIsOpen(true);
+  };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -244,6 +252,7 @@ export default function Home() {
         setInterval(() => {
           setGame("win");
         }, 2000);
+        setModalIsOpen(true);
       } else {
         setCount(count + 1);
         setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
@@ -425,16 +434,27 @@ export default function Home() {
     <div>
       <Sideber />
       <main className={`${globalCss.container} ${styles.main} `}>
-        <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
+        <Modal
+          isOpen={debug && modalIsOpen}
+          ariaHideApp={false}
+          style={customStyles}
+          onRequestClose={handleCloseModal}
+        >
           {debugModal()}
         </Modal>
-        <Modal isOpen={game === "win"} ariaHideApp={false} style={customStyles}>
+        <Modal
+          isOpen={game === "win" && modalIsOpen}
+          ariaHideApp={false}
+          style={customStyles}
+          onRequestClose={handleCloseModal}
+        >
           {submitModal()}
         </Modal>
         <Modal
-          isOpen={game === "lose"}
+          isOpen={game === "lose" && modalIsOpen}
           ariaHideApp={false}
           style={customStyles}
+          onRequestClose={handleCloseModal}
         >
           {gameOverModal()}
         </Modal>
@@ -447,7 +467,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4
+              lg:p-12 lg:m-4 px-16
               left 
               text-center bg-white py-4 rounded-xl
               "
@@ -466,14 +486,27 @@ export default function Home() {
               </div> */}
 
               <div hidden={true}>
-                <button onClick={() => setGame("playing")}>@</button>
-                <button onClick={() => setDebug(!debug)}>デバ</button>
+                <button
+                  onClick={() => {
+                    setGame("win");
+                    setModalIsOpen(true);
+                  }}
+                >
+                  @
+                </button>
+                <button
+                  onClick={() => {
+                    setModalIsOpen(true);
+                  }}
+                >
+                  デバッグ
+                </button>
               </div>
 
               <div
                 id="odai"
                 className="
-              lg:text-4xl text-2xl
+              lg:text-4xl text-2xl 
               lg:mb-4 mb-2 font-serif font-bold
               "
               >
@@ -696,7 +729,7 @@ export default function Home() {
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
                             className={`text-2xl lg:text-3xl text-left text-white ${
-                              result[key]?.length > 20 ? "text-xl" : "mx-10"
+                              result[key]?.length > 20 ? "text-xl" : "mx-2"
                             } `}
                           >
                             {result.userInput}
@@ -718,7 +751,7 @@ export default function Home() {
                           <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
-                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                              result[key]?.length > 20 ? "text-2xl" : "mx-2"
                             } `}
                           >
                             {result.gptOutput}
