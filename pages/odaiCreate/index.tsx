@@ -124,8 +124,9 @@ function odaiCreate() {
             />
             <br />
             <input
-              placeholder="点数"
+              placeholder="スコア"
               className="border-2"
+              hidden={!official}
               onChange={(e) => setOdaiScore(Number(e.target.value))}
             />
             <br />

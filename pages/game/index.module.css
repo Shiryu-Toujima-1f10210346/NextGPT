@@ -9,7 +9,6 @@
   overflow-y: scroll;
   height: 60vh;
   /*x軸のパディング*/
-  padding: 0 10px;
 }
 
 .main form {

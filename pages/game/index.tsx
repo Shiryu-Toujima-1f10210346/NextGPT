@@ -174,6 +174,7 @@ export default function Home() {
   }, [id]);
 
   async function onSubmit(event) {
+    event.preventDefault();
     //エラー処理
     if (userInput.trim().length === 0) {
       setAlert("文字を入力してください");
@@ -195,7 +196,6 @@ export default function Home() {
 
     setthinking(true);
 
-    event.preventDefault();
     try {
       console.log({ user: userInput + " NGワードは" + NG });
       const response = await fetch("/api/judge", {
@@ -380,7 +380,29 @@ export default function Home() {
       </div>
     );
   };
-
+  const gameOverModal = () => {
+    return (
+      <div>
+        <p>ゲームオーバー</p>
+        <button
+          className="bg-blue-500 text-white rounded-full px-4 py-2"
+          onClick={() => {
+            window.location.href = "/game" + "?Odaid=" + id;
+          }}
+        >
+          もう一度同じお題で遊ぶ
+        </button>
+        <button
+          className="bg-blue-500 text-white rounded-full px-4 py-2"
+          onClick={() => {
+            router.push("/odai");
+          }}
+        >
+          別のお題で遊ぶ
+        </button>
+      </div>
+    );
+  };
   return (
     <div>
       <Sideber />
@@ -390,6 +412,13 @@ export default function Home() {
         </Modal>
         <Modal isOpen={game === "win"} ariaHideApp={false} style={customStyles}>
           {submitModal()}
+        </Modal>
+        <Modal
+          isOpen={game === "lose"}
+          ariaHideApp={false}
+          style={customStyles}
+        >
+          {gameOverModal()}
         </Modal>
         <div
           className="
@@ -416,6 +445,9 @@ export default function Home() {
                 {game === "win"
                   ? "あなたの勝ちです！"
                   : "GPTからお題を引き出せ！"}
+              </div>
+
+              <div hidden={true}>
                 <button onClick={() => setGame("playing")}>@</button>
                 <button onClick={() => setDebug(!debug)}>デバ</button>
               </div>

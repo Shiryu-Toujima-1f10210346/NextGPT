@@ -40,7 +40,6 @@ function Sidebar() {
                 object-center
                 flex flex-row justify-center items-center 
                 lg:justify-around lg:text-xl
-                text-gray-800 
                 lg:p-6 
                 hover:shadow-2xl py-4 rounded-full ${
                   router.pathname == val.path
@@ -53,7 +52,9 @@ function Sidebar() {
                   {router.pathname == val.path ? val.selected : val.icon}
                 </div>
                 {router.pathname != val.path ? (
-                  <div className={`${styles.title} ml-4`}>{val.title}</div>
+                  <div className={`${styles.title} ml-4 text-white font-bold`}>
+                    {val.title}
+                  </div>
                 ) : (
                   ""
                 )}
