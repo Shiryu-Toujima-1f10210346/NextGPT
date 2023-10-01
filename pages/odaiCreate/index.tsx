@@ -55,8 +55,9 @@ function odaiCreate() {
     }
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // フォームの送信動作をキャンセルする
+  const handleAddNg = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (ngTmp === "") return;
     setNgList([...ngList, ngTmp]);
     setNgTmp("");
   };
@@ -109,7 +110,7 @@ function odaiCreate() {
                   onChange={(e) => setNgTmp(e.target.value)}
                 />
                 <button
-                  onClick={(e) => handleSubmit(e)}
+                  onClick={(e) => handleAddNg(e)}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                   +
