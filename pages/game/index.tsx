@@ -499,14 +499,14 @@ export default function Home() {
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
-              <form onSubmit={(e) => onSubmit(e)} className="mx-auto">
+              <form onSubmit={(e) => onSubmit(e)} className="mx-2">
                 <input
                   type="text"
                   name="user"
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border border-gray-200 text-center rounded-xl text-xl lg:text-3xl lg:w-96"
+                  className="border border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96"
                 />
 
                 <input
