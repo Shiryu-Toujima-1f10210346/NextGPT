@@ -106,18 +106,17 @@ function info() {
       <Sidebar />
       <main className={global.container}>
         <div className="text-2xl m-4 mt-2">info</div>
-
         <Link href="/github" className={linkClass}>
           <p>既知のバグ､機能要望､改善案はこちらから</p>
         </Link>
         <Link href="/aboutGPT" className={linkClass}>
           <p>GPT､プロンプトエンジニアリングとは</p>
         </Link>
-
         <div className="text-2xl m-4 mt-2">コメント</div>
         <div>{submitCommentForm()}</div>
         <div>{commentSending ? "送信中･･･" : "コメント欄"}</div>
         <CircularProgress size={20} hidden={loaded} />
+        <div>{loaded ? "読み込み完了" : "読み込み中･･･"}</div>{" "}
         <div className="overflow-y-scroll h-2/5 bg-gray-100">
           {commentList.map((comment) => (
             <div
