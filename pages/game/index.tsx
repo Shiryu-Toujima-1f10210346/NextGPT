@@ -449,7 +449,7 @@ export default function Home() {
               className="
               lg:p-12 lg:m-4
               left 
-              text-center
+              text-center bg-white py-4 rounded-xl
               "
             >
               {/* <div
@@ -470,20 +470,21 @@ export default function Home() {
                 <button onClick={() => setDebug(!debug)}>デバ</button>
               </div>
 
-              <p
+              <div
                 id="odai"
                 className="
               lg:text-4xl text-2xl
-              lg:mb-4 mb-2
+              lg:mb-4 mb-2 font-serif font-bold
               "
               >
-                お題:{odai}
-              </p>
+                ― お題 ―<br />
+                <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
+              </div>
               <p
                 id="odai"
                 className="
               lg:text-2xl text-xl
-              lg:mb-4 mb-2
+              lg:mb-4 mb-2 font-serif font-bold
               "
               >
                 NGワード:{NG.join(",")}
@@ -506,7 +507,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96"
+                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96"
                 />
 
                 <input
@@ -621,7 +622,7 @@ export default function Home() {
                           example.userInput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="relative ml-8 bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="relative w-2/3 ml-8 bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
                           <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
@@ -640,7 +641,7 @@ export default function Home() {
                           example.gptOutput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1">
                           GPTくん
                         </div>
                       </div>
@@ -649,9 +650,9 @@ export default function Home() {
                           example.gptOutput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="relative bg-gray-100 p-4 rounded-2xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 -z-10"></div>
+                        <div className="relative w-2/3  bg-white p-4 rounded-2xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-6 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-400" />
+                          <div className="absolute bottom-0 left-6 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 -z-10" />
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
                               example.gptOutput.length > 200 ? "text-2xl" : ""
@@ -690,7 +691,7 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex flex-row-reverse ">
-                        <div className="relative bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="relative w-2/3  bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
                           <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
@@ -707,14 +708,14 @@ export default function Home() {
                   {result.gptOutput && result[key] != "" && (
                     <div>
                       <div className="flex">
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
                           GPTくん
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="relative bg-gray-100 p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                        <div className="relative w-2/3  bg-white p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
                               result[key]?.length > 20 ? "text-2xl" : "mx-10"
