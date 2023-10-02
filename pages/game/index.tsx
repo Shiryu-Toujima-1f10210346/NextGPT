@@ -467,7 +467,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4 px-16
+              lg:p-12 lg:m-4 px-8
               left 
               text-center bg-white py-4 rounded-xl
               "

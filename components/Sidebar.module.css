@@ -52,6 +52,7 @@
     grid-auto-flow: column;
     flex-direction: row;
     justify-content: stretch;
+    /* padding bottom 15px */
   }
   .title {
     display: none;

@@ -9,7 +9,7 @@ import { CircularProgress } from "@mui/material";
 
 export default function index() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const [odai, setOdai] = useState([
     /*{ odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },*/
   ]);
@@ -41,6 +41,7 @@ export default function index() {
         dislike: number;
         score: number;
         official: boolean;
+        name: string;
       }) => ({
         id: item.id,
         odai: item.odai,
@@ -50,11 +51,13 @@ export default function index() {
         dislike: item.dislike,
         score: item.score,
         official: item.official,
+        name: item.name,
       })
     );
     localStorage.setItem("odaiList", JSON.stringify(OdaiList));
     setOdai(OdaiList);
-    setLoading(false);
+    setLoaded(true);
+    console.log("done");
   };
 
   //2分ごとにランキングデータを取得する
@@ -84,6 +87,7 @@ export default function index() {
         className="border-2 border-blue-500 p-4 rounded-xl m-2 mx-10 lg:mx-2 ease-in transition-all duration-100 shadow-xl"
         key={item.id}
       >
+        <li key={item.name}>投稿者: {item.name}さん</li>
         <li key={item.odai}>お題: {item.odai}</li>
         <li key={item.ng}>NGワード: {item.ng.join("､")}</li>
         <li key={item.limit}>制限回数: {item.limit}回</li>
@@ -134,7 +138,7 @@ export default function index() {
         </button>
         <CircularProgress
           size={20}
-          className={`loading ? "opacity-100" : "opacity-0"`}
+          className={loaded && odai.length != 0 ? "opacity-0" : ""}
         />
 
         <ul className={style.odaiContainer}>

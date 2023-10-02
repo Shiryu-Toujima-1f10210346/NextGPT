@@ -50,9 +50,11 @@ function Home() {
           >
             Github
           </a> */}
-          <div className="fixed bottom-16 left-0 w-full p-4 text-2xl font-serif">
+          <div className="fixed bottom-16 left-0 w-full p-4 text-2xl font-serif text-center">
             <div className="">ゲーム開始はこちらから</div>
-            <div className="">👇</div>
+            <div className="flex justify-center">
+              <img src=".././hand.png" alt="hand" className="w-16" />
+            </div>
           </div>
         </div>
       </main>
