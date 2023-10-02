@@ -24,7 +24,7 @@ export default function Home() {
   const [odai, setOdai] = useState<string>("ランダムなお題を取得中");
   const [NG, setNG] = useState<string[]>(["ちょっとまってね"]);
   const [alert, setAlert] = useState<string>("");
-  const [thinking, setthinking] = useState<boolean>(false);
+  const [thinking, setThinking] = useState<boolean>(false);
   const [debug, setDebug] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const [canRegister, setCanRegister] = useState<boolean>(false);
@@ -61,15 +61,17 @@ export default function Home() {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setUserInput(value);
-
+    console.log(NG);
     for (let i = 0; i < NG.length; i++) {
+      if (NG[i] === "") continue;
       if (value.includes(NG[i]) || value.includes(odai)) {
         setAlert("NGワードが含まれています");
         return;
+      } else {
+        setAlert("");
       }
     }
     //アラート以外にする
-    setAlert("");
   };
 
   const cacheOdai = () => {
@@ -193,6 +195,7 @@ export default function Home() {
     setLimit(data.limit);
     setUserScore(data.score);
     setCount(0);
+    setResult([]);
     localStorage.setItem("odai", data.odai);
     localStorage.setItem("NG", JSON.stringify(data.ng));
     localStorage.setItem("limit", JSON.stringify(data.limit));
@@ -209,9 +212,12 @@ export default function Home() {
     }
     //userInputの文字列にNGの文字列が含まれていたら
     for (let i = 0; i < NG.length; i++) {
+      if (NG[i] === "") continue;
       if (userInput.includes(NG[i]) || userInput.includes(odai)) {
         setAlert("NGワードが含まれています");
         return;
+      } else {
+        setAlert("");
       }
     }
 
@@ -221,10 +227,11 @@ export default function Home() {
       return;
     }
 
-    setthinking(true);
+    setThinking(true);
 
     try {
       console.log({ user: userInput + " NGワードは" + NG });
+      console.log(NG);
       const response = await fetch("/api/judge", {
         method: "POST",
         headers: {
@@ -233,7 +240,7 @@ export default function Home() {
         body: JSON.stringify({
           user: userInput,
           odai: odai,
-          NG: NG,
+          NG: NG.length === 1 && NG === [""] ? "NGワードはありません｡" : NG,
         }),
       });
 
@@ -270,10 +277,10 @@ export default function Home() {
           resultRef.current.scrollIntoView({ behavior: "smooth" });
         }
       }, 300);
-      setthinking(false);
+      setThinking(false);
     } catch (error) {
       // Consider implementing your own error handling logic here
-      setthinking(false);
+      setThinking(false);
       console.error(error);
       setAlert(error.message);
     }
