@@ -522,6 +522,17 @@ export default function Home() {
                 ― お題 ―<br />
                 <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
               </div>
+              <button
+                onClick={() => {
+                  randomOdai();
+                }}
+                className="
+                lg:text-2xl text-xl
+                lg: font-serif font-bold
+                "
+              >
+                お題を変更
+              </button>
               <p
                 id="odai"
                 className="
@@ -538,7 +549,6 @@ export default function Home() {
                 {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
                 <span>残り{limit}回</span>
               </span>
-
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
