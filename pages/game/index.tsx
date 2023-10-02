@@ -10,6 +10,7 @@ import globalCss from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
 import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
@@ -390,6 +391,14 @@ export default function Home() {
         >
           対戦結果を保存
         </button>
+        <button
+          onClick={() => {
+            setModalIsOpen(false);
+          }}
+          className="absolute top-0 right-0 mt-2 mr-2 bg-red-500 p-0.5 rounded-full"
+        >
+          <CloseIcon />
+        </button>
         <div hidden={!resultSaved}>
           <Tooltip title="Copy" placement="top" arrow>
             <IconButton
@@ -461,14 +470,14 @@ export default function Home() {
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
-           rounded-xl lg:mt-16 
+           rounded-xl lg:mt-16
          "
         >
           <div className={styles.left}>
             <div
               className="
               lg:p-12 lg:m-4 px-16
-              left 
+              left
               text-center bg-white py-4 rounded-xl
               "
             >
@@ -476,7 +485,7 @@ export default function Home() {
                 id="title"
                 className="
                 text-2xl lg:text-3xl font-bold
-                lg:mb-8 
+                lg:mb-8
                 "
                 style={{ color: game === "win" && "red" }}
               >
@@ -506,7 +515,7 @@ export default function Home() {
               <div
                 id="odai"
                 className="
-              lg:text-4xl text-2xl 
+              lg:text-4xl text-2xl
               lg:mb-4 mb-2 font-serif font-bold
               "
               >
@@ -567,7 +576,7 @@ export default function Home() {
               {/* <p
                 className="
             border-gray-800 border
-            shadow-xl rounded-xl 
+            shadow-xl rounded-xl
             my-4 mx-16 px-4
             text-xl font-bold text-gray-800 text-center lg:hidden
             "
@@ -579,8 +588,8 @@ export default function Home() {
                 {result.length > 0 && (
                   <p
                     className="
-          border-gray-800 border-2 
-          shadow-xl rounded-xl 
+          border-gray-800 border-2
+          shadow-xl rounded-xl
           lg:p-6 lg:m-4 p-2 m-2
           text-xl font-bold text-gray-800
         "
