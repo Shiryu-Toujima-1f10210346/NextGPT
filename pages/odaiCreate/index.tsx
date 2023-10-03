@@ -25,6 +25,21 @@ function odaiCreate() {
   const [name, setName] = useState<string>("名無しさん");
 
   async function fetchAddOdai() {
+    // 以下の内容でよろしいですか？ という確認
+    const firstCheck = confirm(
+      "以下の内容でよろしいですか？\n" +
+        "名前:" +
+        name +
+        "\nお題:" +
+        odai +
+        "\nNGワード:" +
+        ngList.join(",") +
+        "\n制限回数:" +
+        limit.toString() +
+        "\n点数:" +
+        odaiScore.toString()
+    );
+    if (!firstCheck) return;
     if (submit === "ing") return;
     if (ngList.length === 0) {
       const check = confirm("NGワードが指定されていませんがよろしいですか？");
@@ -102,11 +117,10 @@ function odaiCreate() {
       <main>
         <div className={global.container}>
           <p>お題投稿フォーム</p>
-          <div className="text-xl">
-            NGワードは一つごとに+ボタン､またはEnterを押してください！
+          <div className="text-xl font-serif font-bold ">
+            NGワードは一つごとに+ボタン､またはEnterを押してください
           </div>
           <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
-            <p>お題追加</p>
             <input
               placeholder="あなたの名前"
               onChange={(e) => setName(e.target.value)}

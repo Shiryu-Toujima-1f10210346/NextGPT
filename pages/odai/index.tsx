@@ -10,20 +10,7 @@ import { CircularProgress } from "@mui/material";
 export default function index() {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
-  const [odai, setOdai] = useState([
-    /*{ odai: "バナナ", ng: ["黄色", "甘い", "酸っぱい"], limit: 10 },*/
-  ]);
-
-  //test用
-  /*
-  for (let i = 0; i < 10; i++) {
-    odai.push({
-      id: i,
-      odai: "バナナ",
-      ng: ["黄色", "甘い", "酸っぱい"],
-      limit: 10,
-    });
-  }*/
+  const [odai, setOdai] = useState([]);
 
   const fetchOdaiList = async () => {
     const chachedData = localStorage.getItem("odaiList");
@@ -140,6 +127,29 @@ export default function index() {
           size={20}
           className={loaded && odai.length != 0 ? "opacity-0" : ""}
         />
+
+        {/* 公式お題のみを表示するチェックボタン */}
+        <div className="flex items-center justify-center">
+          <label htmlFor="official" className="text-xl">
+            公式お題のみ表示
+          </label>
+          <input
+            type="checkbox"
+            id="official"
+            className="w-6 h-6 m-2"
+            onChange={(e) => {
+              if (e.target.checked) {
+                setOdai(
+                  odai.filter((item) => {
+                    return item.official;
+                  })
+                );
+              } else {
+                setOdai(JSON.parse(localStorage.getItem("odaiList")));
+              }
+            }}
+          />
+        </div>
 
         <ul className={style.odaiContainer}>
           {odai.map((item) => (
