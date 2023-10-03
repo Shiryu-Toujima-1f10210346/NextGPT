@@ -13,20 +13,20 @@ model Rank {
   name      String   
   score     Int
   createdAt DateTime @default(now())
-  odai      String
+  odai      String @default("unknown")
 }
 
 model Odai {
   id        Int      @id @default(autoincrement())
-  ng        String[]
-  odai      String
-  limit     Int
+  ng       String[]
+  odai     String
+  limit    Int
   createdAt DateTime @default(now())
-  like      Int 
-  dislike   Int
-  score     Int
-  official  Boolean
-  name      String
+  like     Int 
+  dislike  Int
+  score    Int
+  official Boolean @default(false)
+  name     String  @default("unknown")
 }
 
 model Result {
