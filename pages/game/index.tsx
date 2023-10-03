@@ -10,32 +10,34 @@ import globalCss from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
 import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
   const [game, setGame] = useState<"win" | "lose" | "playing">("playing");
   const [userInput, setUserInput] = useState<string>("");
   const [result, setResult] = useState([]);
   const [limit, setLimit] = useState<number>(10);
-  const [odai, setOdai] = useState<string>("バナナ");
-  const [NG, setNG] = useState<string[]>(["黄色", "甘い", "酸っぱい"]);
+  const [odai, setOdai] = useState<string>("お題を取得中･･･");
+  const [NG, setNG] = useState<string[]>(["ちょっとまってね"]);
   const [alert, setAlert] = useState<string>("");
-  const [thinking, setthinking] = useState<boolean>(false);
+  const [thinking, setThinking] = useState<boolean>(false);
   const [debug, setDebug] = useState<boolean>(false);
-  const [win, setWin] = useState<boolean>(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [ranking, setRanking] = useState([]);
-  const [userScore, setUserScore] = useState<number>(700);
+  const [userScore, setUserScore] = useState<number>();
   const [count, setCount] = useState<number>(0);
   const [exampleHide, setExampleHide] = useState<boolean>(false);
   const [example, setExample] = useState(examples);
   const [resultSaved, setResultSaved] = useState<boolean>(false);
   const [resultId, setResultId] = useState<number>();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -49,18 +51,27 @@ export default function Home() {
 
   const id = router.query.OdaiId;
 
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalIsOpen(true);
+  };
+
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setUserInput(value);
-
     for (let i = 0; i < NG.length; i++) {
+      if (NG[i] === "") continue;
       if (value.includes(NG[i]) || value.includes(odai)) {
         setAlert("NGワードが含まれています");
         return;
+      } else {
+        setAlert("");
       }
     }
     //アラート以外にする
-    setAlert("");
   };
 
   const cacheOdai = () => {
@@ -102,7 +113,7 @@ export default function Home() {
     const data = await res.json();
     console.log("↓Rankingdata↓");
     console.table(data);
-    const newRanking = data.map((item) => ({
+    const newRanking = data.map((item: { name: String; score: Number }) => ({
       name: item.name,
       score: item.score,
     }));
@@ -112,19 +123,24 @@ export default function Home() {
   };
 
   const compareRanking = async () => {
-    if (ranking.length == 0) setCanRegister(true);
     //RankingにuserScoreが勝っているか
     for (let i = 0; i < ranking.length; i++) {
+      console.log(ranking[i].score);
       if (userScore > ranking[i].score) {
+        console.log(userScore + ">" + ranking[i].score);
+        console.log("ランキングに登録できます");
         setCanRegister(true);
-        console.log("canRegister:" + canRegister);
+        return;
       }
     }
     if (!canRegister) {
       console.log("canRegister:" + canRegister);
+      return;
     }
     if (userScore == 0) {
+      console.log("0点でした");
       setCanRegister(false);
+      return;
     }
   };
 
@@ -170,8 +186,27 @@ export default function Home() {
       getSpecificOdai();
     } else {
       console.log("idがありません");
+      randomOdai();
     }
   }, [id]);
+
+  const randomOdai = async () => {
+    console.log("ランダムなお題を取得中");
+    const res = await fetch("/api/getRandomOdai");
+    const data = await res.json();
+    console.log(data);
+    setOdai(data.odai);
+    setNG(data.ng);
+    setLimit(data.limit);
+    setUserScore(data.score);
+    setCount(0);
+    setResult([]);
+    localStorage.setItem("odai", data.odai);
+    localStorage.setItem("NG", JSON.stringify(data.ng));
+    localStorage.setItem("limit", JSON.stringify(data.limit));
+    localStorage.setItem("score", JSON.stringify(data.score));
+    router.push("/game?OdaiId=" + data.id);
+  };
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -182,9 +217,12 @@ export default function Home() {
     }
     //userInputの文字列にNGの文字列が含まれていたら
     for (let i = 0; i < NG.length; i++) {
+      if (NG[i] === "") continue;
       if (userInput.includes(NG[i]) || userInput.includes(odai)) {
         setAlert("NGワードが含まれています");
         return;
+      } else {
+        setAlert("");
       }
     }
 
@@ -194,10 +232,11 @@ export default function Home() {
       return;
     }
 
-    setthinking(true);
+    setThinking(true);
 
     try {
       console.log({ user: userInput + " NGワードは" + NG });
+      console.log(NG);
       const response = await fetch("/api/judge", {
         method: "POST",
         headers: {
@@ -206,7 +245,10 @@ export default function Home() {
         body: JSON.stringify({
           user: userInput,
           odai: odai,
-          NG: NG,
+          NG:
+            JSON.stringify(NG) === JSON.stringify([])
+              ? "NGワードはありません｡"
+              : NG,
         }),
       });
 
@@ -222,10 +264,10 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.includes(odai)) {
         fetchRanking();
-
         setInterval(() => {
           setGame("win");
         }, 2000);
+        setModalIsOpen(true);
       } else {
         setCount(count + 1);
         setUserScore(Math.floor(userScore * ((limit - count - 1) / limit)));
@@ -242,10 +284,10 @@ export default function Home() {
           resultRef.current.scrollIntoView({ behavior: "smooth" });
         }
       }, 300);
-      setthinking(false);
+      setThinking(false);
     } catch (error) {
       // Consider implementing your own error handling logic here
-      setthinking(false);
+      setThinking(false);
       console.error(error);
       setAlert(error.message);
     }
@@ -308,14 +350,15 @@ export default function Home() {
   const submitModal = () => {
     return (
       <div className="flex flex-col items-center">
-        <p className="text-3xl font-bold">ランキング入り！</p>
+        <p className="text-3xl font-bold">
+          {canRegister ? "ランキング入り！" : "勝利！"}
+        </p>
         <p className="text-2xl font-bold">スコア:{userScore}点</p>
         <button
           onClick={() => {
-            setCanRegister(true);
-            console.log("canRegister:" + canRegister);
             fetchRanking();
           }}
+          hidden={!canRegister}
         >
           ランキング登録
         </button>
@@ -323,12 +366,12 @@ export default function Home() {
           onClick={() => {
             //クエリの初期化
             window.location.href = "/game";
-            console.log("canRegister:" + canRegister);
           }}
+          hidden={!canRegister}
         >
           登録しない
         </button>
-        <div className={canRegister ? "" : "hidden"}>
+        <div>
           <input
             type="text"
             className="border-2"
@@ -339,6 +382,7 @@ export default function Home() {
           <button
             onClick={() => registerRanking()}
             className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+            hidden={!canRegister}
           >
             登録
           </button>
@@ -362,6 +406,14 @@ export default function Home() {
           className={`${userName.length > 0 ? "" : "text-gray-400"}`}
         >
           対戦結果を保存
+        </button>
+        <button
+          onClick={() => {
+            setModalIsOpen(false);
+          }}
+          className="absolute top-0 right-0 mt-2 mr-2 bg-red-500 p-0.5 rounded-full"
+        >
+          <CloseIcon />
         </button>
         <div hidden={!resultSaved}>
           <Tooltip title="Copy" placement="top" arrow>
@@ -407,65 +459,101 @@ export default function Home() {
     <div>
       <Sideber />
       <main className={`${globalCss.container} ${styles.main} `}>
-        <Modal isOpen={debug} ariaHideApp={false} style={customStyles}>
+        <Modal
+          isOpen={debug && modalIsOpen}
+          ariaHideApp={false}
+          style={customStyles}
+          onRequestClose={handleCloseModal}
+        >
           {debugModal()}
         </Modal>
-        <Modal isOpen={game === "win"} ariaHideApp={false} style={customStyles}>
+        <Modal
+          isOpen={game === "win" && modalIsOpen}
+          ariaHideApp={false}
+          style={customStyles}
+          onRequestClose={handleCloseModal}
+        >
           {submitModal()}
         </Modal>
         <Modal
-          isOpen={game === "lose"}
+          isOpen={game === "lose" && modalIsOpen}
           ariaHideApp={false}
           style={customStyles}
+          onRequestClose={handleCloseModal}
         >
           {gameOverModal()}
         </Modal>
         <div
           className="
         sm:flex sm:flex-row sm:justify-strech sm:items-center
-           rounded-xl lg:mt-16 
+           rounded-xl lg:mt-16
          "
         >
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4
+              lg:p-12 lg:m-4 px-8
               left 
-              text-center
+              text-center bg-white py-4 rounded-xl
               "
             >
-              <div
+              {/* <div
                 id="title"
                 className="
                 text-2xl lg:text-3xl font-bold
-                lg:mb-8 
+                lg:mb-8
                 "
                 style={{ color: game === "win" && "red" }}
               >
                 {game === "win"
                   ? "あなたの勝ちです！"
                   : "GPTからお題を引き出せ！"}
-              </div>
+              </div> */}
 
               <div hidden={true}>
-                <button onClick={() => setGame("playing")}>@</button>
-                <button onClick={() => setDebug(!debug)}>デバ</button>
+                <button
+                  onClick={() => {
+                    setGame("win");
+                    setModalIsOpen(true);
+                  }}
+                >
+                  @
+                </button>
+                <button
+                  onClick={() => {
+                    setModalIsOpen(true);
+                  }}
+                >
+                  デバッグ
+                </button>
               </div>
 
-              <p
+              <div
                 id="odai"
                 className="
               lg:text-4xl text-2xl
-              lg:mb-4 mb-2
+              lg:mb-4 mb-2 font-serif font-bold
               "
               >
-                お題:{odai}
-              </p>
+                ― お題 ―<br />
+                <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
+              </div>
+              <button
+                onClick={() => {
+                  randomOdai();
+                }}
+                className="
+                lg:text-2xl text-xl
+                lg: font-serif font-bold
+                "
+              >
+                お題を変更
+              </button>
               <p
                 id="odai"
                 className="
               lg:text-2xl text-xl
-              lg:mb-4 mb-2
+              lg:mb-4 mb-2 font-serif font-bold
               "
               >
                 NGワード:{NG.join(",")}
@@ -477,18 +565,17 @@ export default function Home() {
                 {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
                 <span>残り{limit}回</span>
               </span>
-
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
-              <form onSubmit={(e) => onSubmit(e)} className="mx-auto">
+              <form onSubmit={(e) => onSubmit(e)} className="mx-2">
                 <input
                   type="text"
                   name="user"
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border border-gray-200 text-center rounded-xl text-xl lg:text-3xl lg:w-96"
+                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96 mx-2"
                 />
 
                 <input
@@ -511,24 +598,28 @@ export default function Home() {
                       : ""
                   }`}
                 />
+                <CircularProgress
+                  size={20}
+                  className={thinking ? "" : "opacity-0"}
+                />
               </form>
-              <p
+              {/* <p
                 className="
             border-gray-800 border
-            shadow-xl rounded-xl 
+            shadow-xl rounded-xl
             my-4 mx-16 px-4
             text-xl font-bold text-gray-800 text-center lg:hidden
             "
               >
                 会話履歴
-              </p>
+              </p> */}
 
               {/* <div>
                 {result.length > 0 && (
                   <p
                     className="
-          border-gray-800 border-2 
-          shadow-xl rounded-xl 
+          border-gray-800 border-2
+          shadow-xl rounded-xl
           lg:p-6 lg:m-4 p-2 m-2
           text-xl font-bold text-gray-800
         "
@@ -565,16 +656,6 @@ export default function Home() {
           </div>{" "}
           {/* left */}
           <div className={styles.resultContainer} id="right">
-            <p
-              className="
-            border-gray-800 border-2 
-            shadow-xl rounded-xl 
-            my-4 mx-16 py-4
-            text-2xl font-bold text-gray-800 text-center hidden lg:block 
-            "
-            >
-              会話履歴
-            </p>
             <div className={styles.result}>
               {/*  浮くやつ
               <div className="mx-6">
@@ -613,7 +694,7 @@ export default function Home() {
                           example.userInput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="relative ml-8 bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="relative w-2/3 ml-8 bg-blue-500 p-4 rounded-2xl  border-r-4 border-b-4 mt-1 border-gray-400">
                           <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
@@ -632,7 +713,7 @@ export default function Home() {
                           example.gptOutput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1">
                           GPTくん
                         </div>
                       </div>
@@ -641,9 +722,9 @@ export default function Home() {
                           example.gptOutput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="relative bg-gray-100 p-4 rounded-2xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 -z-10"></div>
+                        <div className="relative w-2/3  bg-white p-4 rounded-2xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-6 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-400" />
+                          <div className="absolute bottom-0 left-6 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 -z-10" />
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
                               example.gptOutput.length > 200 ? "text-2xl" : ""
@@ -682,12 +763,12 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex flex-row-reverse ">
-                        <div className="relative bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
+                        <div className="relative w-2/3  bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
                           <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
                           <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
                           <p
                             className={`text-2xl lg:text-3xl text-left text-white ${
-                              result[key]?.length > 20 ? "text-xl" : "mx-10"
+                              result[key]?.length > 20 ? "text-xl" : "mx-2"
                             } `}
                           >
                             {result.userInput}
@@ -699,17 +780,17 @@ export default function Home() {
                   {result.gptOutput && result[key] != "" && (
                     <div>
                       <div className="flex">
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
                           GPTくん
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="relative bg-gray-100 p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
+                        <div className="relative w-2/3  bg-white p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 shadow-xl -z-10"></div>
                           <p
                             className={`text-gray-800 text-xl lg:text-3xl text-left ${
-                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
+                              result[key]?.length > 20 ? "text-2xl" : "mx-2"
                             } `}
                           >
                             {result.gptOutput}

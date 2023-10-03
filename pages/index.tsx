@@ -12,11 +12,17 @@ function Home() {
       <Sideber />
       <main>
         <div className={`${global.container} text-center`}>
-          <img src="/logo.png" alt="logo" className={styles.logo} />
-          <p className="text-center font-serif text-4xl font-bold">
-            わからせンクラテス
-          </p>
-          <div className={styles.text}>
+          <div id="logo">
+            <img src="/logo.png" alt="logo" className={styles.logo} />
+            <p className="text-center font-serif text-3xl font-bold mt-3 pb-6 border-b-4">
+              - わからせンクラテス -
+            </p>
+          </div>
+          <div>
+            <p className="text-3xl font-serif my-10">How to play</p>
+          </div>
+          <div className="text-left">ここにチュートリアル的なの</div>
+          {/* <div className={styles.text}>
             <p>このサイトはGPTとお題当てゲームができるサイトです</p>
             <p>
               ･ルール
@@ -27,8 +33,9 @@ function Home() {
             <p>
               指示文:日本の料理で､皿に盛った､酢飯の上に､生魚や野菜などをのせたもの｡
             </p>
-          </div>
-          <p className={styles.text}>サイト制作者</p>
+          </div> */}
+
+          {/* <p className={styles.text}>サイト制作者</p>
           <a
             href="https://twitter.com/shiryu_dev"
             className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
@@ -42,7 +49,13 @@ function Home() {
             className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
           >
             Github
-          </a>
+          </a> */}
+          <div className="fixed bottom-16 left-0 w-full p-4 text-2xl font-serif text-center">
+            <div className="">ゲーム開始はこちらから</div>
+            <div className="flex justify-center">
+              <img src=".././hand.png" alt="hand" className="w-16" />
+            </div>
+          </div>
         </div>
       </main>
     </div>

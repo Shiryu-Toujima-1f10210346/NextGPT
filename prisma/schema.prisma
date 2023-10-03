@@ -13,6 +13,7 @@ model Rank {
   name      String   
   score     Int
   createdAt DateTime @default(now())
+  odai      String @default("unknown")
 }
 
 model Odai {
@@ -24,7 +25,8 @@ model Odai {
   like     Int 
   dislike  Int
   score    Int
-  official Boolean
+  official Boolean @default(false)
+  name     String  @default("unknown")
 }
 
 model Result {

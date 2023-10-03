@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const addOdai = async (
+  name: string,
   newOdai: string,
   ng: string[],
   limit: number,
@@ -12,6 +13,7 @@ export const addOdai = async (
   try {
     const odai = await prisma.odai.create({
       data: {
+        name: name,
         odai: newOdai,
         ng: ng,
         limit: limit,

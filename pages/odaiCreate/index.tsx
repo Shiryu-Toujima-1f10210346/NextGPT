@@ -5,18 +5,47 @@ import global from "../../styles/global.module.css";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
 
+interface Odai {
+  name: string;
+  odai: string;
+  ngList: string[];
+  limit: number;
+  odaiScore: number;
+  official: boolean;
+}
+
 function odaiCreate() {
-  //scoreはNumber型
-  const [odai, setOdai] = useState<String>("");
-  const [userInput, setUserInput] = useState<String>("");
-  const [ngList, setNgList] = useState<String[]>([]);
-  const [ngTmp, setNgTmp] = useState<String>("");
-  const [limit, setLimit] = useState<Number>(10);
-  const [odaiScore, setOdaiScore] = useState<Number>(0);
+  const [odai, setOdai] = useState<string>("");
+  const [ngList, setNgList] = useState<string[]>([]);
+  const [ngTmp, setNgTmp] = useState<string>("");
+  const [limit, setLimit] = useState<number>(10);
+  const [odaiScore, setOdaiScore] = useState<number>(0);
   const [official, setOfficial] = useState<boolean>(false);
   const [submit, setSubmit] = useState<"done" | "error" | "ing" | "not">("not");
+  const [name, setName] = useState<string>("名無しさん");
 
   async function fetchAddOdai() {
+    // 以下の内容でよろしいですか？ という確認
+    const firstCheck = confirm(
+      "以下の内容でよろしいですか？\n" +
+        "名前:" +
+        name +
+        "\nお題:" +
+        odai +
+        "\nNGワード:" +
+        ngList.join(",") +
+        "\n制限回数:" +
+        limit.toString() +
+        "\n点数:" +
+        odaiScore.toString()
+    );
+    if (!firstCheck) return;
+    if (submit === "ing") return;
+    if (ngList.length === 0) {
+      const check = confirm("NGワードが指定されていませんがよろしいですか？");
+      if (!check) return;
+    }
+
     setSubmit("ing");
     try {
       const res = await fetch("/api/addOdai", {
@@ -25,8 +54,9 @@ function odaiCreate() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          name: name,
           odai: odai,
-          ng: ngList,
+          ngList: ngList,
           limit: limit,
           score: odaiScore,
           official: official,
@@ -62,8 +92,6 @@ function odaiCreate() {
     setNgTmp("");
   };
 
-  //パスワードを聞き､正しければofficialをtrueにする
-  //パスワードは環境変数から取得する
   const checkOfficial = async () => {
     const check = confirm("あなたは管理者ですか？");
     if (!check) return;
@@ -73,7 +101,6 @@ function odaiCreate() {
       return;
     } else {
       alert("違います いたずらしないでね");
-      //IPアドレスを取得する
       const ip = await getIPAddress();
       alert("あなたのIPアドレスを保存しました:" + ip);
       setOfficial(false);
@@ -90,11 +117,16 @@ function odaiCreate() {
       <main>
         <div className={global.container}>
           <p>お題投稿フォーム</p>
-          <div className="text-xl">
-            NGワードは一つごとに+ボタン､またはEnterを押してください！
+          <div className="text-xl font-serif font-bold ">
+            NGワードは一つごとに+ボタン､またはEnterを押してください
           </div>
           <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
-            <p>お題追加</p>
+            <input
+              placeholder="あなたの名前"
+              onChange={(e) => setName(e.target.value)}
+              className="border-2"
+            />
+            <br />
             <input
               placeholder="お題"
               onChange={(e) => setOdai(e.target.value)}
@@ -143,18 +175,24 @@ function odaiCreate() {
                   }
                 />
               </div>
+              <div> 名前:{name} </div>
               <div> お題:{odai} </div>
               <div>
                 制限回数:
                 {limit.toString()}回
               </div>
-              <div>点数:{odaiScore.toString()}点</div>
+              <div>点数:{odaiScore.toString()}</div>
               <div>NGワード:{ngList.join(",")}</div>
             </div>
 
             <button
               onClick={() => fetchAddOdai()}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                submit === "ing" || name === "" || odai === ""
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              disabled={submit === "ing" || name === "" || odai === ""}
             >
               お題追加
             </button>
@@ -162,9 +200,10 @@ function odaiCreate() {
 
           <CircularProgress
             size={30}
-            className={submit === "ing" ? "" : "hidden"}
+            hidden={submit !== "ing"}
+            className="text-xl"
           />
-          <div className={submit === "done" ? "" : "hidden"}>
+          <div hidden={submit !== "done"} className="text-xl">
             お題を追加しました！
           </div>
         </div>
