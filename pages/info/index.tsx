@@ -17,8 +17,7 @@ function info() {
   const [commentSending, setCommentSending] = useState<boolean>(false);
 
   const router = useRouter();
-  const linkClass =
-    "bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded m-3";
+  const linkClass = "underline text-xl mb-2";
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("submitting comment");
@@ -108,16 +107,17 @@ function info() {
       <main className={global.container}>
         <div className="text-2xl m-4 mt-2">info</div>
         <Link href="/github" className={linkClass}>
-          <p>既知のバグ､機能要望､改善案はこちらから</p>
+          <p>バグ報告､機能要望､改善案はこちら</p>
         </Link>
         <Link href="/aboutGPT" className={linkClass}>
           <p>GPT､プロンプトエンジニアリングとは</p>
         </Link>
-        <div className="text-2xl m-4 mt-2">コメント</div>
         <div>{submitCommentForm()}</div>
-        <div>{commentSending ? "送信中･･･" : "コメント欄"}</div>
-        <CircularProgress size={20} className={loaded ? "hidden" : ""} />
-        <div className="overflow-y-scroll h-2/5 bg-gray-100">
+        <div className="text-xl">
+          {commentSending ? "送信中･･･" : "Comments"}
+        </div>
+        <CircularProgress size={20} className={loaded && "opacity-0"} />
+        <div className="overflow-y-scroll h-1/2 bg-gray-100">
           {commentList.map((comment) => (
             <div
               key={comment.id}

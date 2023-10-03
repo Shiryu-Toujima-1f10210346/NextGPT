@@ -15,13 +15,14 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
+import { CircularProgress } from "@mui/material";
 
 export default function Home() {
   const [game, setGame] = useState<"win" | "lose" | "playing">("playing");
   const [userInput, setUserInput] = useState<string>("");
   const [result, setResult] = useState([]);
   const [limit, setLimit] = useState<number>(10);
-  const [odai, setOdai] = useState<string>("ランダムなお題を取得中");
+  const [odai, setOdai] = useState<string>("お題を取得中･･･");
   const [NG, setNG] = useState<string[]>(["ちょっとまってね"]);
   const [alert, setAlert] = useState<string>("");
   const [thinking, setThinking] = useState<boolean>(false);
@@ -592,6 +593,7 @@ export default function Home() {
                       : ""
                   }`}
                 />
+                <CircularProgress size={20} hidden={!thinking} />
               </form>
               {/* <p
                 className="

@@ -108,7 +108,7 @@ function odaiCreate() {
           <div className="border-2 border-gray-500 p-4 rounded-xl m-4">
             <p>お題追加</p>
             <input
-              placeholder="名前"
+              placeholder="あなたの名前"
               onChange={(e) => setName(e.target.value)}
               className="border-2"
             />
@@ -186,9 +186,10 @@ function odaiCreate() {
 
           <CircularProgress
             size={30}
-            className={submit === "ing" ? "" : "hidden"}
+            hidden={submit !== "ing"}
+            className="text-xl"
           />
-          <div className={submit === "done" ? "" : "hidden"}>
+          <div hidden={submit !== "done"} className="text-xl">
             お題を追加しました！
           </div>
         </div>
