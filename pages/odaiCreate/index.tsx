@@ -181,13 +181,7 @@ function odaiCreate() {
                 制限回数:
                 {limit.toString()}回
               </div>
-              <div>点数:{
-                  
-                  
-                  
-                  
-                  
-                  .toString()}点</div>
+              <div>点数:{odaiScore.toString()}</div>
               <div>NGワード:{ngList.join(",")}</div>
             </div>
 
