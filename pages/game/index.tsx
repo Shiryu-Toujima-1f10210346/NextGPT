@@ -570,12 +570,13 @@ export default function Home() {
               </p>
               <form onSubmit={(e) => onSubmit(e)} className="">
                 <input
+                  style={{ WebkitAppearance: "none" }}
                   type="text"
                   name="user"
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96 mx-2"
+                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96 mx-2 p-1"
                 />
 
                 <input

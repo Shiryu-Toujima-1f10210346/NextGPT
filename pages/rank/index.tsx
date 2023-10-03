@@ -43,48 +43,43 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>わからせンクラテス！ 対戦履歴</title>
-      </Head>
       <Sideber />
-      <main>
-        <div className={global.container}>
-          <span className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
-            {ranking.length == 0 ? (
-              <p>ランキングデータ取得中･･･</p>
-            ) : (
-              <p>ランキングデータ</p>
-            )}
-          </span>
-          <CircularProgress
-            size={20}
-            className={loading ? "opacity-100" : "opacity-0"}
-          />
-          <ul className={styles.resultContainer}>
-            {ranking.map((item, index) => (
-              <li
-                key={index}
-                className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
-              >
-                {index + 1 == 1 ? (
-                  <div className="">🥇{index + 1}位</div>
-                ) : index + 1 == 2 ? (
-                  <div className="">🥈{index + 1}位</div>
-                ) : index + 1 == 3 ? (
-                  <div className="">🥉{index + 1}位</div>
-                ) : (
-                  <div className="">{index + 1}位</div>
-                )}
-                <div id="rankContainer" className="">
-                  <span>{item.name} </span>
-                  <span className={styles.san}>さん</span>
+      <main className={global.container}>
+        <span className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
+          {ranking.length == 0 ? (
+            <p>ランキングデータ取得中･･･</p>
+          ) : (
+            <p>ランキングデータ</p>
+          )}
+        </span>
+        <CircularProgress
+          size={20}
+          className={loading ? "opacity-100" : "opacity-0"}
+        />
+        <ul className={styles.resultContainer}>
+          {ranking.map((item, index) => (
+            <li
+              key={index}
+              className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
+            >
+              {index + 1 == 1 ? (
+                <div className="">🥇{index + 1}位</div>
+              ) : index + 1 == 2 ? (
+                <div className="">🥈{index + 1}位</div>
+              ) : index + 1 == 3 ? (
+                <div className="">🥉{index + 1}位</div>
+              ) : (
+                <div className="">{index + 1}位</div>
+              )}
+              <div id="rankContainer" className="">
+                <span>{item.name} </span>
+                <span className={styles.san}>さん</span>
 
-                  <span className="float-right">{item.score}点</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+                <span className="float-right">{item.score}点</span>
+              </div>
+            </li>
+          ))}
+        </ul>
       </main>
     </div>
   );
