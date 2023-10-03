@@ -10,19 +10,18 @@ function Home() {
         <title>わからせンクラテス！ ホーム</title>
       </Head>
       <Sideber />
-      <main>
-        <div className={`${global.container} text-center`}>
-          <div id="logo">
-            <img src="/logo.png" alt="logo" className={styles.logo} />
-            <p className="text-center font-serif text-3xl font-bold mt-3 pb-6 border-b-4">
-              - わからせンクラテス -
-            </p>
-          </div>
-          <div>
-            <p className="text-3xl font-serif my-10">How to play</p>
-          </div>
-          <div className="text-left">ここにチュートリアル的なの</div>
-          {/* <div className={styles.text}>
+      <main className={`${global.container} text-center`}>
+        <div id="logo">
+          <img src="/logo.png" alt="logo" className={styles.logo} />
+          <p className="text-center font-serif text-3xl font-bold mt-3 pb-6 border-b-4">
+            - わからせンクラテス -
+          </p>
+        </div>
+        <div>
+          <p className="text-3xl font-serif my-10">How to play</p>
+        </div>
+        <div className="text-left">ここにチュートリアル的なの</div>
+        {/* <div className={styles.text}>
             <p>このサイトはGPTとお題当てゲームができるサイトです</p>
             <p>
               ･ルール
@@ -35,7 +34,7 @@ function Home() {
             </p>
           </div> */}
 
-          {/* <p className={styles.text}>サイト制作者</p>
+        {/* <p className={styles.text}>サイト制作者</p>
           <a
             href="https://twitter.com/shiryu_dev"
             className="font-bold text-blue-500 hover:text-blue-400 underline text-xl"
@@ -50,11 +49,10 @@ function Home() {
           >
             Github
           </a> */}
-          <div className="fixed bottom-16 left-0 w-full p-4 text-2xl font-serif text-center">
-            <div className="">ゲーム開始はこちらから</div>
-            <div className="flex justify-center">
-              <img src=".././hand.png" alt="hand" className="w-16" />
-            </div>
+        <div className="fixed bottom-16 left-0 w-full p-4 text-2xl font-serif text-center">
+          <div className="">ゲーム開始はこちらから</div>
+          <div className="flex justify-center">
+            <img src=".././hand.png" alt="hand" className="w-16" />
           </div>
         </div>
       </main>
