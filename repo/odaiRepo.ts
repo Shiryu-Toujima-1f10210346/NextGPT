@@ -46,7 +46,7 @@ export const getOdaiList = async () => {
   try {
     const odai = await prisma.odai.findMany({
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
     return odai;
