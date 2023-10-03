@@ -568,7 +568,7 @@ export default function Home() {
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
-              <form onSubmit={(e) => onSubmit(e)} className="mx-2">
+              <form onSubmit={(e) => onSubmit(e)} className="">
                 <input
                   type="text"
                   name="user"
