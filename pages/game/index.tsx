@@ -240,7 +240,10 @@ export default function Home() {
         body: JSON.stringify({
           user: userInput,
           odai: odai,
-          NG: NG.length === 1 && NG === [""] ? "NGワードはありません｡" : NG,
+          NG:
+            JSON.stringify(NG) === JSON.stringify([])
+              ? "NGワードはありません｡"
+              : NG,
         }),
       });
 

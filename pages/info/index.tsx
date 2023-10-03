@@ -117,7 +117,6 @@ function info() {
         <div>{submitCommentForm()}</div>
         <div>{commentSending ? "送信中･･･" : "コメント欄"}</div>
         <CircularProgress size={20} className={loaded ? "hidden" : ""} />
-        <div>{loaded ? "読み込み完了" : "読み込み中･･･"}</div>{" "}
         <div className="overflow-y-scroll h-2/5 bg-gray-100">
           {commentList.map((comment) => (
             <div
