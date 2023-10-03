@@ -4,6 +4,7 @@
 main.container {
   -webkit-text-size-adjust: 100%;
   -webkit-appearance: none;
+  font-family: "Zen Maru Gothic", sans-serif;
 }
 
 .container {
@@ -14,10 +15,6 @@ main.container {
   font-size: 1.5rem;
   font-family: "Noto Sans JP", sans-serif;
   padding: 1rem 1.5rem;
-}
-
-.body {
-  font-family: "Zen Maru Gothic", sans-serif;
 }
 
 /* ~639px */

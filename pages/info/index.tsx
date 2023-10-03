@@ -42,7 +42,7 @@ function info() {
     return (
       <form className="flex flex-col">
         <input
-          className="border-2"
+          className="border-2 p-1 w-72"
           placeholder="Enter your name"
           onChange={(e) => setName(e.target.value)}
           value={name}
@@ -50,7 +50,7 @@ function info() {
 
         <div>
           <input
-            className="border-2"
+            className="border-2 p-1 w-40"
             placeholder="Enter your comment"
             onChange={(e) => setComment(e.target.value)}
             value={comment}

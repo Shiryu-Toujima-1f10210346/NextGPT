@@ -123,20 +123,20 @@ function odaiCreate() {
           <input
             placeholder="あなたの名前"
             onChange={(e) => setName(e.target.value)}
-            className="border-2"
+            className="border-2 p-1 w-40"
           />
           <br />
           <input
             placeholder="お題"
             onChange={(e) => setOdai(e.target.value)}
-            className="border-2"
+            className="border-2  p-1 w-40"
           />
           <br />
           <div className="flex flex-row">
             <form>
               <input
                 placeholder="NGワード"
-                className="border-2"
+                className="border-2 p-1 w-40"
                 value={ngTmp.toString()}
                 onChange={(e) => setNgTmp(e.target.value)}
               />
@@ -151,13 +151,13 @@ function odaiCreate() {
 
           <input
             placeholder="制限回数"
-            className="border-2"
+            className="border-2 p-1 w-40"
             onChange={(e) => setLimit(Number(e.target.value))}
           />
           <br />
           <input
             placeholder="スコア"
-            className="border-2"
+            className="border-2 p-1 w-40"
             hidden={!official}
             onChange={(e) => setOdaiScore(Number(e.target.value))}
           />
