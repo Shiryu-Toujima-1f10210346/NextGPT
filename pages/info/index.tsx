@@ -62,7 +62,7 @@ function info() {
                 : "bg-blue-500 hover:bg-blue-700"
             } text-white font-bold p-2 rounded`}
             onClick={(e) => handleSubmit(e)}
-            disabled={comment === "" || name === "" || commentSending}
+            disabled={comment === "" || name === "" || commentSendi
           >
             送信
           </button>
