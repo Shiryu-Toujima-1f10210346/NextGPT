@@ -570,7 +570,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96"
+                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96 mx-2"
                 />
 
                 <input
@@ -593,7 +593,10 @@ export default function Home() {
                       : ""
                   }`}
                 />
-                <CircularProgress size={20} hidden={!thinking} />
+                <CircularProgress
+                  size={20}
+                  className={thinking ? "" : "opacity-0"}
+                />
               </form>
               {/* <p
                 className="
