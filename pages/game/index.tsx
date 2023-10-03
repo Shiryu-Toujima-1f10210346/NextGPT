@@ -570,6 +570,7 @@ export default function Home() {
               </p>
               <form onSubmit={(e) => onSubmit(e)} className="mx-2">
                 <input
+                  style={{ WebkitAppearance: "none" }}
                   type="text"
                   name="user"
                   placeholder="お題を引き出そう！"
