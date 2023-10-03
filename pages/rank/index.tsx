@@ -43,12 +43,9 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>わからせンクラテス！ 対戦履歴</title>
-      </Head>
       <Sideber />
       <main>
-        <div className={global.container}>
+        <main className={global.container}>
           <span className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
             {ranking.length == 0 ? (
               <p>ランキングデータ取得中･･･</p>
@@ -84,7 +81,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        </div>
+        </main>
       </main>
     </div>
   );

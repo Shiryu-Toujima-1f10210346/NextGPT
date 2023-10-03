@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 
+.input {
+  -webkit-appearance: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -31,6 +35,9 @@
 
 /* 1200px ~ */
 @media (min-width: 1200px) {
+  /* .main {
+    margin-left: 10vw;
+  } */
   .mainContainer {
     width: 80%;
     height: 100%;

@@ -492,7 +492,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4 px-2
+              lg:p-12 lg:m-4 px-8
               left 
               text-center bg-white py-4 rounded-xl
               "
@@ -532,7 +532,7 @@ export default function Home() {
                 id="odai"
                 className="
               lg:text-4xl text-2xl
-              lg:mb-4 font-serif font-bold
+              lg:mb-4 mb-2 font-serif font-bold
               "
               >
                 ― お題 ―<br />
