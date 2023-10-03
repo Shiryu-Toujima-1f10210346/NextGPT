@@ -6,7 +6,7 @@ export default async function POST(req, res) {
 
   try {
     const newOdai = req.body.odai;
-    const ng = req.body.ng;
+    const ng = req.body.ngList;
     let limit = 10;
     const score = req.body.score;
     const official = req.body.official;

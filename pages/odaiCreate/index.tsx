@@ -22,7 +22,7 @@ function odaiCreate() {
   const [odaiScore, setOdaiScore] = useState<number>(0);
   const [official, setOfficial] = useState<boolean>(false);
   const [submit, setSubmit] = useState<"done" | "error" | "ing" | "not">("not");
-  const [name, setName] = useState<string>("名無しさん");
+  const [name, setName] = useState<string>("名無しさん@いにでぃあん");
 
   async function fetchAddOdai() {
     // 以下の内容でよろしいですか？ という確認
