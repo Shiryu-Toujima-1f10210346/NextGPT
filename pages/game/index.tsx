@@ -62,7 +62,6 @@ export default function Home() {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setUserInput(value);
-    console.log(NG);
     for (let i = 0; i < NG.length; i++) {
       if (NG[i] === "") continue;
       if (value.includes(NG[i]) || value.includes(odai)) {
@@ -114,7 +113,7 @@ export default function Home() {
     const data = await res.json();
     console.log("↓Rankingdata↓");
     console.table(data);
-    const newRanking = data.map((item) => ({
+    const newRanking = data.map((item: { name: String; score: Number }) => ({
       name: item.name,
       score: item.score,
     }));
@@ -124,19 +123,24 @@ export default function Home() {
   };
 
   const compareRanking = async () => {
-    if (ranking.length == 0) setCanRegister(true);
     //RankingにuserScoreが勝っているか
     for (let i = 0; i < ranking.length; i++) {
+      console.log(ranking[i].score);
       if (userScore > ranking[i].score) {
+        console.log(userScore + ">" + ranking[i].score);
+        console.log("ランキングに登録できます");
         setCanRegister(true);
-        console.log("canRegister:" + canRegister);
+        return;
       }
     }
     if (!canRegister) {
       console.log("canRegister:" + canRegister);
+      return;
     }
     if (userScore == 0) {
+      console.log("0点でした");
       setCanRegister(false);
+      return;
     }
   };
 
@@ -260,7 +264,6 @@ export default function Home() {
       //data.result.contentにodaiが含まれていたら
       if (data.result.includes(odai)) {
         fetchRanking();
-
         setInterval(() => {
           setGame("win");
         }, 2000);
@@ -347,14 +350,15 @@ export default function Home() {
   const submitModal = () => {
     return (
       <div className="flex flex-col items-center">
-        <p className="text-3xl font-bold">ランキング入り！</p>
+        <p className="text-3xl font-bold">
+          {canRegister ? "ランキング入り！" : "勝利！"}
+        </p>
         <p className="text-2xl font-bold">スコア:{userScore}点</p>
         <button
           onClick={() => {
-            setCanRegister(true);
-            console.log("canRegister:" + canRegister);
             fetchRanking();
           }}
+          hidden={!canRegister}
         >
           ランキング登録
         </button>
@@ -362,12 +366,12 @@ export default function Home() {
           onClick={() => {
             //クエリの初期化
             window.location.href = "/game";
-            console.log("canRegister:" + canRegister);
           }}
+          hidden={!canRegister}
         >
           登録しない
         </button>
-        <div className={canRegister ? "" : "hidden"}>
+        <div>
           <input
             type="text"
             className="border-2"
@@ -378,6 +382,7 @@ export default function Home() {
           <button
             onClick={() => registerRanking()}
             className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+            hidden={!canRegister}
           >
             登録
           </button>
