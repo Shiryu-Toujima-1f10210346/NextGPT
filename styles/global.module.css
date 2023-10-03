@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 
-/* for fukin ios */
-.main {
+/* for fuckin ios */
+main.container {
   -webkit-text-size-adjust: 100%;
   -webkit-appearance: none;
 }
