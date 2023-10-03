@@ -568,7 +568,7 @@ export default function Home() {
               <p id="alert" className="text-xl mb-4">
                 {alert}
               </p>
-              <form onSubmit={(e) => onSubmit(e)} className="">
+              <form onSubmit={(e) => onSubmit(e)} className="px-2">
                 <input
                   style={{ WebkitAppearance: "none" }}
                   type="text"
@@ -576,7 +576,7 @@ export default function Home() {
                   placeholder="お題を引き出そう！"
                   value={userInput}
                   onChange={(e) => onInputChange(e)}
-                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl lg:w-96 mx-2 p-1"
+                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-40"
                 />
 
                 <input
