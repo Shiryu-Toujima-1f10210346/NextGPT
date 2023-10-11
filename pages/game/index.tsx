@@ -344,7 +344,9 @@ export default function Home() {
   const resultURL = "wakarates.vercel.app/result";
 
   const copyToClipboard = async () => {
-    await global.navigator.clipboard.writeText(resultURL + "?id=" + id);
+    await global.navigator.clipboard.writeText(
+      resultURL + "?resultId=" + resultId
+    );
   };
 
   const submitModal = () => {
@@ -391,7 +393,7 @@ export default function Home() {
           <TwitterShareButton
             url={resultURL}
             title={`${userScore}点を獲得しました！ \n ${
-              resultSaved ? resultURL + "?id=" + resultId : ""
+              resultSaved ? resultURL + "?resultId=" + resultId : ""
             }`}
             hashtags={["INIADFES", "JissyuTeam5"]}
             className="mt-4 flex items-center"
@@ -422,9 +424,7 @@ export default function Home() {
               size="small"
               onClick={() => copyToClipboard()}
             >
-              <Link href={resultURL + "?id=" + resultId}>
-                {resultURL + "?id=" + resultId}
-              </Link>
+              対戦履歴のURLをコピー
               <ContentCopyIcon fontSize="small" />
             </IconButton>
           </Tooltip>
