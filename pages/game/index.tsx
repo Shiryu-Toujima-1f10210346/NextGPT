@@ -485,16 +485,14 @@ export default function Home() {
         </Modal>
         <div
           className="
-        sm:flex sm:flex-row sm:justify-strech sm:items-center
-           rounded-xl lg:mt-16
+           rounded-xl lg:mt-16 
          "
         >
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4 px-8
-              left 
-              text-center bg-white py-4 rounded-xl
+              lg:px-96  lg:m-4 
+              text-center  rounded-xl 
               "
             >
               {/* <div
@@ -527,69 +525,70 @@ export default function Home() {
                   デバッグ
                 </button>
               </div>
-
-              <div
-                id="odai"
-                className="
+              <div className="bg-white rounded-xl shadow-xl p-4 m-2">
+                <div
+                  id="odai"
+                  className="
               lg:text-4xl text-2xl
               lg:mb-4 mb-2 font-serif font-bold
               "
-              >
-                ― お題 ―<br />
-                <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
-              </div>
-              <button
-                onClick={() => {
-                  randomOdai();
-                }}
-                className="
+                >
+                  ― お題 ―<br />
+                  <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
+                </div>
+                <button
+                  onClick={() => {
+                    randomOdai();
+                  }}
+                  className="
                 lg:text-2xl text-xl
                 lg: font-serif font-bold
                 "
-              >
-                お題を変更
-              </button>
-              <p
-                id="odai"
-                className="
+                >
+                  お題を変更
+                </button>
+                <p
+                  id="odai"
+                  className="
               lg:text-2xl text-xl
               lg:mb-4 mb-2 font-serif font-bold
               "
-              >
-                NGワード:{NG.join(",")}
-              </p>
-              <span
-                id="score"
-                className="lg:text-2xl text-xl flex justify-around"
-              >
-                {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
-                <span>残り{limit}回</span>
-              </span>
-              <p id="alert" className="text-xl mb-4">
-                {alert}
-              </p>
-              <form onSubmit={(e) => onSubmit(e)} className="px-2">
-                <input
-                  style={{ WebkitAppearance: "none" }}
-                  type="text"
-                  name="user"
-                  placeholder="お題を引き出そう！"
-                  value={userInput}
-                  onChange={(e) => onInputChange(e)}
-                  className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-40"
-                />
+                >
+                  NGワード:{NG.join(",")}
+                </p>
+                <span
+                  id="score"
+                  className="lg:text-2xl text-xl flex justify-around"
+                >
+                  {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
+                  <span>残り{limit}回</span>
+                </span>
+                <p id="alert" className="text-xl mb-4">
+                  {alert}
+                </p>
+                <div className="lg:hidden">
+                  <form onSubmit={(e) => onSubmit(e)} className="px-2">
+                    <input
+                      style={{ WebkitAppearance: "none" }}
+                      type="text"
+                      name="user"
+                      placeholder="お題を引き出そう！"
+                      value={userInput}
+                      onChange={(e) => onInputChange(e)}
+                      className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-40"
+                    />
 
-                <input
-                  type="submit"
-                  id="submit"
-                  value="送信"
-                  disabled={
-                    limit <= 0 ||
-                    userInput.length === 0 ||
-                    thinking ||
-                    game === "win"
-                  }
-                  className={`"text-center rounded-full lg:text-3xl lg:w-96 bg-blue-500 text-white"
+                    <input
+                      type="submit"
+                      id="submit"
+                      value="送信"
+                      disabled={
+                        limit <= 0 ||
+                        userInput.length === 0 ||
+                        thinking ||
+                        game === "win"
+                      }
+                      className={`"text-center rounded-full lg:text-3xl w-32 bg-blue-500 text-white "
                   ${
                     limit <= 0 ||
                     userInput.length === 0 ||
@@ -598,12 +597,14 @@ export default function Home() {
                       ? "opacity-50 cursor-not-allowed"
                       : ""
                   }`}
-                />
-                <CircularProgress
-                  size={20}
-                  className={thinking ? "" : "opacity-0"}
-                />
-              </form>
+                    />
+                    <CircularProgress
+                      size={20}
+                      className={thinking ? "" : "opacity-0"}
+                    />
+                  </form>
+                </div>
+              </div>
               {/* <p
                 className="
             border-gray-800 border
@@ -654,8 +655,7 @@ export default function Home() {
                 )}
               </div> */}
             </div>
-          </div>{" "}
-          {/* left */}
+          </div>
           <div className={styles.resultContainer} id="right">
             <div className={styles.result}>
               {/*  浮くやつ
@@ -806,6 +806,44 @@ export default function Home() {
             </div>
 
             <div id="result"></div>
+          </div>
+          <div className="hidden lg:block mb-8">
+            <form onSubmit={(e) => onSubmit(e)} className="px-2">
+              <input
+                style={{ WebkitAppearance: "none" }}
+                type="text"
+                name="user"
+                placeholder="お題を引き出そう！"
+                value={userInput}
+                onChange={(e) => onInputChange(e)}
+                className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-2/3 "
+              />
+
+              <input
+                type="submit"
+                id="submit"
+                value="送信"
+                disabled={
+                  limit <= 0 ||
+                  userInput.length === 0 ||
+                  thinking ||
+                  game === "win"
+                }
+                className={`"text-center rounded-full lg:text-3xl w-32 bg-blue-500 text-white "
+                  ${
+                    limit <= 0 ||
+                    userInput.length === 0 ||
+                    thinking ||
+                    game === "win"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+              />
+              <CircularProgress
+                size={20}
+                className={thinking ? "" : "opacity-0"}
+              />
+            </form>
           </div>
         </div>
       </main>
