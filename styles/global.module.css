@@ -41,6 +41,9 @@ main.container {
     width: 80%;
     height: 100%;
   }
+  .container {
+    padding-left: 10vw;
+  }
 }
 
 .bluebtn {

@@ -25,4 +25,7 @@
   .san {
     font-size: 1.5rem;
   }
+  .main {
+    background-color: aqua;
+  }
 }

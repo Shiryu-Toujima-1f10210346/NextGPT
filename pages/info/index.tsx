@@ -117,7 +117,7 @@ function info() {
           {commentSending ? "送信中･･･" : "Comments"}
         </div>
         <CircularProgress size={20} className={loaded && "opacity-0"} />
-        <div className="overflow-y-scroll h-1/2 bg-gray-100">
+        <div className="overflow-y-scroll h-1/2 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3">
           {commentList.map((comment) => (
             <div
               key={comment.id}
