@@ -807,6 +807,44 @@ export default function Home() {
 
             <div id="result"></div>
           </div>
+          <div className="hidden lg:block mb-8">
+            <form onSubmit={(e) => onSubmit(e)} className="px-2">
+              <input
+                style={{ WebkitAppearance: "none" }}
+                type="text"
+                name="user"
+                placeholder="お題を引き出そう！"
+                value={userInput}
+                onChange={(e) => onInputChange(e)}
+                className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-2/3 "
+              />
+
+              <input
+                type="submit"
+                id="submit"
+                value="送信"
+                disabled={
+                  limit <= 0 ||
+                  userInput.length === 0 ||
+                  thinking ||
+                  game === "win"
+                }
+                className={`"text-center rounded-full lg:text-3xl w-32 bg-blue-500 text-white "
+                  ${
+                    limit <= 0 ||
+                    userInput.length === 0 ||
+                    thinking ||
+                    game === "win"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+              />
+              <CircularProgress
+                size={20}
+                className={thinking ? "" : "opacity-0"}
+              />
+            </form>
+          </div>
         </div>
       </main>
     </div>
