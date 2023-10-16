@@ -63,6 +63,9 @@
   .main {
     padding: 0 0 0 25vw;
     margin-left: 10vw;
+    display: flex;
+    grid-template-rows: 1fr 1fr; /* 2つの行を作成 */
+    position: relative;
   }
   .resultContainer {
     margin-bottom: 50px;
@@ -71,12 +74,14 @@
     border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(37, 255, 66, 0.24);
     overflow-y: scroll;
-    height: 60vh;
-    width: 35vw;
+    height: 90vh;
+    width: 80vw;
+    z-index: 0; /* 他の要素より背面に表示 */
   }
   .left {
-    margin-left: 5vh;
-    width: 35vw;
+    width: 80vw;
+    position: absolute; /* 親要素（.main）に対して絶対配置 */
+    z-index: 1; /* 他の要素より前面に表示 */
   }
 }
 
