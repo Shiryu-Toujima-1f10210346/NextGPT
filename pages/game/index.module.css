@@ -61,7 +61,6 @@
 /* 1200px ~ */
 @media (min-width: 1200px) {
   .main {
-    margin-left: 10vw;
     display: flex;
     grid-template-rows: 1fr 1fr; /* 2つの行を作成 */
     position: relative;
