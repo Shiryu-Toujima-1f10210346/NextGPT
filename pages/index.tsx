@@ -3,6 +3,7 @@ import Sideber from "../components/Sidebar";
 import global from "../styles/global.module.css";
 import styles from "./index.module.css";
 import Head from "next/head";
+import Image from "next/image";
 function Home() {
   return (
     <div>
@@ -17,10 +18,26 @@ function Home() {
             - わからせンクラテス -
           </p>
         </div>
-        <div>
+        <div hidden>
           <p className="text-3xl font-serif my-10">How to play</p>
+          <div className="text-left">ここにチュートリアル的なの</div>
         </div>
-        <div className="text-left">ここにチュートリアル的なの</div>
+        <div className="relative">
+          <Image
+            src="/serif.png"
+            alt="serif"
+            width={1000}
+            height={1000}
+            className="hidden lg:block z-index-0"
+          />
+          <button className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4">
+            すた～と
+          </button>
+          <button className="absolute top-3/4 transform translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4">
+            説明スキップ
+          </button>
+        </div>
+
         {/* <div className={styles.text}>
             <p>このサイトはGPTとお題当てゲームができるサイトです</p>
             <p>

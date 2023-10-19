@@ -13,7 +13,6 @@ main.container {
   align-items: center;
   font-size: 1.5rem;
   font-family: "Noto Sans JP", sans-serif;
-  margin-left: 15vw;
   height: 100vh;
 }
 
@@ -40,6 +39,9 @@ main.container {
   .mainContainer {
     width: 80%;
     height: 100%;
+  }
+  .container {
+    margin-left: 15vw;
   }
 }
 
