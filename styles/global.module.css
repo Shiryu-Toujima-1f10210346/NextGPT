@@ -11,10 +11,10 @@ main.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   font-size: 1.5rem;
   font-family: "Noto Sans JP", sans-serif;
-  padding: 1rem 1.5rem;
+  margin-left: 15vw;
+  height: 100vh;
 }
 
 /* ~639px */
@@ -40,9 +40,6 @@ main.container {
   .mainContainer {
     width: 80%;
     height: 100%;
-  }
-  .container {
-    padding-left: 10vw;
   }
 }
 

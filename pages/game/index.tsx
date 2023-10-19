@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
 import { CircularProgress } from "@mui/material";
+import Collapse from "@mui/material/Collapse";
 
 export default function Home() {
   const [game, setGame] = useState<"win" | "lose" | "playing">("playing");
@@ -491,7 +492,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:px-96  lg:m-4 
+              lg:px-48  lg:m-4 
               text-center  rounded-xl 
               "
             >
@@ -534,7 +535,7 @@ export default function Home() {
               "
                 >
                   ― お題 ―<br />
-                  <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
+                  <p className="text-4xl lg:text-5xl">｢{odai}｣</p>
                 </div>
                 <button
                   onClick={() => {
@@ -561,7 +562,7 @@ export default function Home() {
                   className="lg:text-2xl text-xl flex justify-around"
                 >
                   {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
-                  <span>残り{limit}回</span>
+                  <span>制限回数:残り{limit}回</span>
                 </span>
                 <p id="alert" className="text-xl mb-4">
                   {alert}

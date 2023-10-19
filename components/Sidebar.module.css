@@ -11,7 +11,7 @@
   .sidebar {
     position: fixed;
     height: 100%;
-    width: 250px;
+    width: 15vw;
     background: #ffffff3a;
     z-index: 100;
     transition: all 0.5s ease;

@@ -16,7 +16,7 @@ function Sidebar() {
         {/* router.pathでSidebarDataから検索*/}
         {SidebarData.map((val, key) => {
           if (router.pathname == val.path) {
-            return <title key={key}>わからせンクラテス！{val.title}</title>;
+            return <title key={key}>{val.title} : わからせンクラテス！</title>;
           }
         })}
         <link rel="icon" href="/Ncrates.png" />
