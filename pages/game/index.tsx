@@ -9,14 +9,11 @@ import { TwitterShareButton, TwitterIcon } from "react-share";
 import globalCss from "../../styles/global.module.css";
 import Conv from "../../components/conversation";
 import { examples } from "../../components/examples";
-import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import IconButton from "@mui/material/IconButton";
-import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
 import { CircularProgress } from "@mui/material";
-import Collapse from "@mui/material/Collapse";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 
 export default function Home() {
