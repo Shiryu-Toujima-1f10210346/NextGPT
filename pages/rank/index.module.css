@@ -8,8 +8,8 @@
 
 @media (min-width: 1200px) {
   .resultContainer {
-    font-size: 2rem;
-    width: 30vw;
+    font-size: 3rem;
+    width: 50vw;
     height: 20vw;
   }
   .san {

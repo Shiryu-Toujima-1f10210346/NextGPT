@@ -4,7 +4,18 @@ import global from "../styles/global.module.css";
 import styles from "./index.module.css";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 function Home() {
+  const router = useRouter();
+
+  function skipTutorial() {
+    localStorage.setItem("exampleHide", "true");
+
+    router.push("/game");
+
+    console.log("skip");
+  }
+
   return (
     <div>
       <Head>
@@ -30,10 +41,20 @@ function Home() {
             height={1000}
             className="hidden lg:block z-index-0"
           />
-          <button className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4">
+          <button
+            className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4"
+            onClick={() => {
+              router.push("/game");
+            }}
+          >
             すた～と
           </button>
-          <button className="absolute top-3/4 transform translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4">
+          <button
+            className="absolute top-3/4 transform translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4"
+            onClick={() => {
+              skipTutorial();
+            }}
+          >
             説明スキップ
           </button>
         </div>
