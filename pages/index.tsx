@@ -33,13 +33,13 @@ function Home() {
           <p className="text-3xl font-serif my-10">How to play</p>
           <div className="text-left">ここにチュートリアル的なの</div>
         </div>
-        <div className="relative">
+        <div className="relative hidden lg:block ">
           <Image
             src="/serif.png"
             alt="serif"
             width={1000}
             height={1000}
-            className="hidden lg:block z-index-0"
+            className="z-index-0"
           />
           <button
             className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4"
