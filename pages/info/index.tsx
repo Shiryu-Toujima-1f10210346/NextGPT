@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
+import style from "./index.module.css";
 
 function info() {
   const [comment, setComment] = useState<string>("");
@@ -42,7 +43,7 @@ function info() {
     return (
       <form className="flex flex-col">
         <input
-          className="border-2 p-1 w-72"
+          className="border-2 p-1 w-72 lg:w-96"
           placeholder="Enter your name"
           onChange={(e) => setName(e.target.value)}
           value={name}
@@ -50,7 +51,7 @@ function info() {
 
         <div>
           <input
-            className="border-2 p-1 w-40"
+            className="border-2 p-1 w-60 lg:w-96"
             placeholder="Enter your comment"
             onChange={(e) => setComment(e.target.value)}
             value={comment}
@@ -60,7 +61,7 @@ function info() {
               comment === "" || name === ""
                 ? "bg-gray-500"
                 : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold p-2 rounded`}
+            } text-white font-bold px-2 py-1 rounded`}
             onClick={(e) => handleSubmit(e)}
             disabled={comment === "" || name === "" || commentSending}
           >
@@ -117,15 +118,17 @@ function info() {
           {commentSending ? "送信中･･･" : "Comments"}
         </div>
         <CircularProgress size={20} className={loaded && "opacity-0"} />
-        <div className="overflow-y-scroll h-1/2 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3">
+        <div className="overflow-y-scroll h-1/2 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3 mb-0 lg:mb-4 rounded-2xl">
           {commentList.map((comment) => (
             <div
               key={comment.id}
-              className="border-b-2 border-r-2 m-2 p-2 rounded bg-white"
+              className="border-b-4 border-r-4 m-2 p-2 bg-white rounded-2xl"
             >
-              <p>
+              <p className={style.userInfoText}>
                 {comment.name}さん{" "}
-                {new Date(comment.createdAt).toLocaleString("ja-JP")}
+                <span className={style.time}>
+                  {new Date(comment.createdAt).toLocaleString("ja-JP")}
+                </span>
               </p>
               <p>{comment.comment}</p>
             </div>

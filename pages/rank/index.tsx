@@ -45,12 +45,8 @@ export default function Home() {
     <div>
       <Sideber />
       <main className={global.container}>
-        <span className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-16 py-2 m-2 rounded-xl">
-          {ranking.length == 0 ? (
-            <p>ランキングデータ取得中･･･</p>
-          ) : (
-            <p>ランキングデータ</p>
-          )}
+        <span className="border-2 border-gray-600 lg:px-32 lg:py-2 lg:mt-8 px-10 m-2 rounded-xl font-bold text-2xl py-4">
+          {ranking.length == 0 ? <p>取得中･･･</p> : <p>RANKING</p>}
         </span>
         <CircularProgress
           size={20}

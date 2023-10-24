@@ -16,6 +16,8 @@ import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import Tooltip from "@mui/material/Tooltip";
 import { CircularProgress } from "@mui/material";
+import Collapse from "@mui/material/Collapse";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 
 export default function Home() {
   const [game, setGame] = useState<"win" | "lose" | "playing">("playing");
@@ -38,6 +40,7 @@ export default function Home() {
   const [resultSaved, setResultSaved] = useState<boolean>(false);
   const [resultId, setResultId] = useState<number>();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -285,6 +288,9 @@ export default function Home() {
         }
       }, 300);
       setThinking(false);
+      setUserInput("");
+      setIsEmpty(false);
+      console.log("done");
     } catch (error) {
       // Consider implementing your own error handling logic here
       setThinking(false);
@@ -491,7 +497,7 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:px-96  lg:m-4 
+              lg:px-48  lg:m-4 
               text-center  rounded-xl 
               "
             >
@@ -525,18 +531,33 @@ export default function Home() {
                   デバッグ
                 </button>
               </div>
-              <div className="bg-white rounded-xl shadow-xl p-4 m-2">
+              <div className="bg-white rounded-xl shadow-xl p-4 m-2 relative">
+                {/* 右上にXボタン */}
+                <button
+                  onClick={() => {
+                    randomOdai();
+                    setOdai("お題を変更･･･");
+                    setNG(["ちょっとまってね"]);
+                  }}
+                  className="absolute top-0 right-0 "
+                >
+                  <span className="bg-red-200 mt-2 mr-2 px-4 rounded-full">
+                    お題を変更
+                  </span>
+                  <ChangeCircleIcon fontSize="large" />
+                </button>
                 <div
                   id="odai"
                   className="
               lg:text-4xl text-2xl
               lg:mb-4 mb-2 font-serif font-bold
+              mt-4 lg:mt-0
               "
                 >
                   ― お題 ―<br />
-                  <p className="text-4xl lg:text-6xl">｢{odai}｣</p>
+                  <p className="text-4xl lg:text-5xl">｢{odai}｣</p>
                 </div>
-                <button
+                {/* <button
                   onClick={() => {
                     randomOdai();
                   }}
@@ -546,7 +567,7 @@ export default function Home() {
                 "
                 >
                   お題を変更
-                </button>
+                </button> */}
                 <p
                   id="odai"
                   className="
@@ -561,7 +582,7 @@ export default function Home() {
                   className="lg:text-2xl text-xl flex justify-around"
                 >
                   {userScore > 0 ? `スコア:${userScore}点` : "スコアなし"}
-                  <span>残り{limit}回</span>
+                  <span>制限回数:残り{limit}回</span>
                 </span>
                 <p id="alert" className="text-xl mb-4">
                   {alert}
@@ -657,6 +678,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.resultContainer} id="right">
+            <div className="hidden lg:block h-2/5" hidden={isEmpty} />
             <div className={styles.result}>
               {/*  浮くやつ
               <div className="mx-6">
