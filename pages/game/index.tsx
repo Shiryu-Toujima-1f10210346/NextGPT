@@ -584,44 +584,6 @@ export default function Home() {
                 <p id="alert" className="text-xl mb-4">
                   {alert}
                 </p>
-                <div className="lg:hidden">
-                  <form onSubmit={(e) => onSubmit(e)} className="px-2">
-                    <input
-                      style={{ WebkitAppearance: "none" }}
-                      type="text"
-                      name="user"
-                      placeholder="お題を引き出そう！"
-                      value={userInput}
-                      onChange={(e) => onInputChange(e)}
-                      className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-40"
-                    />
-
-                    <input
-                      type="submit"
-                      id="submit"
-                      value="送信"
-                      disabled={
-                        limit <= 0 ||
-                        userInput.length === 0 ||
-                        thinking ||
-                        game === "win"
-                      }
-                      className={`"text-center rounded-full lg:text-3xl w-32 bg-blue-500 text-white "
-                  ${
-                    limit <= 0 ||
-                    userInput.length === 0 ||
-                    thinking ||
-                    game === "win"
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                    />
-                    <CircularProgress
-                      size={20}
-                      className={thinking ? "" : "opacity-0"}
-                    />
-                  </form>
-                </div>
               </div>
               {/* <p
                 className="
@@ -675,7 +637,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.resultContainer} id="right">
-            <div className="hidden lg:block h-2/5" hidden={isEmpty} />
+            <div className="hidden lg:block h-2/5 lg:h-1/3" hidden={isEmpty} />
             <div className={styles.result}>
               {/*  浮くやつ
               <div className="mx-6">
@@ -733,7 +695,7 @@ export default function Home() {
                           example.gptOutput.length == 0 ? "hidden" : ""
                         }`}
                       >
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1">
+                        <div className="text-lg lg:text-3xl text-left px-4 py-1">
                           GPTくん
                         </div>
                       </div>
@@ -823,10 +785,47 @@ export default function Home() {
               ))}
               <div ref={resultRef} />
             </div>
-
             <div id="result"></div>
           </div>
-          <div className="hidden lg:block mb-8">
+          <div className="lg:hidden">
+            <form onSubmit={(e) => onSubmit(e)} className="px-2">
+              <input
+                style={{ WebkitAppearance: "none" }}
+                type="text"
+                name="user"
+                placeholder="お題を引き出そう！"
+                value={userInput}
+                onChange={(e) => onInputChange(e)}
+                className="border-2 border-gray-200 text-center rounded-xl text-md lg:text-3xl mx-2 p-1 w-2/3 lg:w-40"
+              />
+
+              <input
+                type="submit"
+                id="submit"
+                value="送信"
+                disabled={
+                  limit <= 0 ||
+                  userInput.length === 0 ||
+                  thinking ||
+                  game === "win"
+                }
+                className={`"text-center rounded-full lg:text-3xl w-16 lg:w-32 bg-blue-500 text-white "
+                  ${
+                    limit <= 0 ||
+                    userInput.length === 0 ||
+                    thinking ||
+                    game === "win"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+              />
+              <CircularProgress
+                size={20}
+                className={thinking ? "" : "opacity-0"}
+              />
+            </form>
+          </div>
+          <div className="hidden lg:block mb-8 py-2">
             <form onSubmit={(e) => onSubmit(e)} className="px-2">
               <input
                 style={{ WebkitAppearance: "none" }}
