@@ -41,7 +41,7 @@ export const getResultList = async () => {
   try {
     const result = await prisma.result.findMany({
       orderBy: {
-        score: "desc",
+        createdAt: "desc",
       },
     });
     return result;

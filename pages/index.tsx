@@ -41,6 +41,7 @@ function Home() {
             height={1000}
             className="z-index-0"
           />
+
           <button
             className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4"
             onClick={() => {
