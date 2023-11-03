@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import global from "../../styles/global.module.css";
-
+import GitHubIcon from "@mui/icons-material/GitHub";
 const Github = () => {
   const [issues, setIssues] = useState([]);
 
@@ -37,120 +37,127 @@ const Github = () => {
     <div>
       <Sidebar />
       <main className={global.container}>
-        <ul>
-          <li>
-            <a
-              href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=bug&projects=&template=bug-report.md&title="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-red-500 underline"
-            >
-              バグ報告はこちらから
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=enhancement&projects=&template=fature-request.md&title="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-green-500 underline"
-            >
-              機能追加のリクエストはこちらから
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=enhancement&projects=&template=improve-request.md&title="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              改善要望はこちらから
-            </a>
-          </li>
-        </ul>
-        <h1 className="text-2xl">既知のバグ</h1>
-        <ul>
-          {issues.map((issue) => {
-            if (
-              issue.labels.some(
-                (label: { name: string }) => label.name === "bug"
-              )
-            ) {
-              return (
-                <li key={issue.id}>
-                  <span>･</span>
+        <div className="lg:mt-10 text-center">
+          <div>
+            <GitHubIcon className="inline-block text-6xl" />
+            <span className="text-3xl">Githubに飛びます</span>
+          </div>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=bug&projects=&template=bug-report.md&title="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-500 underline"
+              >
+                バグ報告はこちらから
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=enhancement&projects=&template=fature-request.md&title="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-500 underline"
+              >
+                機能追加のリクエストはこちらから
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/Shiryu-Toujima-1f10210346/NextGPT/issues/new?assignees=&labels=enhancement&projects=&template=improve-request.md&title="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                改善要望はこちらから
+              </a>
+            </li>
+          </ul>
+          <br />
+          <h1 className="text-2xl">既知のバグ</h1>
+          <ul>
+            {issues.map((issue) => {
+              if (
+                issue.labels.some(
+                  (label: { name: string }) => label.name === "bug"
+                )
+              ) {
+                return (
+                  <li key={issue.id}>
+                    <span>･</span>
 
-                  <a
-                    href={issue.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-red-500 underline"
-                  >
-                    {issue.title}
-                  </a>
-                </li>
-              );
-            }
-            return null;
-          })}
-        </ul>
-        <br />
-        <h1 className="text-2xl">機能要望</h1>
-        <ul>
-          {issues.map((issue) => {
-            if (
-              issue.labels.some(
-                (label: { name: string }) => label.name === "enhancement"
-              )
-            ) {
-              return (
-                <li key={issue.id}>
-                  <span>･</span>
+                    <a
+                      href={issue.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-red-500 underline"
+                    >
+                      {issue.title}
+                    </a>
+                  </li>
+                );
+              }
+              return null;
+            })}
+          </ul>
+          <br />
+          <h1 className="text-2xl">機能要望</h1>
+          <ul>
+            {issues.map((issue) => {
+              if (
+                issue.labels.some(
+                  (label: { name: string }) => label.name === "enhancement"
+                )
+              ) {
+                return (
+                  <li key={issue.id}>
+                    <span>･</span>
 
-                  <a
-                    href={issue.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-green-500 underline"
-                  >
-                    {issue.title}
-                  </a>
-                </li>
-              );
-            }
-            return null;
-          })}
-        </ul>
+                    <a
+                      href={issue.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-500 underline"
+                    >
+                      {issue.title}
+                    </a>
+                  </li>
+                );
+              }
+              return null;
+            })}
+          </ul>
 
-        <br />
+          <br />
 
-        <h1 className="text-2xl">改善案</h1>
-        <ul>
-          {issues.map((issue) => {
-            if (
-              issue.labels.some(
-                (label: { name: string }) => label.name === "improve"
-              )
-            ) {
-              return (
-                <li key={issue.id}>
-                  <span>･</span>
+          <h1 className="text-2xl">改善案</h1>
+          <ul>
+            {issues.map((issue) => {
+              if (
+                issue.labels.some(
+                  (label: { name: string }) => label.name === "improve"
+                )
+              ) {
+                return (
+                  <li key={issue.id}>
+                    <span>･</span>
 
-                  <a
-                    href={issue.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    {issue.title}
-                  </a>
-                </li>
-              );
-            }
-            return null;
-          })}
-        </ul>
+                    <a
+                      href={issue.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      {issue.title}
+                    </a>
+                  </li>
+                );
+              }
+              return null;
+            })}
+          </ul>
+        </div>
       </main>
     </div>
   );

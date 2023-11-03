@@ -5,14 +5,22 @@ export default async function POST(req, res) {
   console.log(req.body);
 
   try {
+    const odai = req.body.odai;
+    const NG = req.body.NG;
     const odaiId = req.body.odaiId;
     const playerName = req.body.playerName;
     const result = req.body.result;
     const score = req.body.score;
-    console.log("odaiId: " + odaiId);
-    console.log("result: " + result);
-    console.log("score: " + score);
-    const resultData = await submitResult(playerName, odaiId, result, score);
+    const count = req.body.count;
+    const resultData = await submitResult(
+      odai,
+      NG,
+      playerName,
+      odaiId,
+      result,
+      score,
+      count
+    );
     res.status(200).json(resultData);
     return;
   } catch (e) {

@@ -44,7 +44,7 @@ function info() {
       <form className="flex flex-col">
         <input
           className="border-2 p-1 w-72 lg:w-96"
-          placeholder="Enter your name"
+          placeholder="名前を入力"
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
@@ -52,7 +52,7 @@ function info() {
         <div>
           <input
             className="border-2 p-1 w-60 lg:w-96"
-            placeholder="Enter your comment"
+            placeholder="コメントを入力"
             onChange={(e) => setComment(e.target.value)}
             value={comment}
           />
@@ -113,9 +113,20 @@ function info() {
         <Link href="/aboutGPT" className={linkClass}>
           <p>GPT､プロンプトエンジニアリングとは</p>
         </Link>
+        <Link
+          href="https://twitter.com/shiryu_dev"
+          className="underline text-blue-500 text-xl mb-2"
+        >
+          <p>作者の𝕏(旧Twitter)</p>
+        </Link>
         <div>{submitCommentForm()}</div>
-        <div className="text-xl">
-          {commentSending ? "送信中･･･" : "Comments"}
+        <div className="text-xl text-center">
+          {commentSending ? "送信中･･･" : "コメント欄"}
+          <div className="px-2">
+            感想等､気軽に書いていってくれると
+            <br />
+            とても喜びます！
+          </div>
         </div>
         <CircularProgress size={20} className={loaded && "opacity-0"} />
         <div className="overflow-y-scroll h-1/2 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3 mb-0 lg:mb-4 rounded-2xl">

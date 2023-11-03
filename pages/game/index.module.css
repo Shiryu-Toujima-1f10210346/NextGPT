@@ -42,6 +42,12 @@
   top: 0;
 }
 
+.inputBar {
+  position: fixed;
+  z-index: 1;
+  bottom: 7vh;
+}
+
 /* 640~1199px */
 @media (min-width: 640px) {
   .main {

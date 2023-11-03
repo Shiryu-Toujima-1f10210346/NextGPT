@@ -4,13 +4,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { TwitterShareButton, TwitterIcon } from "react-share";
 import global from "../../styles/global.module.css";
-import Conv from "../../components/conversation";
 import styles from "./index.module.css";
-import { CircularProgress } from "@mui/material";
 import Head from "next/head";
 import Button from "@mui/material/Button";
-import { json } from "stream/consumers";
-import { type } from "os";
 export default function Home() {
   const [odai, setOdai] = useState<string>("");
   const [NG, setNG] = useState<string[]>([""]);
@@ -43,8 +39,9 @@ export default function Home() {
       setUserName(data.name);
       setResult(JSON.parse(data.result));
       setFetching(false);
-      setOdai("ここにお題");
-      setNG(["ここにNGワード"]);
+      setOdai(data.odai);
+      setNG(data.ng);
+      setUserScore(data.score);
       setOdaiId(data.odaiId);
       return true;
     } catch (e) {
@@ -90,9 +87,14 @@ export default function Home() {
           <div className={styles.left}>
             <div
               className="
-              lg:p-12 lg:m-4
+              lg:w-3/4
+              py-4 
+              lg:p-5 lg:m-4
               left 
               text-center
+              bg-white
+              shadow-xl
+              rounded-xl
               "
             >
               <p
@@ -159,71 +161,8 @@ export default function Home() {
           </div>{" "}
           {/* left */}
           <div className={styles.resultContainer} id="right">
-            <p
-              className="
-            border-gray-800 border-2 
-            shadow-xl rounded-xl 
-            my-4 mx-16 py-4
-            text-2xl font-bold text-gray-800 text-center hidden lg:block 
-            "
-            >
-              会話履歴
-            </p>
-
+            <div className="hidden lg:block h-2/5 lg:h-1/3" />
             <div className={styles.result}>
-              {fetching && (
-                <div className="flex justify-center items-center mt-10">
-                  <CircularProgress />
-                </div>
-              )}
-              {result.map((result, key) => (
-                <div key={key}>
-                  {result.userInput && result[key] != "" && (
-                    <div>
-                      <div className="flex flex-row-reverse">
-                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
-                          {userName}さん
-                        </div>
-                      </div>
-                      <div className="flex flex-row-reverse ">
-                        <div className="relative bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
-                          <p
-                            className={`text-2xl lg:text-3xl text-left text-white ${
-                              result[key]?.length > 20 ? "text-xl" : "mx-10"
-                            } `}
-                          >
-                            {result.userInput}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {result.gptOutput && result[key] != "" && (
-                    <div>
-                      <div className="flex">
-                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-gray-100 rounded-2xl border-2 border-gray-300">
-                          GPTくん
-                        </div>
-                      </div>
-                      <div className="flex">
-                        <div className="relative bg-gray-100 p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
-                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
-                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-gray-100 transform rotate-45 shadow-xl -z-10"></div>
-                          <p
-                            className={`text-gray-800 text-xl lg:text-3xl text-left ${
-                              result[key]?.length > 20 ? "text-2xl" : "mx-10"
-                            } `}
-                          >
-                            {result.gptOutput}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
               {/*  浮くやつ
               <div className="mx-6">
                 {example.map((example, key) =>
@@ -242,9 +181,58 @@ export default function Home() {
                   )
                 )}
               */}
-              {/* デバッグ用の会話ダミー */}
+
               {/* 会話履歴 */}
+              {result.map((result, key) => (
+                <div key={key}>
+                  {result.userInput && result[key] != "" && (
+                    <div>
+                      <div className="flex flex-row-reverse">
+                        <div className="text-xl lg:text-3xl text-right mx-2 px-4 py-1 bg-blue-500 text-white rounded-2xl border-2 border-gray-300">
+                          {userName}
+                        </div>
+                      </div>
+                      <div className="flex flex-row-reverse ">
+                        <div className="relative w-2/3  bg-blue-500 p-4 rounded-2xl border-r-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 right-11 -mr-3 -mb-3 w-6 h-6 bg-blue-500 transform rotate-45 -z-10"></div>
+                          <p
+                            className={`text-2xl lg:text-3xl text-left text-white ${
+                              result[key]?.length > 20 ? "text-xl" : "mx-2"
+                            } `}
+                          >
+                            {result.userInput}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {result.gptOutput && result[key] != "" && (
+                    <div>
+                      <div className="flex">
+                        <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
+                          GPTくん
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="relative w-2/3  bg-white p-4 rounded-2xl shadow-xl border-l-4 border-b-4 mt-1 border-gray-400">
+                          <div className="absolute -bottom-0.5 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 border-r-2 border-b-2 border-gray-400"></div>
+                          <div className="absolute bottom-0 left-11 -mr-3 -mb-3 w-6 h-6 bg-white transform rotate-45 shadow-xl -z-10"></div>
+                          <p
+                            className={`text-gray-800 text-xl lg:text-3xl text-left ${
+                              result[key]?.length > 20 ? "text-2xl" : "mx-2"
+                            } `}
+                          >
+                            {result.gptOutput}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
+            <div className="lg:hidden h-1/3" />
 
             <div id="result"></div>
           </div>
