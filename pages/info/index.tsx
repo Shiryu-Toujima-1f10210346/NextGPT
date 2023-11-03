@@ -108,28 +108,44 @@ function info() {
       <main className={global.container}>
         <div className="text-2xl m-4 mt-2">info</div>
         <Link href="/github" className={linkClass}>
-          <p>バグ報告､機能要望､改善案はこちら</p>
+          <p className={style.mainText}>
+            バグ報告､機能要望､改善案
+            <br />
+            はこちら
+            <span className="text-sm">(Github)</span>
+          </p>
         </Link>
         <Link href="/aboutGPT" className={linkClass}>
-          <p>GPT､プロンプトエンジニアリングとは</p>
+          <p className={style.mainText}>
+            GPT､生成系AI､
+            <br />
+            プロンプトエンジニアリングとは
+          </p>
         </Link>
         <Link
           href="https://twitter.com/shiryu_dev"
           className="underline text-blue-500 text-xl mb-2"
         >
-          <p>作者の𝕏(旧Twitter)</p>
+          <p className={style.mainText}>作者の𝕏(旧Twitter)</p>
         </Link>
         <div>{submitCommentForm()}</div>
         <div className="text-xl text-center">
-          {commentSending ? "送信中･･･" : "コメント欄"}
           <div className="px-2">
             感想等､気軽に書いていってくれると
             <br />
             とても喜びます！
+            <br />
+            バグ報告はコメント欄でも大丈夫です｡
+            <br />
+            ｢バグ報告｣と含めてください！
+          </div>
+          <div className="font-bold">
+            {commentSending ? "送信中･･･" : "コメント欄"}
+            <CircularProgress size={20} className={loaded && "opacity-0"} />
           </div>
         </div>
-        <CircularProgress size={20} className={loaded && "opacity-0"} />
-        <div className="overflow-y-scroll h-1/2 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3 mb-0 lg:mb-4 rounded-2xl">
+
+        <div className="overflow-y-scroll h-2/5 lg:h-2/3 bg-gray-100 lg:text-3xl lg:w-2/3 mb-0 lg:mb-4 rounded-2xl">
           {commentList.map((comment) => (
             <div
               key={comment.id}

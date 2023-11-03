@@ -29,6 +29,46 @@ function Home() {
             - わからせンクラテス -
           </p>
         </div>
+        <div className="text-gray-500 text-xl">
+          ※製作途中のWebサイトです｡デザイン等､完成してない部分が多々ありますがご了承ください｡
+        </div>
+
+        <div className="lg:hidden">
+          <img
+            src="/Ncrates.png"
+            width={100}
+            height={100}
+            className={styles.socratesIcon}
+          />
+          <div className="font-serif text-2xl font-bold border-2 border-black rounded-xl py-4 px-2 m-2">
+            そなたの親友はこの私､
+            <br />
+            哲学者ンクラテスが誘拐した｡
+            <br />
+            親友を返してほしくば
+            <br />
+            私が出すお題に答え､
+            <br />
+            ソナタが知を証明してみせろ｡
+          </div>
+          <button
+            className="border-2 rounded px-4 m-2 text-xl"
+            onClick={() => {
+              router.push("/game");
+            }}
+          >
+            スタート！
+          </button>
+          <button
+            className="border-2 rounded px-4 m-2 text-xl"
+            onClick={() => {
+              skipTutorial();
+            }}
+          >
+            説明スキップ
+          </button>
+        </div>
+
         <div hidden>
           <p className="text-3xl font-serif my-10">How to play</p>
           <div className="text-left">ここにチュートリアル的なの</div>
@@ -47,7 +87,7 @@ function Home() {
               router.push("/game");
             }}
           >
-            すた～と
+            スタート！
           </button>
           <button
             className="absolute top-3/4 transform translate-x-1/2 -translate-y-1/2 z-10 border-2 rounded px-4"

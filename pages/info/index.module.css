@@ -13,6 +13,11 @@
   }
 }
 
+.mainText {
+  font-size: 1.5rem;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
 @media (min-width: 1200px) {
   .userInfoText {
     font-size: 1.5rem;
