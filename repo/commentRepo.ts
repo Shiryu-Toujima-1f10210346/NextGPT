@@ -27,11 +27,16 @@ export const getCommentList = async () => {
     if (comments.length === 0) {
       await prisma.comment.create({
         data: {
-          comment: "1ゲト",
+          comment: "感想等､気軽に書いていってくれるととても喜びます！！",
           name: "名無しさん@管理者",
         },
       });
-      return [{ comment: "1ゲト", name: "名無し@管理者" }];
+      return [
+        {
+          comment: "感想等､気軽に書いていってくれるととても喜びます！！",
+          name: "名無しさん@管理者",
+        },
+      ];
     }
     return comments;
   } catch (error) {

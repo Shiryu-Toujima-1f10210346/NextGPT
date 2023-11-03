@@ -59,11 +59,23 @@ export default function Home() {
               className="border-b-4 border-r-4 border p-2 rounded-2xl my-4"
             >
               {index + 1 == 1 ? (
-                <div className="">🥇{index + 1}位</div>
+                <div className="flex px-2 ">
+                  <div className="bg-yellow-300 rounded px-4">
+                    🥇{index + 1}位
+                  </div>
+                </div>
               ) : index + 1 == 2 ? (
-                <div className="">🥈{index + 1}位</div>
+                <div className="flex px-2 ">
+                  <div className="bg-gray-300 rounded px-4">
+                    🥈{index + 1}位
+                  </div>
+                </div>
               ) : index + 1 == 3 ? (
-                <div className="">🥉{index + 1}位</div>
+                <div className="flex px-2 ">
+                  <div className="bg-yellow-700 rounded px-4">
+                    🥉{index + 1}位
+                  </div>
+                </div>
               ) : (
                 <div className="">{index + 1}位</div>
               )}

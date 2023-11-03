@@ -1,6 +1,6 @@
 @media (max-width: 320px) {
   .main {
-    width: 90vw;
+    width: 80vw;
   }
 }
 /* ~639px */
@@ -12,13 +12,13 @@
 }
 
 .resultContainer {
-  margin-bottom: 10px;
-  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-top: 10px;
   background-color: rgba(242, 242, 242, 1);
   border-radius: 10px;
   /* box-shadow: inset 0 0 10px rgba(37, 255, 66, 0.479); */
   overflow-y: scroll;
-  height: 60vh;
+  height: 58vh;
   /*x軸のパディング*/
 }
 
@@ -40,6 +40,12 @@
   position: sticky;
   position: -webkit-sticky;
   top: 0;
+}
+
+.inputBar {
+  position: fixed;
+  z-index: 1;
+  bottom: 7vh;
 }
 
 /* 640~1199px */
