@@ -177,6 +177,7 @@ export default function Home() {
         count: count,
       }),
     });
+    registerRanking();
     const data = await res.json();
     console.log(data);
     console.log("対戦履歴ID:" + data.id);
