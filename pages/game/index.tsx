@@ -401,13 +401,20 @@ export default function Home() {
 
         <div hidden={!resultSaved}>
           <TwitterShareButton
-            url={` ${
+            url={" "}
+            // url={` ${
+            //   resultURLShare
+            //     ? resultURL + "?resultId=" + resultId
+            //     : "wakarates.vercel.app"
+            // }`}
+            title={`知を証明し､字飛茶(じぴてぃ)を救出しました！\nお題: ${odai}\nスコア: ${userScore}点\n${
+              resultURLShare ? "対戦履歴: " : "あなたもやってみて！"
+            }${
               resultURLShare
                 ? resultURL + "?resultId=" + resultId
                 : "wakarates.vercel.app"
-            }`}
-            title={`${userScore}点を獲得しました！\n`}
-            hashtags={["INIADFES", "WAKARATES"]}
+            }\n\n#WAKARATES #INIADFES`}
+            // hashtags={["INIADFES", "WAKARATES"]}
             className="mt-4 flex items-center"
           >
             <TwitterIcon size={40} round={true} />

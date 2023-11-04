@@ -41,7 +41,11 @@ function Home() {
             className={styles.socratesIcon}
           />
           <div className="font-serif text-2xl font-bold border-2 border-black rounded-xl py-4 px-2 m-2">
-            そなたの親友はこの私､
+            そなたの親友､
+            <ruby>
+              字飛茶<rt>じぴてぃ</rt>
+            </ruby>
+            はこの私
             <br />
             哲学者ンクラテスが誘拐した｡
             <br />
@@ -51,22 +55,24 @@ function Home() {
             <br />
             ソナタが知を証明してみせろ｡
           </div>
-          <button
-            className="border-2 rounded px-4 m-2 text-xl"
-            onClick={() => {
-              router.push("/game");
-            }}
-          >
-            スタート！
-          </button>
-          <button
-            className="border-2 rounded px-4 m-2 text-xl"
-            onClick={() => {
-              skipTutorial();
-            }}
-          >
-            説明スキップ
-          </button>
+          <div hidden>
+            <button
+              className="border-2 rounded px-4 m-2 text-xl"
+              onClick={() => {
+                router.push("/game");
+              }}
+            >
+              スタート！
+            </button>
+            <button
+              className="border-2 rounded px-4 m-2 text-xl"
+              onClick={() => {
+                skipTutorial();
+              }}
+            >
+              説明スキップ
+            </button>
+          </div>
         </div>
 
         <div hidden>
