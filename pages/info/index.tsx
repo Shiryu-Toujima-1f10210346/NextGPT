@@ -110,8 +110,8 @@ function info() {
           href="https://docs.google.com/forms/d/1ne_r4-WAZpP0Pf914x-PcoP8tILoKNkLW3kkzYRau6g/viewform?edit_requested=true#settings"
           className={linkClass}
         >
-          <span className="text-3xl text-red-500 font-bold">
-            アンケートにご協力ください！
+          <span className="text-2xl lg:text-3xl  text-red-500 font-bold">
+            アンケートの回答はこちら
           </span>
         </Link>
         <Link href="/github" className={linkClass}>
@@ -136,8 +136,8 @@ function info() {
           <p className={style.mainText}>作者の𝕏(旧Twitter)</p>
         </Link>
         <div>{submitCommentForm()}</div>
-        <div className="text-xl text-center">
-          <div className="px-2">
+        <div className="text-xl text-center ">
+          <div className="px-2 hidden">
             感想等､気軽に書いていってくれると
             <br />
             とても喜びます！
