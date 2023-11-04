@@ -39,6 +39,7 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [resultURLShare, setResultURLShare] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -159,6 +160,7 @@ export default function Home() {
   };
 
   const submitResult = async () => {
+    setSubmitting(true);
     console.log("対戦結果を送信します");
     const jsonResult = JSON.stringify(result);
     const res = await fetch("/api/submitResult", {
@@ -430,7 +432,7 @@ export default function Home() {
         </div>
         <button
           onClick={() => submitResult()}
-          disabled={userName.length > 0 ? false : true}
+          disabled={userName.length > 0 ? false : true || submitting}
           hidden={resultSaved}
           className={`${userName.length > 0 ? "" : "text-gray-400"}`}
         >
