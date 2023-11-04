@@ -271,7 +271,7 @@ export default function Home() {
         fetchRanking();
         setInterval(() => {
           setGame("win");
-        }, 2000);
+        }, 1000);
         setModalIsOpen(true);
       } else {
         setCount(count + 1);
