@@ -8,8 +8,8 @@ import styles from "./index.module.css";
 import Head from "next/head";
 import Button from "@mui/material/Button";
 export default function Home() {
-  const [odai, setOdai] = useState<string>("");
-  const [NG, setNG] = useState<string[]>([""]);
+  const [odai, setOdai] = useState<string>("読み込み中･･･");
+  const [NG, setNG] = useState<string[]>(["ちょっとまってね"]);
   const [userName, setUserName] = useState<string>("");
   const [userScore, setUserScore] = useState<number>(0);
   const [tmp, setTmp] = useState<string>("");
