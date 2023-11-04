@@ -720,7 +720,7 @@ export default function Home() {
                         }`}
                       >
                         <div className="text-lg lg:text-3xl text-left px-4 py-1">
-                          GPTくん
+                          ンクラテス
                         </div>
                       </div>
                       <div
@@ -787,7 +787,7 @@ export default function Home() {
                     <div>
                       <div className="flex">
                         <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
-                          GPTくん
+                          字飛茶
                         </div>
                       </div>
                       <div className="flex">
