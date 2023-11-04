@@ -76,6 +76,7 @@ function resultList() {
                   {item.name}
                   <span className={style.san}>さん</span>
                 </p>
+                <p>お題:{item.odai}</p>
                 <p>スコア:{item.score}点</p>
                 {/* <p>{item.odai}<p> */}
                 {/* <p>{item.NG}<p> */}

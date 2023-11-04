@@ -1,20 +1,27 @@
 import { PrismaClient } from "@prisma/client";
+import { count } from "console";
 
 const prisma = new PrismaClient();
 
 export const submitResult = async (
+  odai: string,
+  NG: string[],
   playerName: string,
   odaiId: string,
   playerResult: any,
-  score: number
+  score: number,
+  count: number
 ) => {
   try {
     const result = await prisma.result.create({
       data: {
+        odai: odai,
+        ng: NG,
         name: playerName,
         odaiId: odaiId,
         result: playerResult,
         score: score,
+        count: count,
       },
     });
     return result;
