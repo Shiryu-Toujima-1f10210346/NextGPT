@@ -107,7 +107,7 @@ function info() {
       <Sidebar />
       <main className={global.container}>
         <Link
-          href="https://docs.google.com/forms/d/1ne_r4-WAZpP0Pf914x-PcoP8tILoKNkLW3kkzYRau6g/viewform?edit_requested=true#settings"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSemiDqYvX0xdvpSG4-m4JiSsv6ab1ilSJ7as15fWfvjq4CZzA/viewform"
           className={linkClass}
         >
           <span className="text-2xl lg:text-3xl  text-red-500 font-bold">
