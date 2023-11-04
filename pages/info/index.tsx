@@ -106,7 +106,14 @@ function info() {
     <div>
       <Sidebar />
       <main className={global.container}>
-        <div className="text-2xl m-4 mt-2">info</div>
+        <Link
+          href="https://docs.google.com/forms/d/1ne_r4-WAZpP0Pf914x-PcoP8tILoKNkLW3kkzYRau6g/viewform?edit_requested=true#settings"
+          className={linkClass}
+        >
+          <span className="text-3xl text-red-500 font-bold">
+            アンケートにご協力ください！
+          </span>
+        </Link>
         <Link href="/github" className={linkClass}>
           <p className={style.mainText}>
             バグ報告､機能要望､改善案

@@ -53,7 +53,7 @@ export default function Home() {
   const id = router.query.OdaiId;
 
   const handleCloseModal = () => {
-    setModalIsOpen(false);
+    window.location.href = "/game";
   };
 
   const handleOpenModal = () => {
