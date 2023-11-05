@@ -18,10 +18,12 @@ export const addRanking = async (userName: string, userScore: number) => {
 
 export const getRanking = async () => {
   try {
+    //上から10位までを返す
     const ranking = await prisma.rank.findMany({
       orderBy: {
         score: "desc",
       },
+      take: 10,
     });
     return ranking;
   } catch (error) {

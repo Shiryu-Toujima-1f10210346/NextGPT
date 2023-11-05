@@ -106,7 +106,14 @@ function info() {
     <div>
       <Sidebar />
       <main className={global.container}>
-        <div className="text-2xl m-4 mt-2">info</div>
+        <Link
+          href="https://docs.google.com/forms/d/e/1FAIpQLSemiDqYvX0xdvpSG4-m4JiSsv6ab1ilSJ7as15fWfvjq4CZzA/viewform"
+          className={linkClass}
+        >
+          <span className="text-2xl lg:text-3xl  text-red-500 font-bold">
+            アンケートの回答はこちら
+          </span>
+        </Link>
         <Link href="/github" className={linkClass}>
           <p className={style.mainText}>
             バグ報告､機能要望､改善案
@@ -129,8 +136,8 @@ function info() {
           <p className={style.mainText}>作者の𝕏(旧Twitter)</p>
         </Link>
         <div>{submitCommentForm()}</div>
-        <div className="text-xl text-center">
-          <div className="px-2">
+        <div className="text-xl text-center ">
+          <div className="px-2 hidden">
             感想等､気軽に書いていってくれると
             <br />
             とても喜びます！

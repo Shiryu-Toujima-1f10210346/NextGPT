@@ -39,6 +39,7 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [resultURLShare, setResultURLShare] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -53,7 +54,7 @@ export default function Home() {
   const id = router.query.OdaiId;
 
   const handleCloseModal = () => {
-    setModalIsOpen(false);
+    window.location.href = "/game";
   };
 
   const handleOpenModal = () => {
@@ -155,11 +156,11 @@ export default function Home() {
       body: JSON.stringify({ name: userName, score: userScore }),
     });
     const data = await res.json();
-    console.log(data);
-    window.location.href = "/rank";
+    console.log("regRank" + data);
   };
 
   const submitResult = async () => {
+    setSubmitting(true);
     console.log("対戦結果を送信します");
     const jsonResult = JSON.stringify(result);
     const res = await fetch("/api/submitResult", {
@@ -177,6 +178,7 @@ export default function Home() {
         count: count,
       }),
     });
+    registerRanking();
     const data = await res.json();
     console.log(data);
     console.log("対戦履歴ID:" + data.id);
@@ -401,13 +403,20 @@ export default function Home() {
 
         <div hidden={!resultSaved}>
           <TwitterShareButton
-            url={` ${
+            url={" "}
+            // url={` ${
+            //   resultURLShare
+            //     ? resultURL + "?resultId=" + resultId
+            //     : "wakarates.vercel.app"
+            // }`}
+            title={`知を証明し､字飛茶(じぴてぃ)を救出しました！\nお題: ${odai}\nスコア: ${userScore}点\n${
+              resultURLShare ? "対戦履歴: " : "あなたもやってみて！"
+            }${
               resultURLShare
                 ? resultURL + "?resultId=" + resultId
                 : "wakarates.vercel.app"
-            }`}
-            title={`${userScore}点を獲得しました！\n`}
-            hashtags={["INIADFES", "WAKARATES"]}
+            }\n\n#WAKARATES #INIADFES`}
+            // hashtags={["INIADFES", "WAKARATES"]}
             className="mt-4 flex items-center"
           >
             <TwitterIcon size={40} round={true} />
@@ -423,9 +432,11 @@ export default function Home() {
         </div>
         <button
           onClick={() => submitResult()}
-          disabled={userName.length > 0 ? false : true}
+          disabled={userName.length > 0 ? false : true || submitting}
           hidden={resultSaved}
-          className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+          className={`${
+            userName.length > 0 || !submitting ? "" : "text-gray-400"
+          }`}
         >
           対戦結果を保存
         </button>
@@ -713,7 +724,7 @@ export default function Home() {
                         }`}
                       >
                         <div className="text-lg lg:text-3xl text-left px-4 py-1">
-                          GPTくん
+                          ンクラテス
                         </div>
                       </div>
                       <div
@@ -780,7 +791,7 @@ export default function Home() {
                     <div>
                       <div className="flex">
                         <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
-                          GPTくん
+                          字飛茶
                         </div>
                       </div>
                       <div className="flex">
@@ -809,7 +820,11 @@ export default function Home() {
           {/* スマホ版 smartphone*/}
           <div className="flex justify-center bg-blue-500">
             <div className={`lg:hidden mb-8 py-2 ${styles.inputBar}`}>
-              <form onSubmit={(e) => onSubmit(e)} className="px-2">
+              <form
+                onSubmit={(e) => onSubmit(e)}
+                className="px-2"
+                autoComplete="off"
+              >
                 <input
                   style={{ WebkitAppearance: "none" }}
                   type="text"
@@ -849,7 +864,11 @@ export default function Home() {
           </div>
           {/* パソコン版 */}
           <div className="hidden lg:block mb-8 py-2">
-            <form onSubmit={(e) => onSubmit(e)} className="px-2">
+            <form
+              onSubmit={(e) => onSubmit(e)}
+              className="px-2"
+              autoComplete="off"
+            >
               <input
                 style={{ WebkitAppearance: "none" }}
                 type="text"
