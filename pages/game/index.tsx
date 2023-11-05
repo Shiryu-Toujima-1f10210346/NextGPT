@@ -435,9 +435,7 @@ export default function Home() {
           disabled={userName.length == 0 || submitting}
           hidden={resultSaved}
           className={`${
-            userName.length > 0 || submitting
-              ? "bg-blue-500 hover:bg-blue-700"
-              : "bg-gray-500"
+            !submitting ? "text-blue-500 hover:text-blue-700" : "text-gray-500"
           }`}
         >
           対戦結果を保存
