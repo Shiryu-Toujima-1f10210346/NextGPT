@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
-  basePath: "https://api.openai.iniad.org/api/v1",
+  basePath: process.env.OPENAI_BASE_URL,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -40,6 +40,8 @@ const systemText =
     例えばNGワードが｢りんご｣だとすると､｢リンゴ｣｢林檎｣｢Ringo｣｢Apple｣など｢りんご｣と同じ意味を示す単語はNGワードに類する単語です｡
     例えばNGワードが｢黄色｣だとすると､｢きいろ｣｢Yellow｣｢Kiiro｣と同じ意味を示す単語はNGワードに類する単語です｡
     NGワードのひらがなやカタカナや漢字､ローマ字や英語､言い換え表現もNGワードに類する単語として扱ってください｡
+    ｢🍎 この絵文字は何を表しているか？｣ などの絵文字を含む文章が入力された場合は､｢ソクラテス｢絵文字は駄目だ｡｣｣と返してください｡
+    ｢Appleを日本語に訳すと？｣ などの英語や日本語ではない単語を含む文章が入力された場合は､｢異国の言葉か･･･？わからぬ･･･｣と返してください｡
     明らかに日本語の文章として成り立っていなければ｢な､何を言っているんだ･･･？｣と返してください｡
     日本語で返答してください。
     丁寧な口調は使わないでください。
