@@ -156,7 +156,7 @@ export default function Home() {
       body: JSON.stringify({ name: userName, score: userScore }),
     });
     const data = await res.json();
-    console.log("regRanki" + data);
+    console.log("regRank" + data);
   };
 
   const submitResult = async () => {
@@ -434,7 +434,9 @@ export default function Home() {
           onClick={() => submitResult()}
           disabled={userName.length > 0 ? false : true || submitting}
           hidden={resultSaved}
-          className={`${userName.length > 0 ? "" : "text-gray-400"}`}
+          className={`${
+            userName.length > 0 || !submitting ? "" : "text-gray-400"
+          }`}
         >
           対戦結果を保存
         </button>
