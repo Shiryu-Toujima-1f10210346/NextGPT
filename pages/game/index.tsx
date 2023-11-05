@@ -818,7 +818,11 @@ export default function Home() {
           {/* スマホ版 smartphone*/}
           <div className="flex justify-center bg-blue-500">
             <div className={`lg:hidden mb-8 py-2 ${styles.inputBar}`}>
-              <form onSubmit={(e) => onSubmit(e)} className="px-2">
+              <form
+                onSubmit={(e) => onSubmit(e)}
+                className="px-2"
+                autoComplete="off"
+              >
                 <input
                   style={{ WebkitAppearance: "none" }}
                   type="text"
@@ -858,7 +862,11 @@ export default function Home() {
           </div>
           {/* パソコン版 */}
           <div className="hidden lg:block mb-8 py-2">
-            <form onSubmit={(e) => onSubmit(e)} className="px-2">
+            <form
+              onSubmit={(e) => onSubmit(e)}
+              className="px-2"
+              autoComplete="off"
+            >
               <input
                 style={{ WebkitAppearance: "none" }}
                 type="text"
