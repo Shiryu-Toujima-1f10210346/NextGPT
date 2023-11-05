@@ -432,10 +432,12 @@ export default function Home() {
         </div>
         <button
           onClick={() => submitResult()}
-          disabled={userName.length > 0 ? false : true || submitting}
+          disabled={userName.length == 0 || submitting}
           hidden={resultSaved}
           className={`${
-            userName.length > 0 || !submitting ? "" : "text-gray-400"
+            userName.length > 0 || submitting
+              ? "bg-blue-500 hover:bg-blue-700"
+              : "bg-gray-500"
           }`}
         >
           対戦結果を保存
