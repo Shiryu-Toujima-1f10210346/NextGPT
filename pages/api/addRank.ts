@@ -1,7 +1,7 @@
 import { addRanking, getRanking, updateRanking } from "../../repo/rankingRepo";
 
 export default async function POST(req, res) {
-  console.log("ランキング追加");
+  console.log("ランキング追加api");
   console.log(req.body);
 
   try {
