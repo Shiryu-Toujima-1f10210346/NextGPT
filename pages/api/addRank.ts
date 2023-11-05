@@ -1,7 +1,7 @@
 import { addRanking, getRanking, updateRanking } from "../../repo/rankingRepo";
 
 export default async function POST(req, res) {
-  console.log("ランキング追加");
+  console.log("ランキング追加api");
   console.log(req.body);
 
   try {
@@ -9,31 +9,39 @@ export default async function POST(req, res) {
     const userName = req.body.name;
     const userScore = req.body.score;
 
+    //マイナス点を弾く
+    if (userScore < 0) {
+      res.status(200).json(currentRanking);
+      console.log("マイナス点");
+      return;
+    }
+
     if (!userName || !userScore) {
       res.status(400).json({
         error: {
           message: "Bad Request",
         },
       });
+      console.log("Bad Request");
       return;
     }
 
     //ランキングが空の場合
-    if (currentRanking.length == 0) {
-      console.log("ランキングが空の場合");
-      const ranking = await addRanking(userName, userScore);
-      res.status(200).json(ranking);
-      return;
-    }
+    // if (currentRanking.length == 0) {
+    //   console.log("ランキングが空の場合");
+    //   const ranking = await addRanking(userName, userScore);
+    //   res.status(200).json(ranking);
+    //   return;
+    // }
 
-    if (currentRanking.length >= 10) {
-      //上位10位以内に入ってたら
-      if (currentRanking[9].score < userScore) {
-        res.status(200).json(currentRanking);
-        console.log("上位10位以内に入ってる");
-        return;
-      }
-    }
+    //上位10位以内に入ってたら
+    // if (currentRanking.length >= 10) {
+    //   if (currentRanking[9].score < userScore) {
+    //     console.log("上位10位以内に入ってる");
+    //     const ranking = await addRanking(userName, userScore);
+    //     res.status(200).json(ranking);
+    //   }
+    // }
 
     //同じ名前､同じスコアの人がいたら登録しない
     for (let i = 0; i < currentRanking.length; i++) {
@@ -47,7 +55,7 @@ export default async function POST(req, res) {
       }
     }
 
-    //同じ名前の人がいたら､スコアが高い方を登録する
+    //ランキングに同じ名前の人がいて､スコアがそれより高い場合は､スコアを更新する
     for (let i = 0; i < currentRanking.length; i++) {
       if (currentRanking[i].name == userName) {
         if (currentRanking[i].score < userScore) {
@@ -62,9 +70,9 @@ export default async function POST(req, res) {
         }
       }
     }
-
     console.log("userName:" + userName);
     console.log("userScore:" + userScore);
+    console.log("ランキングに登録する");
     const ranking = await addRanking(userName, userScore);
     res.status(200).json(ranking);
   } catch (error) {

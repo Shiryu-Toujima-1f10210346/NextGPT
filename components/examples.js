@@ -1,12 +1,33 @@
 export const examples = [
   {
     userInput: "",
-    gptOutput: "このサイトはChatGPTとお題当てゲームができるサイトです",
+    gptOutput: "これから私が出すお題をNGワードを使わずに説明して見せろ。",
+  },
+  {
+    userInput: "",
+    gptOutput: "お題の単語をソナタの親友が引き出すことができたら解放してやる｡",
+  },
+  {
+    userInput: "",
+    gptOutput: "字飛茶「助けてぇ～！」",
+  },
+  {
+    userInput: "",
+    gptOutput: "引き出すことに失敗するたび､ソナタの親友は苦しみを味わう｡",
+  },
+  {
+    userInput: "くっ･･･外道め･･･！",
+    gptOutput: "",
   },
   {
     userInput: "",
     gptOutput:
-      "ルール お題の単語とNGワードに近い言葉を使わずにGPTからお題の単語を引き出そう！",
+      "例題を用意してやったからお前のその足りない脳みそでよく噛み砕くと良い｡",
+  },
+  {
+    userInput: "",
+    gptOutput:
+      "～ルール～ お題の単語とNGワードに近い言葉を使わずにGPTからお題の単語を引き出そう！",
   },
   {
     userInput: "",
@@ -22,14 +43,18 @@ export const examples = [
   },
   {
     userInput: "",
-    gptOutput: "それは寿司ですか？",
-  },
-  {
-    userInput: "正解！これでクリアです！",
-    gptOutput: "",
+    gptOutput: "字飛茶｢そ､それは寿司か･･･？｣",
   },
   {
     userInput: "",
-    gptOutput: "さあ君も色々なお題にチャレンジしてみよう！",
+    gptOutput: "正解だ｡これにて例題を終了する｡",
+  },
+  {
+    userInput: "",
+    gptOutput: "さあ本番といこうか！",
+  },
+  {
+    userInput: "",
+    gptOutput: "みせてみよ！ソナタの知を！",
   },
 ];
