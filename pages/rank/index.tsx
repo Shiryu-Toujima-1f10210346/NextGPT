@@ -80,7 +80,7 @@ export default function Home() {
                 <div className="">{index + 1}位</div>
               )}
               <div id="rankContainer" className="">
-                <span>{item.name} </span>
+                <span className={styles.name}>{item.name} </span>
                 <span className={styles.san}>さん</span>
 
                 <span className="float-right">{item.score}点</span>

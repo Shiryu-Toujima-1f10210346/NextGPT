@@ -15,15 +15,21 @@
   .san {
     font-size: 1.5rem;
   }
+  .name {
+    font-size: 2rem;
+  }
 }
 @media (max-width: 500px) {
   .resultContainer {
     overflow-y: scroll;
     font-size: 1.5rem;
-    width: 80vw;
+    width: 90vw;
     padding-bottom: 20%;
   }
   .san {
     font-size: 1rem;
+  }
+  .name {
+    font-size: 1.5rem;
   }
 }

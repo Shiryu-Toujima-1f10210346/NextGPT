@@ -39,6 +39,7 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const [resultURLShare, setResultURLShare] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const setExampleHideCache = () => {
     const exampleHideCache = localStorage.getItem("exampleHide");
@@ -53,7 +54,7 @@ export default function Home() {
   const id = router.query.OdaiId;
 
   const handleCloseModal = () => {
-    setModalIsOpen(false);
+    window.location.href = "/game";
   };
 
   const handleOpenModal = () => {
@@ -156,10 +157,10 @@ export default function Home() {
     });
     const data = await res.json();
     console.log(data);
-    window.location.href = "/rank";
   };
 
   const submitResult = async () => {
+    setSubmitting(true);
     console.log("対戦結果を送信します");
     const jsonResult = JSON.stringify(result);
     const res = await fetch("/api/submitResult", {
@@ -177,6 +178,7 @@ export default function Home() {
         count: count,
       }),
     });
+    registerRanking();
     const data = await res.json();
     console.log(data);
     console.log("対戦履歴ID:" + data.id);
@@ -430,7 +432,7 @@ export default function Home() {
         </div>
         <button
           onClick={() => submitResult()}
-          disabled={userName.length > 0 ? false : true}
+          disabled={userName.length > 0 ? false : true || submitting}
           hidden={resultSaved}
           className={`${userName.length > 0 ? "" : "text-gray-400"}`}
         >
@@ -720,7 +722,7 @@ export default function Home() {
                         }`}
                       >
                         <div className="text-lg lg:text-3xl text-left px-4 py-1">
-                          GPTくん
+                          ンクラテス
                         </div>
                       </div>
                       <div
@@ -787,7 +789,7 @@ export default function Home() {
                     <div>
                       <div className="flex">
                         <div className="text-xl lg:text-3xl text-left mx-2 px-4 py-1 bg-white rounded-2xl border-2 border-gray-300">
-                          GPTくん
+                          字飛茶
                         </div>
                       </div>
                       <div className="flex">
