@@ -825,6 +825,14 @@ export default function Home() {
                 className="px-2"
                 autoComplete="off"
               >
+                <button
+                  onClick={() => {
+                    setUserInput(result[result.length - 1].userInput);
+                  }}
+                  className="bg-gray-200 rounded-full mb-8 px-4 py-2 text-gray-8"
+                >
+                  前回の回答をコピー
+                </button>
                 <input
                   style={{ WebkitAppearance: "none" }}
                   type="text"
@@ -869,6 +877,14 @@ export default function Home() {
               className="px-2"
               autoComplete="off"
             >
+              <button
+                onClick={() => {
+                  setUserInput(result[result.length - 1].userInput);
+                }}
+                className="bg-gray-200 rounded-full mb-8 px-4 py-2 text-gray-8"
+              >
+                前回の回答をコピー
+              </button>
               <input
                 style={{ WebkitAppearance: "none" }}
                 type="text"
